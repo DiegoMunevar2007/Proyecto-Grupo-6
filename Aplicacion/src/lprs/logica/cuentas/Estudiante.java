@@ -1,9 +1,9 @@
-package lprs.cuentas;
+package lprs.logica.cuentas;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import lprs.learningPaths.LearningPath;
+import lprs.logica.learningPath.LearningPath;
 
 public class Estudiante extends Usuario {
 	private List<LearningPath> learningPathsInscritos;

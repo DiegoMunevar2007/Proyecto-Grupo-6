@@ -1,8 +1,9 @@
-package lprs.contenido;
+package lprs.logica.contenido;
 
 import java.util.ArrayList;
+import java.util.Date;
 
-import lprs.extras.Fecha;
+
 
 public abstract class Actividad {
     protected String numeroActividad;
@@ -11,14 +12,14 @@ public abstract class Actividad {
     protected String objetivo;
     protected int duracionEsperada;
     protected boolean obligatoria;
-    protected Fecha fechaLimite;
+    protected Date fechaLimite;
     protected String estado;
     protected ArrayList<Resenia> resenias;
     protected ArrayList<Actividad> actividadesPrevias;
     protected ArrayList<Actividad> actividadesSeguimiento;
 
     public Actividad(String numeroActividad, String titulo, String descripcion, String objetivo, int duracionEsperada,
-            boolean obligatoria, Fecha fechaLimite) {
+            boolean obligatoria, Date fechaLimite) {
         this.numeroActividad = numeroActividad;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -103,11 +104,11 @@ public abstract class Actividad {
     }
 
     /**
-     * Obtiene la fecha límite de la actividad.
+     * Obtiene la Date límite de la actividad.
      *
-     * @return la fecha límite de la actividad
+     * @return la Date límite de la actividad
      */
-    public Fecha getFechaLimite() {
+    public Date getFechaLimite() {
         return fechaLimite;
     }
 
@@ -194,11 +195,11 @@ public abstract class Actividad {
     }
 
     /**
-     * Establece la fecha límite de la actividad.
+     * Establece la Date límite de la actividad.
      *
-     * @param fechaLimite la nueva fecha límite de la actividad
+     * @param fechaLimite la nueva Date límite de la actividad
      */
-    public void setFechaLimite(Fecha fechaLimite) {
+    public void setFechaLimite(Date fechaLimite) {
         this.fechaLimite = fechaLimite;
     }
 

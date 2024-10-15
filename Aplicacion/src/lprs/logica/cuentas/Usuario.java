@@ -1,8 +1,8 @@
-package lprs.cuentas;
+package lprs.logica.cuentas;
 
 import java.util.List;
 
-import lprs.learningPaths.LearningPath;
+import lprs.logica.learningPath.LearningPath;
 
 public abstract class Usuario {
 	protected static final String ESTUDIANTE = "Estudiante";

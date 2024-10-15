@@ -1,15 +1,15 @@
-package lprs.contenido;
+package lprs.logica.contenido;
 
-import java.util.ArrayList;
+import java.util.Date;
 
-import lprs.extras.Fecha;
+
 
 public class Tarea extends Actividad {
     private static final String EXITOSO = "Exitoso";
     private static final String NOEXITOSO = "No exitoso";
 
     public Tarea(String numeroActividad, String titulo, String descripcion, String objetivo,
-            int duracionEsperada, boolean obligatoria, Fecha fechaLimite, String estado) {
+            int duracionEsperada, boolean obligatoria, Date fechaLimite, String estado) {
         super(numeroActividad, titulo, descripcion, objetivo, duracionEsperada, obligatoria, fechaLimite);
         this.estado = estado;
     }

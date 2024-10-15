@@ -1,9 +1,9 @@
-package lprs.cuentas;
+package lprs.logica.cuentas;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import lprs.learningPaths.LearningPath;
+import lprs.logica.learningPath.LearningPath;
 
 public class Profesor extends Usuario {
     private HashMap<String, LearningPath> learningPathsCreados;
