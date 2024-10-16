@@ -1,4 +1,4 @@
-package lprs.Principal;
+package lprs.principal;
 
 import javax.swing.JOptionPane;
 
