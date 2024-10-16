@@ -1,6 +1,6 @@
-package lprs.contenido;
+package lprs.logica.contenido;
 
-import lprs.cuentas.Usuario;
+import lprs.logica.cuentas.Usuario;
 
 public class Resenia {
     private String ID;

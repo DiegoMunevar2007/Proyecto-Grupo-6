@@ -1,11 +1,11 @@
-package lprs.learningPaths;
+package lprs.logica.learningPath;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import lprs.contenido.Actividad;
-import lprs.cuentas.Estudiante;
-import lprs.cuentas.Profesor;
+import lprs.logica.contenido.Actividad;
+import lprs.logica.cuentas.Estudiante;
+import lprs.logica.cuentas.Profesor;
 
 public class LearningPath {
 	private static int numeroLP;
