@@ -1,6 +1,7 @@
 package lprs.logica.learningPath;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import lprs.logica.contenido.Actividad;
@@ -22,6 +23,7 @@ public class LearningPath {
 	private Profesor profesorCreador;
 	protected static HashMap<String, LearningPath> learningPathsHash;
 	protected static ArrayList<LearningPath> learningPaths;
+	private Metadato metadatos;
 
 	/**
 	 * Constructor para crear un objeto LearningPath.
@@ -47,6 +49,7 @@ public class LearningPath {
 		this.actividades = new ArrayList<Actividad>();
 		this.estudiantesInscritos = new ArrayList<Estudiante>();
 		this.profesorCreador = profesorCreador;
+		this.metadatos= new Metadato("1");
 	}
 
 	/**
@@ -313,6 +316,10 @@ public class LearningPath {
 			this.descripcion = descripcion;
 			this.nivelDificultad = nivelDificultad;
 			this.objetivos = objetivos;
+			this.metadatos.setFechaModificacion(new Date());
+			String versionActual = this.metadatos.getVersion();
+			int versionActualInt = Integer.parseInt(versionActual)+1;
+			this.metadatos.setVersion(Integer.toString(versionActualInt));
 		} else {
 			System.out.println("No tienes permiso para editar esta ruta de aprendizaje.");
 			// TODO: throw exception en lugar de imprimir mensaje

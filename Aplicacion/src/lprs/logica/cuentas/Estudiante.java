@@ -1,13 +1,27 @@
 package lprs.logica.cuentas;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+import lprs.logica.learningPath.Avance;
 import lprs.logica.learningPath.LearningPath;
 
 public class Estudiante extends Usuario {
+	private HashMap<String, Avance> avancesEstudiante;
 	private List<LearningPath> learningPathsInscritos;
 
+	
+	public Avance obtenerAvance(String ID) {
+		return avancesEstudiante.get(ID);
+	}
+	
+	
+	
+	
+	
+	
 	/**
 	 * Constructor para crear un objeto Estudiante.
 	 *
@@ -30,6 +44,8 @@ public class Estudiante extends Usuario {
 		LearningPath lP = LearningPath.getLearningPath(ID);
 		learningPathsInscritos.add(lP);
 		lP.aniadirEstudiante(this);
+		Avance nuevoAvance = new Avance(new Date(),lP); //TODO: Verificar que Date de esta manera si sea valido
+		avancesEstudiante.put(ID, nuevoAvance);
 	}
 
 	/**
@@ -42,6 +58,7 @@ public class Estudiante extends Usuario {
 		LearningPath lP = LearningPath.getLearningPath(ID);
 		learningPathsInscritos.remove(lP);
 		lP.eliminarEstudiante(this);
+		avancesEstudiante.remove(ID);
 	}
 
 }
