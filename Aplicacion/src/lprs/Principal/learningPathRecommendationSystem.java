@@ -1,4 +1,6 @@
-package Principal;
+package lprs.Principal;
+
+import javax.swing.JOptionPane;
 
 import lprs.consola.ConsolaPrincipal;
 
@@ -14,6 +16,8 @@ public class learningPathRecommendationSystem {
 		
 		ConsolaPrincipal consolaP = new ConsolaPrincipal();
 		
+		String cadena=JOptionPane.showInputDialog("Digita una cadena");
+        JOptionPane.showMessageDialog(null, cadena);
 		try {
 			consolaP.mostrarConsolaPrincipal();
 		} catch (Exception e) {

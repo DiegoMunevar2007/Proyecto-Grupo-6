@@ -2,6 +2,8 @@ package lprs.consola;
 
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 public class ConsolaPrincipal {
 	
 	Scanner lectura = new Scanner (System.in);
@@ -14,7 +16,7 @@ public class ConsolaPrincipal {
 		
 		System.out.println("Ingrese una opcion (1   o   2): ");
 		
-		int opcion = lectura.nextInt();
+		int opcion = lectura.nextInt();		
 		
 		if(opcion == 1) {
 			System.out.println("----------------Iniciar Sesion------------------");
@@ -33,7 +35,7 @@ public class ConsolaPrincipal {
 		}else if(opcion == 2) {
 			System.out.println("----------------Crear Usuario------------------");
 			System.out.println("Ingrese su Usuario: ");
-			
+		
 			String usuario = lectura.next();
 	
 			System.out.println("Ingrese su contraseña: ");
