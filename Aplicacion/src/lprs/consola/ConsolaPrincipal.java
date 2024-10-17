@@ -16,7 +16,7 @@ public class ConsolaPrincipal {
 	}
 
 	public void mostrarConsolaPrincipal() throws Exception {
-
+		//TODO: Cargar los usuarios a partir del JSON
 		System.out.println("Bienvenido a learning Path Recommendation System :) ");
 		System.out.println("Iniciar Sesion: 1 , Crear cuenta: 2");
 
@@ -24,32 +24,19 @@ public class ConsolaPrincipal {
 
 		int opcion = lectura.nextInt();
 
-		if (opcion == 1) {
-			System.out.println("----------------Iniciar Sesion------------------");
-
-			System.out.println("Ingrese su Usuario: ");
-
-			String usuarioID = lectura.next();
-			Usuario usuarioEncontrado = LPRS.obtenerUsuario(usuarioID);
-			if (usuarioEncontrado == null) {
-				throw new Exception("Usuario no encontrado");
+		if (opcion == 1) 
+		{
+			Usuario usuarioEncontrado= iniciarSesion();
+			if (usuarioEncontrado.getTipo() == "Estudiante") 
+			{
+				ConsolaEstudiante consolaEstudiante = new ConsolaEstudiante((Estudiante) usuarioEncontrado);
+				consolaEstudiante.mostrarConsolaEstudiante();
+			} 
+			else 
+			{
+				ConsolaProfesor consolaProfesor= new ConsolaProfesor((Profesor) usuarioEncontrado);
 			}
-			System.out.println("Ingrese su contraseña: ");
-
-			String contrasena = lectura.next();
-			System.out.println(contrasena);
-			System.out.println(usuarioEncontrado.getContrasenia());
-			if (contrasena.equals(usuarioEncontrado.getContrasenia())) {
-				System.out.println("Bienvenido " + usuarioEncontrado.getUsuario());
-				if (usuarioEncontrado.getTipo() == "Estudiante") {
-					ConsolaEstudiante consolaEstudiante = new ConsolaEstudiante((Estudiante) usuarioEncontrado);
-					consolaEstudiante.mostrarConsolaEstudiante();
-				} else {
-
-				}
-			} else {
-				throw new Exception("Contraseña incorrecta, vuelva a intentarlo");
-			}
+			
 		} else if (opcion == 2) {
 			System.out.println("----------------Crear Usuario------------------");
 			System.out.println("Ingrese su Usuario: ");
@@ -87,5 +74,18 @@ public class ConsolaPrincipal {
 			System.out.println(i+1 + ". " + opciones[i]);
 		}
 	}
+	public Usuario iniciarSesion() throws Exception {
+		System.out.println("----------------Iniciar Sesion------------------");
 
+		System.out.println("Ingrese su Usuario: ");
+
+		String usuarioID = lectura.next();
+		Usuario usuarioEncontrado = LPRS.obtenerUsuario(usuarioID);
+		
+		System.out.println("Ingrese su contraseña: ");
+		String contrasena = lectura.next();
+		return LPRS.iniciarSesion(usuarioEncontrado, contrasena);
+
+	}
+	
 }
