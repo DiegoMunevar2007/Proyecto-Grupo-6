@@ -84,7 +84,7 @@ public class ConsolaPrincipal {
 	public void mostrarOpciones(int cantidad, String[] opciones) {
 		System.out.println("Seleccione una opcion: ");
 		for (int i = 0; i < cantidad; i++) {
-			System.out.println(i + ". " + opciones[i]);
+			System.out.println(i+1 + ". " + opciones[i]);
 		}
 	}
 

@@ -9,6 +9,14 @@ public class LPRS {
 
 	private static HashMap<String, Usuario> usuarios = new HashMap<String, Usuario>();
 
+
+	public static Usuario obtenerUsuario(String ID) {
+		return usuarios.get(ID);
+	}
+
+	public static void agregarUsuario(String ID, Usuario usuario) {
+		usuarios.put(ID, usuario);
+	}
 	public static void main(String[] args) {
 		// TODO: Cargar a partir de la persistencia los usuarios antiguos
 		ConsolaPrincipal consolaP = new ConsolaPrincipal();
@@ -21,11 +29,4 @@ public class LPRS {
 
 	}
 
-	public static Usuario obtenerUsuario(String ID) {
-		return usuarios.get(ID);
-	}
-
-	public static void agregarUsuario(String ID, Usuario usuario) {
-		usuarios.put(ID, usuario);
-	}
 }
