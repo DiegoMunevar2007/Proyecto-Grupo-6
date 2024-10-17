@@ -2,8 +2,6 @@ package lprs.consola;
 
 import java.util.Scanner;
 
-import javax.swing.JOptionPane;
-
 public class ConsolaPrincipal {
 	
 	Scanner lectura = new Scanner (System.in);
@@ -36,11 +34,11 @@ public class ConsolaPrincipal {
 			System.out.println("----------------Crear Usuario------------------");
 			System.out.println("Ingrese su Usuario: ");
 		
-			String usuario = lectura.next();
+			//String usuario = lectura.next();
 	
 			System.out.println("Ingrese su contraseña: ");
 	
-			String contrasena = lectura.next();
+			//String contrasena = lectura.next();
 			
 			System.out.println("Estudiante: 1 , Profesor: 2 ");
 			
