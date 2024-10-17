@@ -22,6 +22,7 @@ public class LearningPath {
 	private ArrayList<Estudiante> estudiantesInscritos;
 	private Profesor profesorCreador;
 	protected static HashMap<String, LearningPath> learningPathsHash;
+	//Dejamos la lista tambien?
 	protected static ArrayList<LearningPath> learningPaths;
 	private Metadato metadatos;
 

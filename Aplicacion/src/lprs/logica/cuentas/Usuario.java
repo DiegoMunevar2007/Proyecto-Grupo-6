@@ -26,5 +26,11 @@ public abstract class Usuario {
 	public String getTipo() {
 		return tipo;
 	}
+	public static String getEstudiante() {
+		return ESTUDIANTE;
+	}
+	public static String getProfesor() {
+		return PROFESOR;
+	}
 
 }
