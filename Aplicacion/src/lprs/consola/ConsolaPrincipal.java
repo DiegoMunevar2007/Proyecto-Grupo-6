@@ -5,6 +5,7 @@ import java.util.Scanner;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.cuentas.Profesor;
 import lprs.logica.cuentas.Usuario;
+import lprs.persistencia.PersistenciaUsuario;
 import lprs.principal.LPRS;
 
 public class ConsolaPrincipal {
@@ -18,9 +19,9 @@ public class ConsolaPrincipal {
 	public void mostrarConsolaPrincipal() throws Exception {
 		// TODO: Cargar los usuarios a partir del JSON
 		System.out.println("Bienvenido a learning Path Recommendation System :) ");
-		System.out.println("Iniciar Sesion: 1 , Crear cuenta: 2");
+		System.out.println("Iniciar Sesion: 1 , Crear cuenta: 2 , Cargar Usuarios: 3");
 
-		System.out.println("Ingrese una opcion (1   o   2): ");
+		System.out.println("Ingrese una opcion (1, 2 o 3): ");
 
 		int opcion = lectura.nextInt();
 
@@ -51,7 +52,12 @@ public class ConsolaPrincipal {
 			System.out.println("Usuario agregado con exito yipeee");
 			mostrarConsolaPrincipal();
 
-		} else {
+		} else if (opcion==3) {
+			PersistenciaUsuario.cargarUsuarios();
+			mostrarConsolaPrincipal();
+		}
+		
+		else {
 			throw new Exception("Esta no es una opcion valida, vuelva a intentar");
 		}
 
