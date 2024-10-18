@@ -11,7 +11,7 @@ public class LPRS {
 
 	private static HashMap<String, Usuario> usuarios = new HashMap<String, Usuario>();
 
-	public static void crearUsuario(String usuario, String contrasena, int tipo) {
+	public static void crearUsuario(String usuario, String contrasena, int tipo) throws Exception{
 		Usuario nuevoUsuario;
 		if (tipo == 1) {
 			nuevoUsuario = new Estudiante(usuario, contrasena);

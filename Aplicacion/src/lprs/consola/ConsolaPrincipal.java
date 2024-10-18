@@ -50,15 +50,8 @@ public class ConsolaPrincipal {
 			System.out.println("Estudiante: 1 , Profesor: 2 ");
 
 			int tipo = lectura.nextInt();
-			Usuario nuevoUsuario;
-			if (tipo == 1) {
-				nuevoUsuario = new Estudiante(usuario, contrasena);
-			} else if (tipo == 2) {
-				nuevoUsuario = new Profesor(usuario, contrasena);
-			} else {
-				throw new Exception("Este no es un tipo valido, vuelva a intentar");
-			}
-			LPRS.agregarUsuario(usuario, nuevoUsuario);
+			LPRS.crearUsuario(usuario, contrasena, tipo);  
+			
 			System.out.println("Usuario agregado con exito yipeee");
 			mostrarConsolaPrincipal();
 
