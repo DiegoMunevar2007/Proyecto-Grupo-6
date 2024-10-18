@@ -32,6 +32,7 @@ public class ConsolaPrincipal {
 				consolaEstudiante.mostrarConsolaEstudiante();
 			} else {
 				ConsolaProfesor consolaProfesor = new ConsolaProfesor((Profesor) usuarioEncontrado);
+				consolaProfesor.mostrarConsolaProfesor();
 			}
 
 		} else if (opcion == 2) {

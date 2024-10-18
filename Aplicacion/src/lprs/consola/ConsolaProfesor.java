@@ -8,7 +8,7 @@ public class ConsolaProfesor extends ConsolaPrincipal{
 		super();
 		profesor= usuarioEncontrado;
 	}
-    public void mostrarConsolaEstudiante() {
+    public void mostrarConsolaProfesor() {
         System.out.println("Bienvenido + " + profesor.getUsuario());
         String[] opciones = { "Ver mis Leaning Paths hechos", "Ver los learning Paths disponibles", "Salir" };
         mostrarOpciones(3, opciones);
