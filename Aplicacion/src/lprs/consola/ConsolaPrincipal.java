@@ -2,11 +2,14 @@ package lprs.consola;
 
 import java.util.Scanner;
 
+<<<<<<< HEAD
+=======
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.cuentas.Profesor;
 import lprs.logica.cuentas.Usuario;
 import lprs.principal.LPRS;
 
+>>>>>>> 0bff5c85522313c07ad6e425aaa9995342a2277b
 public class ConsolaPrincipal {
 
 	Scanner lectura;
@@ -40,6 +43,15 @@ public class ConsolaPrincipal {
 		} else if (opcion == 2) {
 			System.out.println("----------------Crear Usuario------------------");
 			System.out.println("Ingrese su Usuario: ");
+<<<<<<< HEAD
+		
+			//String usuario = lectura.next();
+	
+			System.out.println("Ingrese su contraseña: ");
+	
+			//String contrasena = lectura.next();
+			
+=======
 
 			String usuario = lectura.next();
 
@@ -47,6 +59,7 @@ public class ConsolaPrincipal {
 
 			String contrasena = lectura.next();
 
+>>>>>>> 0bff5c85522313c07ad6e425aaa9995342a2277b
 			System.out.println("Estudiante: 1 , Profesor: 2 ");
 
 			int tipo = lectura.nextInt();
