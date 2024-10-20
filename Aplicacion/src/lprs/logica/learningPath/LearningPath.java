@@ -21,8 +21,8 @@ public class LearningPath {
 	private ArrayList<Actividad> actividades;
 	private ArrayList<Estudiante> estudiantesInscritos;
 	private Profesor profesorCreador;
-	protected static HashMap<String, LearningPath> learningPathsHash = new HashMap<String,LearningPath>();
-	//Dejamos la lista tambien?
+	protected static HashMap<String, LearningPath> learningPathsHash = new HashMap<String, LearningPath>();
+	// Dejamos la lista tambien?
 	protected static ArrayList<LearningPath> learningPathsDisponibles = new ArrayList<LearningPath>();
 	private Metadato metadatos;
 
@@ -37,19 +37,20 @@ public class LearningPath {
 	 * @param rating          la calificación de la ruta de aprendizaje
 	 * @param profesorCreador el profesor que crea la ruta de aprendizaje
 	 */
-	public LearningPath(String titulo, String descripcion, String nivelDificultad, ArrayList<String> objetivos, Profesor profesorCreador) {
+	public LearningPath(String titulo, String descripcion, String nivelDificultad, ArrayList<String> objetivos,
+			Profesor profesorCreador) {
 		this.ID = asignarID();
 		this.titulo = titulo;
 		this.descripcion = descripcion;
 		this.nivelDificultad = nivelDificultad;
-		this.objetivos = new ArrayList<String>();
+		this.objetivos = objetivos;
 		this.duracion = 0;
 		this.rating = 0;
 		this.calificaciones = 0;
 		this.actividades = new ArrayList<Actividad>();
 		this.estudiantesInscritos = new ArrayList<Estudiante>();
 		this.profesorCreador = profesorCreador;
-		this.metadatos= new Metadato("1");
+		this.metadatos = new Metadato("1");
 	}
 
 	/**
@@ -220,6 +221,10 @@ public class LearningPath {
 	public String getID() {
 		return ID;
 	}
+	public void setID(String ID) {
+		this.ID=ID;
+		numeroLP=Integer.parseInt(ID);
+	}
 
 	/**
 	 * Obtiene la duración de la ruta de aprendizaje.
@@ -311,21 +316,19 @@ public class LearningPath {
 	 */
 	public void editarLearningPath(String titulo, String descripcion, String nivelDificultad,
 			ArrayList<String> objetivos, Profesor profesorCreador) throws Exception {
-	if (profesorCreador == this.profesorCreador) {
+		if (profesorCreador == this.profesorCreador) {
 			this.titulo = titulo;
 			this.descripcion = descripcion;
 			this.nivelDificultad = nivelDificultad;
 			this.objetivos = objetivos;
 			this.metadatos.setFechaModificacion(new Date());
 			String versionActual = this.metadatos.getVersion();
-			int versionActualInt = Integer.parseInt(versionActual)+1;
+			int versionActualInt = Integer.parseInt(versionActual) + 1;
 			this.metadatos.setVersion(Integer.toString(versionActualInt));
-		} else { 
-		throw new Exception("No tienes permiso para editar esta ruta de aprendizaje.");
-	}
+		} else {
+			throw new Exception("No tienes permiso para editar esta ruta de aprendizaje.");
+		}
 
-
-		
 	}
 
 	/**

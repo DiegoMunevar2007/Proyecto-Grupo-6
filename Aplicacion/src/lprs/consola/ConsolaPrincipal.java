@@ -27,6 +27,9 @@ public class ConsolaPrincipal {
 
 		if (opcion == 1) {
 			Usuario usuarioEncontrado = iniciarSesion();
+			if (usuarioEncontrado == null) {
+				mostrarConsolaPrincipal();
+			}
 			if (usuarioEncontrado.getTipo() == "Estudiante") {
 				ConsolaEstudiante consolaEstudiante = new ConsolaEstudiante((Estudiante) usuarioEncontrado);
 				consolaEstudiante.mostrarConsolaEstudiante();
@@ -50,7 +53,7 @@ public class ConsolaPrincipal {
 			int tipo = lectura.nextInt();
 			Usuario.crearUsuario(usuario, contrasena, tipo);
 
-			System.out.println("Usuario agregado con exito yipeee");
+			System.out.println("¡Usuario agregado con exito!");
 			mostrarConsolaPrincipal();
 
 		} else if (opcion == 3) {
@@ -88,11 +91,10 @@ public class ConsolaPrincipal {
 		List<LearningPath> learningPathsDisponibles = LearningPath.getLearningPaths();
 		if (learningPathsDisponibles.isEmpty()) {
 			System.out.println("No hay Learning Paths disponibles.");
-
 			return;
 		}
-		for (LearningPath lP : learningPathsDisponibles) {
-			System.out.println(lP.getTitulo());
+		for (int i = 0; i < learningPathsDisponibles.size(); i++) {
+			System.out.println(i + 1 + ". " + learningPathsDisponibles.get(i).getTitulo());
 		}
 	}
 

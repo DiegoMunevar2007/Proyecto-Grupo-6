@@ -1,6 +1,7 @@
 package lprs.logica.cuentas;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import lprs.logica.learningPath.LearningPath;
@@ -32,11 +33,12 @@ public class Profesor extends Usuario {
      * @param duracion        la duración de la ruta de aprendizaje
      * @param rating          la calificación de la ruta de aprendizaje
      */
-    public void crearLearningPath(String titulo, String descripcion, String nivelDificultad,
+    public String crearLearningPath(String titulo, String descripcion, String nivelDificultad,
             ArrayList<String> objetivos) {
         LearningPath lP = new LearningPath(titulo, descripcion, nivelDificultad, objetivos, this);
         LearningPath.addLearningPath(lP);
-        ;
+        learningPathsCreados.put(lP.getID(), lP);
+        return lP.getID();
     }
 
     /**
@@ -94,5 +96,9 @@ public class Profesor extends Usuario {
         LearningPath lPClon = new LearningPath(lP, this);
         LearningPath.addLearningPath(lPClon);
         learningPathsCreados.put(lPClon.getID(), lPClon);
+    }
+
+    public Collection<LearningPath> getLearningPathsCreados() {
+        return learningPathsCreados.values();
     }
 }

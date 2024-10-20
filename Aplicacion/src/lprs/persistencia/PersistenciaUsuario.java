@@ -9,11 +9,10 @@ import java.util.Collection;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import lprs.exceptions.ArchivoException;
 import lprs.logica.cuentas.Usuario;
 
 public class PersistenciaUsuario implements Persistencia {
-
-    
 
     public static void guardarUsuario() throws IOException {
         Collection<Usuario> usuarios = Usuario.getUsuarios();
@@ -37,18 +36,21 @@ public class PersistenciaUsuario implements Persistencia {
     }
 
     public static void cargarUsuarios() throws Exception {
-        String contenido;
+        String contenido = "";
         try {
             if (!Files.exists(Paths.get(direccionArchivo + "/usuarios.json"))) {
-                throw new Exception("Archivo no encontrado: usuarios.json");
+                throw new ArchivoException("Archivo no encontrado: usuarios.json");
+            } else {
+                contenido = new String(Files.readAllBytes(Paths.get(direccionArchivo + "/usuarios.json")));
             }
-
-            contenido = new String(Files.readAllBytes(Paths.get(direccionArchivo + "/usuarios.json")));
-        } catch (Exception e) {
+        } catch (ArchivoException e) {
             System.out.println("Error leyendo el archivo: " + e.getMessage());
-            throw e;
+            System.out.println("Creando archivo de usuarios vacio");
+            PrintWriter writer = new PrintWriter(direccionArchivo + "/usuarios.json");
+            writer.write("{\"Usuarios\":[]}");
+            writer.close();
+            contenido = new String(Files.readAllBytes(Paths.get(direccionArchivo + "/usuarios.json")));
         }
-
         try {
             JSONObject jObject = new JSONObject(contenido);
             JSONArray jUsuarios = jObject.getJSONArray("Usuarios");
