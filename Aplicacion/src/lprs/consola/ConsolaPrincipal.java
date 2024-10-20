@@ -1,12 +1,13 @@
 package lprs.consola;
 
+import java.util.List;
 import java.util.Scanner;
 
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.cuentas.Profesor;
 import lprs.logica.cuentas.Usuario;
 import lprs.persistencia.PersistenciaUsuario;
-import lprs.principal.LPRS;
+import lprs.logica.learningPath.LearningPath;
 
 public class ConsolaPrincipal {
 
@@ -17,7 +18,6 @@ public class ConsolaPrincipal {
 	}
 
 	public void mostrarConsolaPrincipal() throws Exception {
-		// TODO: Cargar los usuarios a partir del JSON
 		System.out.println("Bienvenido a learning Path Recommendation System :) ");
 		System.out.println("Iniciar Sesion: 1 , Crear cuenta: 2 , Cargar Usuarios: 3");
 
@@ -48,16 +48,16 @@ public class ConsolaPrincipal {
 			System.out.println("Estudiante: 1 , Profesor: 2 ");
 
 			int tipo = lectura.nextInt();
-			LPRS.crearUsuario(usuario, contrasena, tipo);
+			Usuario.crearUsuario(usuario, contrasena, tipo);
 
 			System.out.println("Usuario agregado con exito yipeee");
 			mostrarConsolaPrincipal();
 
-		} else if (opcion==3) {
+		} else if (opcion == 3) {
 			PersistenciaUsuario.cargarUsuarios();
 			mostrarConsolaPrincipal();
 		}
-		
+
 		else {
 			throw new Exception("Esta no es una opcion valida, vuelva a intentar");
 		}
@@ -77,12 +77,23 @@ public class ConsolaPrincipal {
 		System.out.println("Ingrese su Usuario: ");
 
 		String usuarioID = lectura.next();
-		Usuario usuarioEncontrado = LPRS.obtenerUsuario(usuarioID);
 
 		System.out.println("Ingrese su contraseña: ");
 		String contrasena = lectura.next();
-		return LPRS.iniciarSesion(usuarioEncontrado, contrasena);
+		return Usuario.iniciarSesion(usuarioID, contrasena);
 
+	}
+
+	public void mostrarLearningPathsDisponibles() {
+		List<LearningPath> learningPathsDisponibles = LearningPath.getLearningPaths();
+		if (learningPathsDisponibles.isEmpty()) {
+			System.out.println("No hay Learning Paths disponibles.");
+
+			return;
+		}
+		for (LearningPath lP : learningPathsDisponibles) {
+			System.out.println(lP.getTitulo());
+		}
 	}
 
 }

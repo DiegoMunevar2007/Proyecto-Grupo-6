@@ -21,9 +21,9 @@ public class LearningPath {
 	private ArrayList<Actividad> actividades;
 	private ArrayList<Estudiante> estudiantesInscritos;
 	private Profesor profesorCreador;
-	protected static HashMap<String, LearningPath> learningPathsHash;
+	protected static HashMap<String, LearningPath> learningPathsHash = new HashMap<String,LearningPath>();
 	//Dejamos la lista tambien?
-	protected static ArrayList<LearningPath> learningPaths;
+	protected static ArrayList<LearningPath> learningPathsDisponibles = new ArrayList<LearningPath>();
 	private Metadato metadatos;
 
 	/**
@@ -37,15 +37,14 @@ public class LearningPath {
 	 * @param rating          la calificación de la ruta de aprendizaje
 	 * @param profesorCreador el profesor que crea la ruta de aprendizaje
 	 */
-	public LearningPath(String titulo, String descripcion, String nivelDificultad, ArrayList<String> objetivos,
-			int duracion, float rating, Profesor profesorCreador) {
+	public LearningPath(String titulo, String descripcion, String nivelDificultad, ArrayList<String> objetivos, Profesor profesorCreador) {
 		this.ID = asignarID();
 		this.titulo = titulo;
 		this.descripcion = descripcion;
 		this.nivelDificultad = nivelDificultad;
 		this.objetivos = new ArrayList<String>();
-		this.duracion = duracion;
-		this.rating = rating;
+		this.duracion = 0;
+		this.rating = 0;
 		this.calificaciones = 0;
 		this.actividades = new ArrayList<Actividad>();
 		this.estudiantesInscritos = new ArrayList<Estudiante>();
@@ -90,7 +89,7 @@ public class LearningPath {
 	 * @param learningPath
 	 */
 	public static void addLearningPath(LearningPath learningPath) {
-		learningPaths.add(learningPath);
+		learningPathsDisponibles.add(learningPath);
 		learningPathsHash.put(learningPath.getID(), learningPath);
 	}
 
@@ -100,7 +99,7 @@ public class LearningPath {
 	 * @return una lista con todos los learning paths
 	 */
 	public static ArrayList<LearningPath> getLearningPaths() {
-		return learningPaths;
+		return learningPathsDisponibles;
 	}
 
 	/**
@@ -171,7 +170,7 @@ public class LearningPath {
 	 *
 	 * @param objetivos el objetivo a añadir
 	 */
-	public void aniadirObjetivos(String objetivos) {
+	public void addObjetivo(String objetivos) {
 		this.objetivos.add(objetivos);
 	}
 
@@ -180,7 +179,7 @@ public class LearningPath {
 	 *
 	 * @param objetivos el objetivo a eliminar
 	 */
-	public void eliminarObjetivos(String objetivos) {
+	public void delObjetivos(String objetivos) {
 		this.objetivos.remove(objetivos);
 	}
 
@@ -336,7 +335,7 @@ public class LearningPath {
 		for (Estudiante estudiante : estudiantes) {
 			estudiante.eliminarLearningPath(getID());
 		}
-		learningPaths.remove(this);
+		learningPathsDisponibles.remove(this);
 		learningPathsHash.remove(getID());
 	}
 }

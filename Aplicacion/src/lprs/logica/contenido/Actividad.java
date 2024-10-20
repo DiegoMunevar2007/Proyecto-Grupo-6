@@ -3,9 +3,12 @@ package lprs.logica.contenido;
 import java.util.ArrayList;
 import java.util.Date;
 
+import lprs.logica.learningPath.LearningPath;
+
 
 
 public abstract class Actividad {
+	protected static int actividadesCreadas=0;
     protected String numeroActividad;
     protected String titulo;
     protected String descripcion;
@@ -17,10 +20,12 @@ public abstract class Actividad {
     protected ArrayList<Resenia> resenias;
     protected ArrayList<Actividad> actividadesPrevias;
     protected ArrayList<Actividad> actividadesSeguimiento;
+    protected LearningPath learningPathAsignado;
 
-    public Actividad(String numeroActividad, String titulo, String descripcion, String objetivo, int duracionEsperada,
-            boolean obligatoria, Date fechaLimite) {
-        this.numeroActividad = numeroActividad;
+    public Actividad(String titulo, String descripcion, String objetivo, int duracionEsperada,
+            boolean obligatoria, Date fechaLimite, LearningPath lP) {
+    	actividadesCreadas++;
+        this.numeroActividad = Integer.toString(actividadesCreadas);
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.objetivo = objetivo;
@@ -31,6 +36,7 @@ public abstract class Actividad {
         this.resenias = new ArrayList<Resenia>();
         this.actividadesPrevias = new ArrayList<Actividad>();
         this.actividadesSeguimiento = new ArrayList<Actividad>();
+        this.learningPathAsignado= lP;
     }
 
     public Actividad(Actividad actividad) {
@@ -244,6 +250,7 @@ public abstract class Actividad {
      */
     public void addResenia(Resenia resenia) {
         resenias.add(resenia);
+        learningPathAsignado.cambiarRating(resenia.getRating());
     }
 
     /**

@@ -10,14 +10,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import lprs.logica.cuentas.Usuario;
-import lprs.principal.LPRS;
 
-public class PersistenciaUsuario {
+public class PersistenciaUsuario implements Persistencia {
 
-    private static String direccionArchivo = System.getProperty("user.dir") + "/datos";
+    
 
     public static void guardarUsuario() throws IOException {
-        Collection<Usuario> usuarios = LPRS.getUsuarios();
+        Collection<Usuario> usuarios = Usuario.getUsuarios();
         JSONObject jObject = new JSONObject();
         JSONArray jUsuarios = new JSONArray();
         for (Usuario usuario : usuarios) {
@@ -59,7 +58,7 @@ public class PersistenciaUsuario {
                 String contrasena = jUsuario.getString("contrasena");
                 int tipo = jUsuario.getInt("tipo");
                 try {
-                    LPRS.crearUsuario(usuario, contrasena, tipo);
+                    Usuario.crearUsuario(usuario, contrasena, tipo);
                 } catch (Exception e) {
                     System.out.println("Error creando usuario: " + e.getMessage());
                 }

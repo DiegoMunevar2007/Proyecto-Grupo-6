@@ -2,15 +2,17 @@ package lprs.logica.contenido;
 
 import java.util.Date;
 
+import lprs.logica.learningPath.LearningPath;
+
 
 
 public class Tarea extends Actividad {
     private static final String EXITOSO = "Exitoso";
     private static final String NOEXITOSO = "No exitoso";
 
-    public Tarea(String numeroActividad, String titulo, String descripcion, String objetivo,
-            int duracionEsperada, boolean obligatoria, Date fechaLimite, String estado) {
-        super(numeroActividad, titulo, descripcion, objetivo, duracionEsperada, obligatoria, fechaLimite);
+    public Tarea(String titulo, String descripcion, String objetivo, int duracionEsperada,
+            boolean obligatoria, Date fechaLimite, LearningPath lP, String estado) {
+        super(titulo, descripcion, objetivo, duracionEsperada, obligatoria, fechaLimite, lP);
         this.estado = estado;
     }
 

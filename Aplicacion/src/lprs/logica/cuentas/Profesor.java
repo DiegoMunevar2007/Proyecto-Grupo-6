@@ -33,8 +33,8 @@ public class Profesor extends Usuario {
      * @param rating          la calificación de la ruta de aprendizaje
      */
     public void crearLearningPath(String titulo, String descripcion, String nivelDificultad,
-            ArrayList<String> objetivos, int duracion, float rating) {
-        LearningPath lP = new LearningPath(titulo, descripcion, nivelDificultad, objetivos, duracion, rating, this);
+            ArrayList<String> objetivos) {
+        LearningPath lP = new LearningPath(titulo, descripcion, nivelDificultad, objetivos, this);
         LearningPath.addLearningPath(lP);
         ;
     }
