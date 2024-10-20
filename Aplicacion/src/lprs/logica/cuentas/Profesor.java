@@ -58,7 +58,11 @@ public class Profesor extends Usuario {
             System.out.println("No tienes permiso para modificar esta ruta de aprendizaje.");
             return;
         }
-        lP.editarLearningPath(titulo, descripcion, nivelDificultad, objetivos, this);
+        try {
+            lP.editarLearningPath(titulo, descripcion, nivelDificultad, objetivos, this);
+        } catch (Exception e) {
+            System.out.println("Clona el learning path y modifica la copia.");
+        }
     }
 
     /**

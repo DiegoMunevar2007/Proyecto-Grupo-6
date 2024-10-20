@@ -310,8 +310,8 @@ public class LearningPath {
 	 * Edita la ruta de aprendizaje.
 	 */
 	public void editarLearningPath(String titulo, String descripcion, String nivelDificultad,
-			ArrayList<String> objetivos, Profesor profesorCreador) {
-		if (profesorCreador == this.profesorCreador) {
+			ArrayList<String> objetivos, Profesor profesorCreador) throws Exception {
+	if (profesorCreador == this.profesorCreador) {
 			this.titulo = titulo;
 			this.descripcion = descripcion;
 			this.nivelDificultad = nivelDificultad;
@@ -320,10 +320,12 @@ public class LearningPath {
 			String versionActual = this.metadatos.getVersion();
 			int versionActualInt = Integer.parseInt(versionActual)+1;
 			this.metadatos.setVersion(Integer.toString(versionActualInt));
-		} else {
-			System.out.println("No tienes permiso para editar esta ruta de aprendizaje.");
-			// TODO: throw exception en lugar de imprimir mensaje
-		}
+		} else { 
+		throw new Exception("No tienes permiso para editar esta ruta de aprendizaje.");
+	}
+
+
+		
 	}
 
 	/**
