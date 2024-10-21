@@ -1,1 +1,23 @@
-{"LearningPaths":[]}
+{"LearningPaths": [
+  {
+    "descripcion": "Ola",
+    "nivelDificultad": "Principiante",
+    "objetivos": ["Diego"],
+    "titulo": "Ola",
+    "profesor": "Profe",
+    "ID": "0",
+    "estudiantesInscritos": []
+  },
+  {
+    "descripcion": "Dos",
+    "nivelDificultad": "Avanzado",
+    "objetivos": [
+      "Diego",
+      "Diego"
+    ],
+    "titulo": "Dos",
+    "profesor": "Profe",
+    "ID": "1",
+    "estudiantesInscritos": []
+  }
+]}

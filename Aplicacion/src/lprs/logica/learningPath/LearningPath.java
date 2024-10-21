@@ -9,7 +9,7 @@ import lprs.logica.cuentas.Estudiante;
 import lprs.logica.cuentas.Profesor;
 
 public class LearningPath {
-	private static int numeroLP;
+	private static int numeroLP = 0;
 	private String ID;
 	private String titulo;
 	private String descripcion;
@@ -221,9 +221,11 @@ public class LearningPath {
 	public String getID() {
 		return ID;
 	}
+
 	public void setID(String ID) {
-		this.ID=ID;
-		numeroLP=Integer.parseInt(ID);
+		this.ID = ID;
+		numeroLP = Integer.parseInt(ID);
+		numeroLP++;
 	}
 
 	/**

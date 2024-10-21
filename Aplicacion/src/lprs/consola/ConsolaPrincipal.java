@@ -33,9 +33,11 @@ public class ConsolaPrincipal {
 			if (usuarioEncontrado.getTipo() == "Estudiante") {
 				ConsolaEstudiante consolaEstudiante = new ConsolaEstudiante((Estudiante) usuarioEncontrado);
 				consolaEstudiante.mostrarConsolaEstudiante();
+				return;
 			} else {
 				ConsolaProfesor consolaProfesor = new ConsolaProfesor((Profesor) usuarioEncontrado);
 				consolaProfesor.mostrarConsolaProfesor();
+				return;
 			}
 
 		} else if (opcion == 2) {

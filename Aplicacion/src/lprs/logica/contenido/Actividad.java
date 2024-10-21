@@ -288,4 +288,25 @@ public abstract class Actividad {
     public void removeActividadSeguimiento(Actividad actividadSeguimiento) {
         actividadesSeguimiento.remove(actividadSeguimiento);
     }
+
+	public static int getActividadesCreadas() {
+		return actividadesCreadas;
+	}
+
+	public static void setActividadesCreadas(int actividadesCreadas) {
+		Actividad.actividadesCreadas = actividadesCreadas;
+	}
+
+	public LearningPath getLearningPathAsignado() {
+		return learningPathAsignado;
+	}
+
+	public void setLearningPathAsignado(LearningPath learningPathAsignado) {
+		this.learningPathAsignado = learningPathAsignado;
+	}
+
+	public void setNumeroActividad(String numeroActividad) {
+		this.numeroActividad = numeroActividad;
+	}
+    
 }
