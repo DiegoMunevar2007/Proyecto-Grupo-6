@@ -6,15 +6,17 @@ import java.util.Scanner;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.cuentas.Profesor;
 import lprs.logica.cuentas.Usuario;
-import lprs.persistencia.PersistenciaUsuario;
 import lprs.logica.learningPath.LearningPath;
+import lprs.principal.LPRS;
 
 public class ConsolaPrincipal {
 
 	Scanner lectura;
+	LPRS lprsActual;
 
-	public ConsolaPrincipal() {
+	public ConsolaPrincipal(LPRS lprs) {
 		lectura = new Scanner(System.in);
+		lprsActual = lprs;
 	}
 
 	public void mostrarConsolaPrincipal() throws Exception {
@@ -31,11 +33,11 @@ public class ConsolaPrincipal {
 				mostrarConsolaPrincipal();
 			}
 			if (usuarioEncontrado.getTipo() == "Estudiante") {
-				ConsolaEstudiante consolaEstudiante = new ConsolaEstudiante((Estudiante) usuarioEncontrado);
+				ConsolaEstudiante consolaEstudiante = new ConsolaEstudiante(lprsActual, (Estudiante) usuarioEncontrado);
 				consolaEstudiante.mostrarConsolaEstudiante();
 				return;
 			} else {
-				ConsolaProfesor consolaProfesor = new ConsolaProfesor((Profesor) usuarioEncontrado);
+				ConsolaProfesor consolaProfesor = new ConsolaProfesor(lprsActual, (Profesor) usuarioEncontrado);
 				consolaProfesor.mostrarConsolaProfesor();
 				return;
 			}
@@ -53,13 +55,13 @@ public class ConsolaPrincipal {
 			System.out.println("Estudiante: 1 , Profesor: 2 ");
 
 			int tipo = lectura.nextInt();
-			Usuario.crearUsuario(usuario, contrasena, tipo);
+			lprsActual.getManejadorSesion().crearUsuario(usuario, contrasena, tipo);
 
 			System.out.println("¡Usuario agregado con exito!");
 			mostrarConsolaPrincipal();
 
 		} else if (opcion == 3) {
-			PersistenciaUsuario.cargarUsuarios();
+			lprsActual.cargarDatos();
 			mostrarConsolaPrincipal();
 		}
 
@@ -85,12 +87,14 @@ public class ConsolaPrincipal {
 
 		System.out.println("Ingrese su contraseña: ");
 		String contrasena = lectura.next();
-		return Usuario.iniciarSesion(usuarioID, contrasena);
+		
+		return lprsActual.getManejadorSesion().iniciarSesion(usuarioID, contrasena);
 
 	}
 
 	public void mostrarLearningPathsDisponibles() {
-		List<LearningPath> learningPathsDisponibles = LearningPath.getLearningPaths();
+		
+		List<LearningPath> learningPathsDisponibles = lprsActual.getManejadorLP().getLearningPaths();
 		if (learningPathsDisponibles.isEmpty()) {
 			System.out.println("No hay Learning Paths disponibles.");
 			return;

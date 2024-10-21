@@ -7,23 +7,25 @@ import lprs.exceptions.UsuarioNotFoundException;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.cuentas.Profesor;
 import lprs.logica.cuentas.Usuario;
-import lprs.persistencia.PersistenciaUsuario;
+import lprs.principal.LPRS;
 
 public class ManejadorSesion {
 	protected static final String ESTUDIANTE = "Estudiante";
 	protected static final String PROFESOR = "Profesor";
-	private HashMap<String, Usuario> usuarios
+	private LPRS lprsActual;
+	private HashMap<String, Usuario> usuarios;
 	
-	public ManejadorSesion() {
-		usuarios =  = new HashMap<String, Usuario>();
+	public ManejadorSesion(LPRS lprsActual) {
+		this.lprsActual = lprsActual;
+		usuarios = new HashMap<String, Usuario>();
 	}
 	
 	
 	
-	public static void crearUsuario(String usuario, String contrasena, int tipo) throws Exception {
+	public void crearUsuario(String usuario, String contrasena, int tipo) throws Exception {
 		Usuario nuevoUsuario;
 		if (tipo == 1) {
-			nuevoUsuario = new Estudiante(usuario, contrasena);
+			nuevoUsuario = new Estudiante(usuario, contrasena, lprsActual);
 
 		} else if (tipo == 2) {
 			nuevoUsuario = new Profesor(usuario, contrasena);
@@ -31,10 +33,9 @@ public class ManejadorSesion {
 			throw new Exception("Este no es un tipo valido, vuelva a intentar");
 		}
 		agregarUsuario(nuevoUsuario);
-		PersistenciaUsuario.guardarUsuario();
 	}
 
-	public static Usuario obtenerUsuario(String ID) throws Exception {
+	public Usuario obtenerUsuario(String ID) throws Exception {
 		Usuario usuarioEncontrado = usuarios.get(ID);
 		if (usuarioEncontrado == null) {
 			throw new UsuarioNotFoundException("Usuario no encontrado", ID);
@@ -43,11 +44,12 @@ public class ManejadorSesion {
 		}
 	}
 
-	public static void agregarUsuario(Usuario usuario) {
-		usuarios.put(usuario.getUsuario(), usuario);
+	public void agregarUsuario(Usuario usuario) {
+		HashMap<String, Usuario> hashUsuarios = getUsuarios();
+		hashUsuarios.put(usuario.getUsuario(), usuario);
 	}
 
-	public static Usuario iniciarSesion(String ID, String contrasena) throws Exception {
+	public Usuario iniciarSesion(String ID, String contrasena) throws Exception {
 		Usuario usuario;
 		try {
 			usuario = obtenerUsuario(ID);
@@ -65,7 +67,22 @@ public class ManejadorSesion {
 		}
 	}
 
-	public static Collection<Usuario> getUsuarios() {
-		return usuarios.values();
+	public void setUsuarios(HashMap<String, Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+
+	public HashMap<String,Usuario> getUsuarios() {
+		return usuarios;
+	}
+	
+	public Collection<Usuario> getUsuariosLista(){
+		return getUsuarios().values();
+	}
+	public String getEstudianteFinal() {
+		return ESTUDIANTE;
+	}
+
+	public String getProfesorFinal() {
+		return PROFESOR;
 	}
 }

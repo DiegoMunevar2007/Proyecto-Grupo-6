@@ -10,8 +10,8 @@ import lprs.principal.LPRS;
 public class ConsolaProfesor extends ConsolaPrincipal {
     Profesor profesor;
 
-    public ConsolaProfesor(Profesor usuarioEncontrado) {
-        super();
+    public ConsolaProfesor(LPRS lprsActual, Profesor usuarioEncontrado) {
+        super(lprsActual);
         profesor = usuarioEncontrado;
     }
 
@@ -31,7 +31,7 @@ public class ConsolaProfesor extends ConsolaPrincipal {
         } else if (opcion == 4) {
             System.out.println("Hasta luego!");
             try {
-                LPRS.guardarDatos();
+                lprsActual.guardarDatos();
             } catch (Exception e) {
                 System.out.println("Error al guardar los datos");
             }

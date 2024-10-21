@@ -1,23 +1,17 @@
 package lprs.logica.cuentas;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-
-import lprs.exceptions.UsuarioNotFoundException;
-import lprs.logica.learningPath.LearningPath;
-import lprs.persistencia.PersistenciaUsuario;
+import lprs.principal.LPRS;
 
 public abstract class Usuario {
 	protected String usuario;
 	protected String contrasenia;
 	protected String tipo;
-
-
+	protected LPRS lprsActual;
 	
-
-	public List<LearningPath> learningPathsDisponibles() {
-		return LearningPath.getLearningPaths();
+	public Usuario(String usuario, String contrasenia, LPRS lprsActual) {
+		this.usuario = usuario;
+		this.contrasenia = contrasenia;
+		this.lprsActual=lprsActual;
 	}
 
 	public String getUsuario() {
@@ -32,12 +26,6 @@ public abstract class Usuario {
 		return tipo;
 	}
 
-	public static String getEstudiante() {
-		return ESTUDIANTE;
-	}
-
-	public static String getProfesor() {
-		return PROFESOR;
-	}
+	
 
 }

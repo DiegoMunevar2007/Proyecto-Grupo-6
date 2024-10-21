@@ -14,12 +14,19 @@ import lprs.logica.cuentas.Estudiante;
 import lprs.logica.cuentas.Profesor;
 import lprs.logica.cuentas.Usuario;
 import lprs.logica.learningPath.LearningPath;
+import lprs.manejador.ManejadorLP;
+import lprs.manejador.ManejadorSesion;
 
 public class PersistenciaLP implements Persistencia {
-
-	public static void guardarLP() throws IOException {
+	
+	public PersistenciaLP() {
+		
+	}
+	
+	
+	public void guardarLP(ManejadorSesion manejadorS, ManejadorLP manejadorLP) throws IOException {
 		// Se obtienen todos los learning paths creados en formato ArrayList
-		ArrayList<LearningPath> lPS = LearningPath.getLearningPaths();
+		ArrayList<LearningPath> lPS = manejadorLP.getLearningPaths();
 		// Se crea un objeto nuevo de json
 		JSONObject jObject = new JSONObject();
 		// Se crea un arreglo de objetos para almacenar los learning paths.
@@ -57,7 +64,7 @@ public class PersistenciaLP implements Persistencia {
 		writer.close();
 	}
 
-	public static void cargarLP() throws IOException {
+	public void cargarLP(ManejadorSesion manejadorS, ManejadorLP manejadorLP) throws IOException {
 		String contenido = "";
 		try 
 		{
@@ -98,14 +105,14 @@ public class PersistenciaLP implements Persistencia {
 					objetivos.add(jObjetivos.getString(j));
 				}
 				String profesor = jLearningPath.getString("profesor");
-				Profesor profesorCreador = (Profesor) Usuario.obtenerUsuario(profesor);
+				Profesor profesorCreador = (Profesor) manejadorS.obtenerUsuario(profesor);
 				String idLearningPath = profesorCreador.crearLearningPath(titulo, descripcion, nivelDificultad,objetivos);
-				LearningPath lP = LearningPath.getLearningPath(idLearningPath);
+				LearningPath lP = manejadorLP.getLearningPath(idLearningPath);
 				lP.setID(ID);
 				JSONArray jEstudiantesInscritos = jLearningPath.getJSONArray("estudiantesInscritos");
 				for (int j = 0; j < jEstudiantesInscritos.length(); j++) 
 				{
-					Estudiante estudiante = (Estudiante) Usuario.obtenerUsuario(jEstudiantesInscritos.getString(j));
+					Estudiante estudiante = (Estudiante) manejadorS.obtenerUsuario(jEstudiantesInscritos.getString(j));
 					estudiante.inscribirLearningPath(ID);
 				}
 				System.out.println("Learning Path: " + titulo); // Print para debug

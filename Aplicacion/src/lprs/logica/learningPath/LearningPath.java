@@ -21,9 +21,6 @@ public class LearningPath {
 	private ArrayList<Actividad> actividades;
 	private ArrayList<Estudiante> estudiantesInscritos;
 	private Profesor profesorCreador;
-	protected static HashMap<String, LearningPath> learningPathsHash = new HashMap<String, LearningPath>();
-	// Dejamos la lista tambien?
-	protected static ArrayList<LearningPath> learningPathsDisponibles = new ArrayList<LearningPath>();
 	private Metadato metadatos;
 
 	/**
@@ -74,34 +71,6 @@ public class LearningPath {
 		this.profesorCreador = profesorCreador;
 	}
 
-	/**
-	 * Obtener un learning path por su ID
-	 * 
-	 * @param ID el ID del learning path
-	 * @return el learning path con el ID dado
-	 */
-	public static LearningPath getLearningPath(String ID) {
-		return learningPathsHash.get(ID);
-	}
-
-	/**
-	 * Añadir un learning path
-	 * 
-	 * @param learningPath
-	 */
-	public static void addLearningPath(LearningPath learningPath) {
-		learningPathsDisponibles.add(learningPath);
-		learningPathsHash.put(learningPath.getID(), learningPath);
-	}
-
-	/**
-	 * Obtener todos los learning paths
-	 * 
-	 * @return una lista con todos los learning paths
-	 */
-	public static ArrayList<LearningPath> getLearningPaths() {
-		return learningPathsDisponibles;
-	}
 
 	/**
 	 * Obtiene el título de la ruta de aprendizaje.

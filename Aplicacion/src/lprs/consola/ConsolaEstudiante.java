@@ -4,12 +4,13 @@ import java.util.List;
 
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
+import lprs.principal.LPRS;
 
 public class ConsolaEstudiante extends ConsolaPrincipal {
     Estudiante estudiante;
 
-    public ConsolaEstudiante(Estudiante estudiante) {
-        super();
+    public ConsolaEstudiante(LPRS lprsActual, Estudiante estudiante) {
+        super(lprsActual);
         this.estudiante = estudiante;
     }
 
@@ -48,7 +49,7 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
     }
 
     public String escogerLearningPath() {
-        List<LearningPath> learningPathsDisponibles = LearningPath.getLearningPaths();
+        List<LearningPath> learningPathsDisponibles = lprsActual.getManejadorLP().learningPathsDisponibles();
         mostrarLearningPathsDisponibles();
         if (learningPathsDisponibles.isEmpty()) {
             mostrarConsolaEstudiante();

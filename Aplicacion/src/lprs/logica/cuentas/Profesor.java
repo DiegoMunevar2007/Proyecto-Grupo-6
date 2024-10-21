@@ -5,8 +5,10 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import lprs.logica.learningPath.LearningPath;
+import lprs.principal.LPRS;
 
 public class Profesor extends Usuario {
+	private final String PROFESOR = "Profesor";
     private HashMap<String, LearningPath> learningPathsCreados;
 
     /**
@@ -15,9 +17,8 @@ public class Profesor extends Usuario {
      * @param usuario     el nombre de usuario del profesor
      * @param contrasenia la contraseña del profesor
      */
-    public Profesor(String usuario, String contrasenia) {
-        this.usuario = usuario;
-        this.contrasenia = contrasenia;
+    public Profesor(String usuario, String contrasenia, LPRS lprsActual) {
+        super(usuario,contrasenia,lprsActual);
         this.tipo = PROFESOR;
         learningPathsCreados = new HashMap<String, LearningPath>();
     }

@@ -11,11 +11,15 @@ import org.json.JSONObject;
 
 import lprs.exceptions.ArchivoException;
 import lprs.logica.cuentas.Usuario;
+import lprs.manejador.ManejadorSesion;
 
 public class PersistenciaUsuario implements Persistencia {
 
-    public static void guardarUsuario() throws IOException {
-        Collection<Usuario> usuarios = Usuario.getUsuarios();
+	public PersistenciaUsuario() {
+		
+	}
+    public void guardarUsuario(ManejadorSesion manejadorS) throws IOException {
+        Collection<Usuario> usuarios = manejadorS.getUsuariosLista();
         JSONObject jObject = new JSONObject();
         JSONArray jUsuarios = new JSONArray();
         for (Usuario usuario : usuarios) {
@@ -35,7 +39,7 @@ public class PersistenciaUsuario implements Persistencia {
         writer.close();
     }
 
-    public static void cargarUsuarios() throws Exception {
+    public void cargarUsuarios(ManejadorSesion manejadorS) throws Exception {
         String contenido = "";
         try {
             if (!Files.exists(Paths.get(direccionArchivo + "/usuarios.json"))) {
@@ -60,7 +64,7 @@ public class PersistenciaUsuario implements Persistencia {
                 String contrasena = jUsuario.getString("contrasena");
                 int tipo = jUsuario.getInt("tipo");
                 try {
-                    Usuario.crearUsuario(usuario, contrasena, tipo);
+                    manejadorS.crearUsuario(usuario, contrasena, tipo);
                 } catch (Exception e) {
                     System.out.println("Error creando usuario: " + e.getMessage());
                 }
