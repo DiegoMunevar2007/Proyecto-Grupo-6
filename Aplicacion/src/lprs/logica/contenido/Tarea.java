@@ -1,9 +1,10 @@
 package lprs.logica.contenido;
-import lprs.logica.contenido.realizable.TareaRealizable;
-
 import java.util.ArrayList;
 import java.util.Date;
 
+import lprs.logica.contenido.realizable.ActividadRealizable;
+import lprs.logica.contenido.realizable.TareaRealizable;
+import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
 
 
@@ -22,6 +23,14 @@ public class Tarea extends Actividad {
 		return tarea;
 	} 
 	
+	public ArrayList<Seccion> getSecciones() {
+		return secciones;
+	}
+
+	public void setSecciones(ArrayList<Seccion> secciones) {
+		this.secciones = secciones;
+	}
+
 	public void addSeccion(Seccion nuevaSeccion) {
         secciones.add(nuevaSeccion);
     }
@@ -34,12 +43,8 @@ public class Tarea extends Actividad {
         super(actividad);
     }
 
-    public Actividad crearActividadRealizable(Actividad actividad) {
-        return new Tarea(actividad);
+    public ActividadRealizable crearActividadRealizable(Estudiante estudiante) {
+        return new TareaRealizable(this, estudiante);
     }
 
-	@Override
-	public void setEstado(String estado) {
-		
-	}
 }

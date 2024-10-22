@@ -28,7 +28,7 @@ public class ManejadorSesion {
 			nuevoUsuario = new Estudiante(usuario, contrasena, lprsActual);
 
 		} else if (tipo == 2) {
-			nuevoUsuario = new Profesor(usuario, contrasena);
+			nuevoUsuario = new Profesor(usuario, contrasena, lprsActual);
 		} else {
 			throw new Exception("Este no es un tipo valido, vuelva a intentar");
 		}

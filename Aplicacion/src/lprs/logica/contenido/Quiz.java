@@ -35,10 +35,5 @@ public class Quiz extends Actividad{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	@Override
-	public void setEstado(String estado) {
-		// TODO Auto-generated method stub
-		
-	}
 }
 	

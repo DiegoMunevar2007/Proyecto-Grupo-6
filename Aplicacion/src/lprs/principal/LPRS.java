@@ -12,7 +12,7 @@ public class LPRS {
 	
 	public LPRS() {
 		manejadorLP= new ManejadorLP();
-		manejadorSesion = new ManejadorSesion();
+		manejadorSesion = new ManejadorSesion(this);
 	}
 
 	public static void main(String[] args) {
