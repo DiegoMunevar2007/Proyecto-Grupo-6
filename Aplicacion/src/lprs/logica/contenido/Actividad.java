@@ -13,6 +13,7 @@ public abstract class Actividad {
     protected String titulo;
     protected String descripcion;
     protected String objetivo;
+    protected String nivelDificultad;
     protected int duracionEsperada;
     protected boolean obligatoria;
     protected Date fechaLimite;
@@ -23,7 +24,7 @@ public abstract class Actividad {
     protected LearningPath learningPathAsignado;
 
     public Actividad(String titulo, String descripcion, String objetivo, int duracionEsperada,
-            boolean obligatoria, Date fechaLimite, LearningPath lP) {
+            boolean obligatoria, Date fechaLimite, LearningPath lP, String dificultad) {
     	actividadesCreadas++;
         this.numeroActividad = Integer.toString(actividadesCreadas);
         this.titulo = titulo;
@@ -37,6 +38,7 @@ public abstract class Actividad {
         this.actividadesPrevias = new ArrayList<Actividad>();
         this.actividadesSeguimiento = new ArrayList<Actividad>();
         this.learningPathAsignado= lP;
+        this.nivelDificultad = dificultad;
     }
 
     public Actividad(Actividad actividad) {
@@ -71,6 +73,15 @@ public abstract class Actividad {
      */
     public String getTitulo() {
         return titulo;
+    }
+    
+    /**
+     * Obtiene el nivel de dificultad de la actividad.
+     *
+     * @return el nivel de dificultad de la actividad
+     */
+    public String getNivelDificultad() {
+        return nivelDificultad;
     }
 
     /**
@@ -161,6 +172,15 @@ public abstract class Actividad {
      */
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+    
+    /**
+     * Establece el nivel de dificultad de la actividad.
+     *
+     * @param dificultad el nuevo nivel de dificultad de la actividad
+     */
+    public void setNivelDificultad(String dificultad) {
+        this.nivelDificultad = dificultad;
     }
 
     /**

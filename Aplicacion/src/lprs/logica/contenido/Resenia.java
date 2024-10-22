@@ -5,10 +5,10 @@ import lprs.logica.cuentas.Usuario;
 public class Resenia {
     private String ID;
     private String contenido;
-    private float rating;
+    private double rating;
     private Usuario autor;
 
-    public Resenia(String ID, String contenido, float rating, Usuario autor) {
+    public Resenia(String ID, String contenido, double rating, Usuario autor) {
         this.ID = ID;
         this.contenido = contenido;
         this.rating = rating;
@@ -23,7 +23,7 @@ public class Resenia {
         return contenido;
     }
 
-    public float getRating() {
+    public double getRating() {
         return rating;
     }
 
@@ -35,7 +35,7 @@ public class Resenia {
         this.contenido = contenido;
     }
 
-    public void setRating(float rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 

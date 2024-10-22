@@ -16,7 +16,7 @@ public class LearningPath {
 	private String nivelDificultad;
 	private ArrayList<String> objetivos;
 	private int duracion;
-	private float rating;
+	private double rating;
 	private int calificaciones;
 	private ArrayList<Actividad> actividades;
 	private ArrayList<Estudiante> estudiantesInscritos;
@@ -167,19 +167,19 @@ public class LearningPath {
 	 *
 	 * @return la calificación de la ruta de aprendizaje
 	 */
-	public float getRating() {
+	public double getRating() {
 		return rating;
 	}
 
 	/**
 	 * Cambia la calificación de la ruta de aprendizaje.
 	 *
-	 * @param rating la nueva calificación de la ruta de aprendizaje
+	 * @param d la nueva calificación de la ruta de aprendizaje
 	 */
-	public void cambiarRating(float rating) {
+	public void cambiarRating(double d) {
 		calificaciones++;
-		rating = (this.rating * calificaciones + rating) / calificaciones;
-		this.rating = rating;
+		d = (this.rating * calificaciones + d) / calificaciones;
+		this.rating = d;
 	}
 
 	/**
