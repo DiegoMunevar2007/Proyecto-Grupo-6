@@ -17,18 +17,18 @@ public class Avance {
 	private double tasaFracaso;
 	private LearningPath learningPathCorrespondiente;
 	private List<ActividadRealizable> actividadesRealizadas;
-	private HashMap<String,Actividad> actividadesObligatorias;
-	
+	private HashMap<String, Actividad> actividadesObligatorias;
+
 	public Avance(Date fechaInicio, LearningPath learningPathCorrespondiente) {
-		this.actividadesCompletadas=0.0;
+		this.actividadesCompletadas = 0.0;
 		this.fechaInicio = fechaInicio;
-		this.fechaFin= null;
-		this.tiempoDedicado=0.0;
-		this.tasaExito=0.0;
-		this.tasaFracaso=0.0;
+		this.fechaFin = null;
+		this.tiempoDedicado = 0.0;
+		this.tasaExito = 0.0;
+		this.tasaFracaso = 0.0;
 		this.learningPathCorrespondiente = learningPathCorrespondiente;
 		this.actividadesRealizadas = new ArrayList<ActividadRealizable>();
-		this.setActividadesObligatorias(new HashMap<String,Actividad>());
+		this.setActividadesObligatorias(new HashMap<String, Actividad>());
 	}
 
 	public double getActividadesCompletadas() {
@@ -95,16 +95,25 @@ public class Avance {
 		this.actividadesRealizadas = actividadesRealizadas;
 	}
 
-	public HashMap<String,Actividad> getActividadesObligatorias() {
+	public HashMap<String, Actividad> getActividadesObligatorias() {
 		return actividadesObligatorias;
 	}
 
-	public void setActividadesObligatorias(HashMap<String,Actividad> actividadesObligatorias) {
+	public void setActividadesObligatorias(HashMap<String, Actividad> actividadesObligatorias) {
 		this.actividadesObligatorias = actividadesObligatorias;
 	}
+
 	public Actividad obtenerActividadObligatoria(String numeroActividad) {
 		return this.actividadesObligatorias.get(numeroActividad);
 	}
-	
-	
+
+	public void addActividadRealizada(ActividadRealizable actividadRealizada) {
+		this.actividadesRealizadas.add(actividadRealizada);
+		Actividad actividadBase = actividadRealizada.getActividadBase();
+		if (actividadBase.isObligatoria()) {
+			actividadesObligatorias.put(actividadBase.getNumeroActividad(), actividadBase);
+		}
+		this.actividadesCompletadas++;
+	}
+
 }

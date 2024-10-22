@@ -2,7 +2,10 @@
   {
     "descripcion": "Ola",
     "nivelDificultad": "Principiante",
-    "objetivos": ["Diego"],
+    "objetivos": [
+      "Diego",
+      "Manu"
+    ],
     "titulo": "Ola",
     "profesor": "Profe",
     "ID": "0",

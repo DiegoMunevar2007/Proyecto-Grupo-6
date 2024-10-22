@@ -48,4 +48,7 @@ public class ManejadorLP {
 	public List<LearningPath> learningPathsDisponibles() {
 		return getLearningPaths();
 	}
+	public HashMap<String,LearningPath>learningPathsHashMap(){
+		return learningPathsHash;
+	}
 }

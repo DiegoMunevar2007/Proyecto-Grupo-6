@@ -36,8 +36,8 @@ public class Profesor extends Usuario {
      */
     public String crearLearningPath(String titulo, String descripcion, String nivelDificultad,
             ArrayList<String> objetivos) {
-        LearningPath lP = new LearningPath(titulo, descripcion, nivelDificultad, objetivos, this);
-        LearningPath.addLearningPath(lP);
+        LearningPath lP = new LearningPath(titulo, descripcion, nivelDificultad, objetivos, this, lprsActual);
+        lprsActual.getManejadorLP().addLearningPath(lP);
         learningPathsCreados.put(lP.getID(), lP);
         return lP.getID();
     }
@@ -55,8 +55,8 @@ public class Profesor extends Usuario {
      */
     public void modificarLearningPath(String ID, String titulo, String descripcion, String nivelDificultad,
             ArrayList<String> objetivos) {
-
-        LearningPath lP = LearningPath.getLearningPath(ID);
+    	
+        LearningPath lP = lprsActual.getManejadorLP().getLearningPath(ID);
         if (lP.getProfesorCreador() != this) {
             System.out.println("No tienes permiso para modificar esta ruta de aprendizaje.");
             return;
@@ -74,7 +74,8 @@ public class Profesor extends Usuario {
      * @param ID el ID de la ruta de aprendizaje a eliminar
      */
     public void eliminarLearningPath(String ID) {
-        LearningPath lP = LearningPath.getLearningPath(ID);
+    	
+    	 LearningPath lP = lprsActual.getManejadorLP().getLearningPath(ID);
         if (lP.getProfesorCreador() != this) {
             System.out.println("No tienes permiso para eliminar esta ruta de aprendizaje.");
             return;
@@ -93,9 +94,9 @@ public class Profesor extends Usuario {
      * @param ID el ID de la ruta de aprendizaje a clonar
      */
     public void clonarLearningPath(String ID) {
-        LearningPath lP = LearningPath.getLearningPath(ID);
+    	LearningPath lP = lprsActual.getManejadorLP().getLearningPath(ID);
         LearningPath lPClon = new LearningPath(lP, this);
-        LearningPath.addLearningPath(lPClon);
+        lprsActual.getManejadorLP().addLearningPath(lPClon);
         learningPathsCreados.put(lPClon.getID(), lPClon);
     }
 

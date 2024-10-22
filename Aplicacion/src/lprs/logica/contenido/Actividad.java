@@ -3,6 +3,8 @@ package lprs.logica.contenido;
 import java.util.ArrayList;
 import java.util.Date;
 
+import lprs.logica.contenido.realizable.ActividadRealizable;
+import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
 
 
@@ -55,7 +57,7 @@ public abstract class Actividad {
         this.actividadesSeguimiento = actividad.getActividadesSeguimiento();
     }
 
-    public abstract Actividad crearActividadRealizable(Actividad actividad);
+    public abstract ActividadRealizable crearActividadRealizable(Estudiante estudiante	);
 
     /**
      * Obtiene el número de la actividad.
@@ -234,7 +236,9 @@ public abstract class Actividad {
      *
      * @param estado el nuevo estado de la actividad
      */
-    public abstract void setEstado(String estado);
+    public void setEstado(String estado) {
+    	this.estado = estado;
+    }
 
     /**
      * Establece las reseñas de la actividad.

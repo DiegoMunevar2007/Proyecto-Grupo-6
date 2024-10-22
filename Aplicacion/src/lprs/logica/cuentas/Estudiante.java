@@ -25,10 +25,10 @@ public class Estudiante extends Usuario {
 	 * @param contrasenia la contraseña del estudiante
 	 */
 	public Estudiante(String usuario, String contrasenia, LPRS lprsActual) {
-		super(usuario,contrasenia, lprsActual);
+		super(usuario, contrasenia, lprsActual);
 		this.tipo = ESTUDIANTE;
 		learningPathsInscritos = new ArrayList<LearningPath>();
-		avancesEstudiante = new HashMap<String,Avance>();
+		avancesEstudiante = new HashMap<String, Avance>();
 	}
 
 	/**
@@ -59,6 +59,14 @@ public class Estudiante extends Usuario {
 
 	public List<LearningPath> getLearningPathsInscritos() {
 		return learningPathsInscritos;
+	}
+
+	public HashMap<String, Avance> getAvancesEstudiante() {
+		return avancesEstudiante;
+	}
+
+	public Avance getAvance(String ID) {
+		return avancesEstudiante.get(ID);
 	}
 
 }

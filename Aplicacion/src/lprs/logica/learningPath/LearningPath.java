@@ -2,11 +2,11 @@ package lprs.logica.learningPath;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 import lprs.logica.contenido.Actividad;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.cuentas.Profesor;
+import lprs.principal.LPRS;
 
 public class LearningPath {
 	private static int numeroLP = 0;
@@ -22,6 +22,7 @@ public class LearningPath {
 	private ArrayList<Estudiante> estudiantesInscritos;
 	private Profesor profesorCreador;
 	private Metadato metadatos;
+	private LPRS lprsActual;
 
 	/**
 	 * Constructor para crear un objeto LearningPath.
@@ -35,7 +36,7 @@ public class LearningPath {
 	 * @param profesorCreador el profesor que crea la ruta de aprendizaje
 	 */
 	public LearningPath(String titulo, String descripcion, String nivelDificultad, ArrayList<String> objetivos,
-			Profesor profesorCreador) {
+			Profesor profesorCreador, LPRS lprsActual) {
 		this.ID = asignarID();
 		this.titulo = titulo;
 		this.descripcion = descripcion;
@@ -311,7 +312,8 @@ public class LearningPath {
 		for (Estudiante estudiante : estudiantes) {
 			estudiante.eliminarLearningPath(getID());
 		}
-		learningPathsDisponibles.remove(this);
-		learningPathsHash.remove(getID());
+		
+		lprsActual.getManejadorLP().getLearningPaths().remove(this);
+		lprsActual.getManejadorLP().learningPathsHashMap().remove(this);
 	}
 }

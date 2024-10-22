@@ -161,23 +161,25 @@ public class ConsolaProfesor extends ConsolaPrincipal {
         }
         System.out.println("¿Desea modificar los objetivos? (s/n)");
         respuesta = lectura.next();
-        lectura.nextLine();
         if (respuesta.equalsIgnoreCase("s")) {
+            lectura.nextLine(); 
             ArrayList<String> objetivos = new ArrayList<>();
             boolean terminado = false;
             while (!terminado) {
                 System.out.println("Ingrese un objetivo: ");
-                String objetivo = lectura.nextLine();
+                String objetivo = lectura.nextLine(); 
                 objetivos.add(objetivo);
 
                 System.out.println("¿Desea agregar otro objetivo? (s/n): ");
-                respuesta = lectura.next();
+                respuesta = lectura.next(); 
+                lectura.nextLine(); 
                 if (respuesta.equalsIgnoreCase("n")) {
                     terminado = true;
                 }
             }
             lp.setObjetivos(objetivos);
         }
+
         System.out.println("Learning Path modificado con éxito.");
         mostrarLearningPathsHechos();
     }
