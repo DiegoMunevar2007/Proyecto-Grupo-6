@@ -5,7 +5,9 @@ import java.util.Scanner;
 
 import lprs.exceptions.ActividadPreviaException;
 import lprs.exceptions.EstadoException;
+import lprs.exceptions.EstadoException;
 import lprs.logica.contenido.Actividad;
+import lprs.logica.contenido.Seccion;
 import lprs.logica.contenido.Seccion;
 import lprs.logica.contenido.Tarea;
 import lprs.logica.cuentas.Estudiante;
@@ -15,11 +17,14 @@ import lprs.logica.learningPath.LearningPath;
 public class TareaRealizable extends ActividadRealizable {
 	private Tarea actividadBase;
 	private int seccionActual;
+	private Tarea actividadBase;
+	private int seccionActual;
 
 	public TareaRealizable(Tarea actividadBase, Estudiante estudiante) {
 		super(estudiante);
 		this.actividadBase = actividadBase;
 		this.estado = "No Exitoso";
+		seccionActual = 0;
 		seccionActual = 0;
 	}
 
@@ -44,6 +49,7 @@ public class TareaRealizable extends ActividadRealizable {
 		System.out.println("Realizando tarea...");
 		System.out.println("Titulo: " + actividadBase.getTitulo());
 		System.out.println("Descripcion: " + actividadBase.getDescripcion());
+		System.out.println("Duracion esperada: " + actividadBase.getDuracionEsperada());
 		System.out.println("Duracion esperada: " + actividadBase.getDuracionEsperada());
 		// TODO: Implementar la realizacion de la tarea teniendo en cuenta si existen
 		// secciones
@@ -91,6 +97,30 @@ public class TareaRealizable extends ActividadRealizable {
 				}
 				i++;
 				seccionActual = i;
+			}
+			System.out.println("¿Ha enviado la tarea? (S/N)");
+			String respuesta = lectura.nextLine();
+			if (respuesta.equalsIgnoreCase("S")) {
+				enviarActividad();
+			}
+			lectura.close();
+		}
+	}
+
+	public boolean verificarEligibilidad() throws Exception {
+		// Verificar si todas las actividades previas estan completas
+		LearningPath lP = actividadBase.getLearningPathAsignado();
+		Avance avanceEstudiante = estudiante.obtenerAvance(lP.getTitulo());
+		boolean todasActividadesPreviasCompletas = true;
+		// Se crea una lista de actividades no completadas para mostrar al usuario
+		ArrayList<Actividad> actividadesNoCompletadas = new ArrayList<Actividad>();
+		// Por cada actividad previa, se verifica si esta en el avance del estudiante
+		for (Actividad actividadPrevia : actividadBase.getActividadesPrevias()) {
+			// Si no esta en el avance del estudiante, se agrega a la lista de actividades
+			// no completadas
+			if (avanceEstudiante.obtenerActividadObligatoria(actividadPrevia.getNumeroActividad()) == null) {
+				todasActividadesPreviasCompletas = false;
+				actividadesNoCompletadas.add(actividadPrevia);
 			}
 			System.out.println("¿Ha enviado la tarea? (S/N)");
 			String respuesta = lectura.nextLine();
@@ -155,6 +185,20 @@ public class TareaRealizable extends ActividadRealizable {
 		}
 		lectura.close();
 
+	}
+
+	@Override
+	public void setEstado(String estado) throws EstadoException {
+		// TODO Auto-generated method stub
+
+	}
+
+	public Actividad getActividadBase() {
+		return actividadBase;
+	}
+
+	public void setActividadBase(Tarea actividadBase) {
+		this.actividadBase = actividadBase;
 	}
 
 }
