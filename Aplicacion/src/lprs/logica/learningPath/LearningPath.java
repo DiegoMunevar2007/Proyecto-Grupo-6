@@ -313,7 +313,7 @@ public class LearningPath {
 		}
 
 		lprsActual.getManejadorLP().getLearningPaths().remove(this);
-		lprsActual.getManejadorLP().learningPathsHashMap().remove(this);
+		lprsActual.getManejadorLP().learningPathsHashMap().remove(this.getID());
 	}
 
 	public void setLPRS(LPRS lprs) {

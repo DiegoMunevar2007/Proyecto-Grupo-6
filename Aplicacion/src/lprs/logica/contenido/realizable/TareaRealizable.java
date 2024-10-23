@@ -5,9 +5,7 @@ import java.util.Scanner;
 
 import lprs.exceptions.ActividadPreviaException;
 import lprs.exceptions.EstadoException;
-import lprs.exceptions.EstadoException;
 import lprs.logica.contenido.Actividad;
-import lprs.logica.contenido.Seccion;
 import lprs.logica.contenido.Seccion;
 import lprs.logica.contenido.Tarea;
 import lprs.logica.cuentas.Estudiante;
@@ -15,8 +13,6 @@ import lprs.logica.learningPath.Avance;
 import lprs.logica.learningPath.LearningPath;
 
 public class TareaRealizable extends ActividadRealizable {
-	private Tarea actividadBase;
-	private int seccionActual;
 	private Tarea actividadBase;
 	private int seccionActual;
 
@@ -108,6 +104,7 @@ public class TareaRealizable extends ActividadRealizable {
 	}
 
 	public boolean verificarEligibilidad() throws Exception {
+		Scanner lectura = new Scanner(System.in);
 		// Verificar si todas las actividades previas estan completas
 		LearningPath lP = actividadBase.getLearningPathAsignado();
 		Avance avanceEstudiante = estudiante.obtenerAvance(lP.getTitulo());
@@ -122,13 +119,14 @@ public class TareaRealizable extends ActividadRealizable {
 				todasActividadesPreviasCompletas = false;
 				actividadesNoCompletadas.add(actividadPrevia);
 			}
-			System.out.println("¿Ha enviado la tarea? (S/N)");
-			String respuesta = lectura.nextLine();
-			if (respuesta.equalsIgnoreCase("S")) {
-				enviarActividad();
-			}
-			lectura.close();
 		}
+		if (!todasActividadesPreviasCompletas) {
+			lectura.close();
+			throw new ActividadPreviaException(actividadesNoCompletadas);
+
+		}
+		lectura.close();
+		return todasActividadesPreviasCompletas;
 	}
 
 	@Override
@@ -185,20 +183,6 @@ public class TareaRealizable extends ActividadRealizable {
 		}
 		lectura.close();
 
-	}
-
-	@Override
-	public void setEstado(String estado) throws EstadoException {
-		// TODO Auto-generated method stub
-
-	}
-
-	public Actividad getActividadBase() {
-		return actividadBase;
-	}
-
-	public void setActividadBase(Tarea actividadBase) {
-		this.actividadBase = actividadBase;
 	}
 
 }
