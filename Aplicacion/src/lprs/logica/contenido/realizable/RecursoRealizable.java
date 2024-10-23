@@ -82,7 +82,7 @@ public class RecursoRealizable extends ActividadRealizable {
 			if (estado.equals("No completado") || estado.equals("Completado")) {
 				this.estado = estado;
 			} else {
-				throw new EstadoException(this, estado);
+				throw new EstadoException(this.getActividadBase(), estado);
 			}
 		} catch (EstadoException e) {
 			e.printStackTrace();

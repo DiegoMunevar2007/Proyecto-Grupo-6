@@ -1,11 +1,11 @@
 package lprs.exceptions;
 
-import lprs.logica.contenido.realizable.ActividadRealizable;
+import lprs.logica.contenido.Actividad;
 
 public class EstadoException extends Exception {
 
-	public EstadoException(ActividadRealizable actividad, String estado) {
-		super("El estado "+ estado + "no es valido para la actividad" + actividad.getActividadBase().getTitulo());
+	public EstadoException(Actividad actividad, String estado) {
+		super("El estado "+ estado + "no es valido para la actividad" + actividad.getTitulo());
 	}
 	
 }

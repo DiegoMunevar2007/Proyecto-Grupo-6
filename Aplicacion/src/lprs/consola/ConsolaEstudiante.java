@@ -3,9 +3,9 @@ package lprs.consola;
 import java.util.List;
 
 import lprs.logica.cuentas.Estudiante;
+import lprs.logica.learningPath.Avance;
 import lprs.logica.learningPath.LearningPath;
 import lprs.persistencia.CentralPersistencia;
-import lprs.persistencia.PersistenciaLP;
 import lprs.principal.LPRS;
 
 public class ConsolaEstudiante extends ConsolaPrincipal {
@@ -18,7 +18,7 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
 
     public void mostrarConsolaEstudiante() {
         System.out.println("Bienvenido " + estudiante.getUsuario());
-        String[] opciones = { "Ver mis Leaning Paths", "Inscribir un learning Path",
+        String[] opciones = { "Ver mis Leaning Paths", "Inscribir un learning Path", "Ver mi avance",
                 "Salir" };
 
         mostrarOpciones(3, opciones);
@@ -32,28 +32,57 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
             estudiante.inscribirLearningPath(id);
             mostrarConsolaEstudiante();
         } else if (opcion == 3) {
-            System.out.println("Hasta luego!");
+            
+        } else if (opcion==4) {
+        	System.out.println("Hasta luego!");
             CentralPersistencia cp = new CentralPersistencia(lprsActual);
             cp.guardarDatos();
             return;
-        } else {
+        }
+        
+        else {
             System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
             mostrarConsolaEstudiante();
         }
     }
 
-    public void mostrarLearningPaths() {
-        List<LearningPath> learningPathsEstudiante = estudiante.getLearningPathsInscritos();
-        if (learningPathsEstudiante.isEmpty()) {
-            System.out.println("No tienes Learning Paths inscritos.");
+    public String mostrarLearningPaths() {
+    	List<LearningPath> learningPathsDisponibles = estudiante.getLearningPathsInscritos();
+        if (learningPathsDisponibles.isEmpty()) {
+        	System.out.println("No tienes learning paths inscritos");
             mostrarConsolaEstudiante();
-            return;
+            return null;
         }
-        for (LearningPath lP : learningPathsEstudiante) {
-            System.out.println(lP.getTitulo());
+        else {
+        	for (int i =1; i<learningPathsDisponibles.size(); i++) {
+        		System.out.println(Integer.toString(i)+". "+ learningPathsDisponibles.get(i).getTitulo());
+        	}
         }
+        System.out.println("Seleccione un Learning Path: ");
+        int opcion = lectura.nextInt();
+        if (opcion < 1 || opcion > learningPathsDisponibles.size()) {
+            System.out.println("Opción no válida. Por favor, seleccione un Learning Path de la lista.");
+            mostrarLearningPaths();
+        }
+        LearningPath lP = learningPathsDisponibles.get(opcion - 1);
+        System.out.println("Esta es la informacion del Learning Path seleccionado: ");
+        System.out.println("Titulo: " + lP.getTitulo());
+        System.out.println("Descripcion: " + learningPathsDisponibles.get(opcion - 1).getDescripcion());
+        System.out.println("Nivel de dificultad: " + lP.getNivelDificultad());
+        System.out.println("Objetivos: ");
+        for (String objetivo : lP.getObjetivos()) {
+            System.out.println(objetivo);
+        }
+        System.out.println("Duracion: " + lP.getDuracion());
+        System.out.println("Rating: " + lP.getRating());
+        return lP.getID();
     }
 
+    public void escogerAvance() {
+    String id =mostrarLearningPaths();
+    Avance avance =estudiante.getAvance(id);
+    System.out.println(avance.getTasaExito());
+    }
     public String escogerLearningPath() {
         List<LearningPath> learningPathsDisponibles = lprsActual.getManejadorLP().learningPathsDisponibles();
         mostrarLearningPathsDisponibles();

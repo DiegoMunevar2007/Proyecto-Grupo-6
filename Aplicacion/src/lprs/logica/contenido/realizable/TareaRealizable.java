@@ -142,7 +142,7 @@ public class TareaRealizable extends ActividadRealizable {
 		if (estado.equals("No Exitoso") || estado.equals("Exitoso")) {
 			this.estado = estado;
 		} else {
-			throw new EstadoException(this, estado);
+			throw new EstadoException(this.getActividadBase(), estado);
 		}
 
 	}

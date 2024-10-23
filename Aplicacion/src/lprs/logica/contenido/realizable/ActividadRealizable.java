@@ -13,6 +13,7 @@ public abstract class ActividadRealizable {
 	protected String comentarios;
 	protected String estado;
 	protected Estudiante estudiante;
+	protected Actividad actividadBase;
 
 	public ActividadRealizable(Estudiante estudiante) {
 		this.comentarios = "";

@@ -100,7 +100,7 @@ public class ExamenRealizable extends ActividadRealizable {
         if (estado.equals("Enviado") || estado.equals("No exitoso") || estado.equals("Exitoso")) {
             this.estado = estado;
         } else {
-            throw new EstadoException(this, estado);
+            throw new EstadoException(this.getActividadBase(), estado);
         }
     }
 
