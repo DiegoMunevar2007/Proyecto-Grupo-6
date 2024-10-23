@@ -13,10 +13,12 @@ public class ConsolaPrincipal {
 
 	Scanner lectura;
 	LPRS lprsActual;
+	Usuario usuarioActual;
 
 	public ConsolaPrincipal(LPRS lprs) {
 		lectura = new Scanner(System.in);
 		lprsActual = lprs;
+		usuarioActual = null;
 	}
 
 	public void mostrarConsolaPrincipal() throws Exception {
@@ -31,6 +33,8 @@ public class ConsolaPrincipal {
 			Usuario usuarioEncontrado = iniciarSesion();
 			if (usuarioEncontrado == null) {
 				mostrarConsolaPrincipal();
+			} else {
+				usuarioActual = usuarioEncontrado;
 			}
 			if (usuarioEncontrado.getTipo() == "Estudiante") {
 				ConsolaEstudiante consolaEstudiante = new ConsolaEstudiante(lprsActual, (Estudiante) usuarioEncontrado);
@@ -87,13 +91,13 @@ public class ConsolaPrincipal {
 
 		System.out.println("Ingrese su contraseña: ");
 		String contrasena = lectura.next();
-		
+
 		return lprsActual.getManejadorSesion().iniciarSesion(usuarioID, contrasena);
 
 	}
 
 	public void mostrarLearningPathsDisponibles() {
-		
+
 		List<LearningPath> learningPathsDisponibles = lprsActual.getManejadorLP().getLearningPaths();
 		if (learningPathsDisponibles.isEmpty()) {
 			System.out.println("No hay Learning Paths disponibles.");

@@ -4,6 +4,8 @@ import java.util.List;
 
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
+import lprs.persistencia.CentralPersistencia;
+import lprs.persistencia.PersistenciaLP;
 import lprs.principal.LPRS;
 
 public class ConsolaEstudiante extends ConsolaPrincipal {
@@ -23,12 +25,16 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
         int opcion = lectura.nextInt();
 
         if (opcion == 1) {
-            escogerLearningPath();
+            mostrarLearningPaths();
+            mostrarConsolaEstudiante();
         } else if (opcion == 2) {
-            mostrarLearningPathsDisponibles();
-            estudiante.inscribirLearningPath(null);
+            String id = escogerLearningPath();
+            estudiante.inscribirLearningPath(id);
+            mostrarConsolaEstudiante();
         } else if (opcion == 3) {
             System.out.println("Hasta luego!");
+            CentralPersistencia cp = new CentralPersistencia(lprsActual);
+            cp.guardarDatos();
             return;
         } else {
             System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");

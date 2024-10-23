@@ -2,6 +2,9 @@ package lprs.logica.contenido;
 
 import java.util.Date;
 
+import lprs.logica.contenido.realizable.ActividadRealizable;
+import lprs.logica.contenido.realizable.RecursoRealizable;
+import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
 
 public class RecursoEducativo extends Actividad{
@@ -31,15 +34,16 @@ public class RecursoEducativo extends Actividad{
 		this.tipoRecurso = recurso;
 	}
 	
-	@Override
-	public Actividad crearActividadRealizable(Actividad actividad) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
 	public void setEstado(String estado) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public ActividadRealizable crearActividadRealizable(Estudiante estudiante) {
+		// TODO Auto-generated method stub
+		RecursoRealizable recursoR = new RecursoRealizable(this,estudiante);
+		return recursoR;
 	}
 
 }

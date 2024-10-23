@@ -1,20 +1,31 @@
 package lprs.logica.contenido.pregunta;
 
-public class PreguntaCerrada extends Pregunta{
+public class PreguntaCerrada extends Pregunta {
 
-    private boolean correcta;
+    private Opcion correcta;
 
-    public PreguntaCerrada(String enunciado, boolean correcta) {
+    private Opcion opciones[];
+
+    public PreguntaCerrada(String enunciado, Opcion correcta, Opcion opciones[]) {
         super(enunciado);
         this.correcta = correcta;
+        this.opciones = opciones;
     }
 
-    public boolean isCorrecta() {
+    public Opcion getCorrecta() {
         return correcta;
     }
 
-    public void setCorrecta(boolean correcta) {
+    public void setCorrecta(Opcion correcta) {
         this.correcta = correcta;
     }
+
+	public Opcion[] getOpciones() {
+		return opciones;
+	}
+
+	public void setOpciones(Opcion[] opciones) {
+		this.opciones = opciones;
+	}
 
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import lprs.logica.contenido.pregunta.PreguntaAbierta;
+import lprs.logica.contenido.realizable.ActividadRealizable;
+import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
 
 public class Examen extends Actividad{
@@ -30,16 +32,14 @@ public class Examen extends Actividad{
 	public void removePreguntaExamen(PreguntaAbierta pregunta) {
 		preguntasExamen.remove(pregunta);
     }
-	
+
 	@Override
-	public Actividad crearActividadRealizable(Actividad actividad) {
+	public ActividadRealizable crearActividadRealizable(Estudiante estudiante) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	
-	@Override
-	public void setEstado(String estado) {
-		
-	}
+	
 
 }
 	

@@ -51,8 +51,9 @@ public class TareaRealizable extends ActividadRealizable {
 			System.out.println("Secciones:");
 			ArrayList<Seccion> secciones = actividadBase.getSecciones();
 			int i = 0;
-			while (i < actividadBase.getSecciones().size()) {
-				Seccion seccion = actividadBase.getSecciones().get(i);
+			i = seccionActual;
+			while (i < secciones.size()) {
+				Seccion seccion = secciones.get(i);
 				System.out.println("Seccion #" + seccion.getNumero());
 				System.out.println("Titulo: " + seccion.getTitulo());
 				System.out.println("Descripcion: " + seccion.getDescripcion());
@@ -78,7 +79,7 @@ public class TareaRealizable extends ActividadRealizable {
 						System.out.println("Resultado correcto");
 					} else {
 						System.out.println("Resultado incorrecto");
-						System.out.println("El resultado esperado es: "+ seccion.getResultadoEsperado());
+						System.out.println("El resultado esperado es: " + seccion.getResultadoEsperado());
 					}
 				}
 				System.out.println("Desea continuar con la siguiente seccion? (S/N)");
@@ -100,35 +101,6 @@ public class TareaRealizable extends ActividadRealizable {
 		}
 	}
 
-	public boolean verificarEligibilidad() throws Exception {
-		// Verificar si todas las actividades previas estan completas
-		LearningPath lP = actividadBase.getLearningPathAsignado();
-		Avance avanceEstudiante = estudiante.obtenerAvance(lP.getTitulo());
-		boolean todasActividadesPreviasCompletas = true;
-		// Se crea una lista de actividades no completadas para mostrar al usuario
-		ArrayList<Actividad> actividadesNoCompletadas = new ArrayList<Actividad>();
-		// Por cada actividad previa, se verifica si esta en el avance del estudiante
-		for (Actividad actividadPrevia : actividadBase.getActividadesPrevias()) {
-			// Si no esta en el avance del estudiante, se agrega a la lista de actividades
-			// no completadas
-			if (avanceEstudiante.obtenerActividadObligatoria(actividadPrevia.getNumeroActividad()) == null) {
-				todasActividadesPreviasCompletas = false;
-				actividadesNoCompletadas.add(actividadPrevia);
-			}
-		}
-		// Si no se completaron todas las actividades previas, se lanza una excepcion
-		if (!todasActividadesPreviasCompletas) {
-			throw new ActividadPreviaException(actividadesNoCompletadas);
-		}
-		return todasActividadesPreviasCompletas;
-	}
-
-	@Override
-	public void guardarActividad() {
-		// TODO Auto-generated method stub
-
-	}
-
 	@Override
 	public void enviarActividad() {
 		// TODO Auto-generated method stub
@@ -139,9 +111,14 @@ public class TareaRealizable extends ActividadRealizable {
 
 	@Override
 	public void setEstado(String estado) throws EstadoException {
-		// TODO Auto-generated method stub
+		if (estado.equals("No Exitoso") || estado.equals("Exitoso")) {
+			this.estado = estado;
+		} else {
+			throw new EstadoException(this, estado);
+		}
 
 	}
+
 	public Actividad getActividadBase() {
 		return actividadBase;
 	}
@@ -150,5 +127,34 @@ public class TareaRealizable extends ActividadRealizable {
 		this.actividadBase = actividadBase;
 	}
 
+	@Override
+	public void guardarActividad() {
+
+	}
+
+	@Override
+	public void calificarActividad() {
+		Scanner lectura = new Scanner(System.in);
+		System.out.println("Calificacion de la tarea: ");
+		System.out.println("Estudiante: " + estudiante.getUsuario());
+		System.out.println("Tarea: " + actividadBase.getTitulo());
+		System.out.println("Estado de la tarea: " + estado);
+		System.out.println("1. No exitoso");
+		System.out.println("2. Exitoso");
+		int opcion = lectura.nextInt();
+		String estado = "";
+		if (opcion == 1) {
+			estado = "No Exitoso";
+		} else if (opcion == 2) {
+			estado = "Exitoso";
+		}
+		try {
+			setEstado(estado);
+		} catch (EstadoException e) {
+			System.out.println(e.getMessage());
+		}
+		lectura.close();
+
+	}
 
 }

@@ -26,6 +26,8 @@ public class Metadato {
 	public Date getFechaCreacion() {
 		return fechaCreacion;
 	}
-	
+	public void setFechaCreacion(Date fecha) {
+		this.fechaCreacion=fecha;
+	}
     
 }

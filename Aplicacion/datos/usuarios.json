@@ -1,5 +1,12 @@
-{"Usuarios": [{
-  "tipo": 2,
-  "usuario": "Profe",
-  "contrasena": "Profe"
-}]}
+{"Usuarios": [
+  {
+    "tipo": 2,
+    "usuario": "Profe",
+    "contrasena": "Profe"
+  },
+  {
+    "tipo": 1,
+    "usuario": "Estudiante",
+    "contrasena": "Estudiante"
+  }
+]}

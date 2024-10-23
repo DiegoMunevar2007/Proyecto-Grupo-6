@@ -9,7 +9,7 @@
     "titulo": "Ola",
     "profesor": "Profe",
     "ID": "0",
-    "estudiantesInscritos": []
+    "estudiantesInscritos": ["Estudiante"]
   },
   {
     "descripcion": "Dos",

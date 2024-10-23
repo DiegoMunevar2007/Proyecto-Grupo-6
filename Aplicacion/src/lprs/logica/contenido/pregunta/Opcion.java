@@ -13,7 +13,14 @@ public class Opcion {
         return opcion;
     }
 
-    public String getExplicacion() {
+    public void setOpcion(String opcion) {
+    	this.opcion=opcion;
+    }
+    public void setExplicacion(String explicacion) {
+		this.explicacion = explicacion;
+	}
+
+	public String getExplicacion() {
         return explicacion;
     }
     

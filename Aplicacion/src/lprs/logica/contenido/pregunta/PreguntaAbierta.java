@@ -1,6 +1,6 @@
 package lprs.logica.contenido.pregunta;
 
-public class PreguntaAbierta extends Pregunta{
+public class PreguntaAbierta extends Pregunta {
     private String respuesta;
     private Boolean calificado;
 

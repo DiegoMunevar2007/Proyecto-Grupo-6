@@ -72,7 +72,6 @@ public class LearningPath {
 		this.profesorCreador = profesorCreador;
 	}
 
-
 	/**
 	 * Obtiene el título de la ruta de aprendizaje.
 	 *
@@ -312,8 +311,21 @@ public class LearningPath {
 		for (Estudiante estudiante : estudiantes) {
 			estudiante.eliminarLearningPath(getID());
 		}
-		
+
 		lprsActual.getManejadorLP().getLearningPaths().remove(this);
-		lprsActual.getManejadorLP().learningPathsHashMap().remove(this);
+		lprsActual.getManejadorLP().learningPathsHashMap().remove(this.getID());
 	}
+
+	public void setLPRS(LPRS lprs) {
+		this.lprsActual = lprs;
+	}
+
+	public Metadato getMetadatos() {
+		return metadatos;
+	}
+
+	public void setMetadatos(Metadato metadatos) {
+		this.metadatos = metadatos;
+	}
+
 }

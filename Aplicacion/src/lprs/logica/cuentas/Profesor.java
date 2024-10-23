@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import lprs.logica.contenido.realizable.ActividadRealizable;
 import lprs.logica.learningPath.LearningPath;
 import lprs.principal.LPRS;
 
 public class Profesor extends Usuario {
 	private final String PROFESOR = "Profesor";
     private HashMap<String, LearningPath> learningPathsCreados;
+    private ArrayList<ActividadRealizable> actividadesPendientes;
 
     /**
      * Constructor para crear un objeto Profesor.
@@ -103,4 +105,24 @@ public class Profesor extends Usuario {
     public Collection<LearningPath> getLearningPathsCreados() {
         return learningPathsCreados.values();
     }
+
+	public ArrayList<ActividadRealizable> getActividadesPendientes() {
+		return actividadesPendientes;
+	}
+
+	public void setActividadesPendientes(ArrayList<ActividadRealizable> actividadesPendientes) {
+		this.actividadesPendientes = actividadesPendientes;
+	}
+
+	public String getPROFESOR() {
+		return PROFESOR;
+	}
+
+	public void setLearningPathsCreados(HashMap<String, LearningPath> learningPathsCreados) {
+		this.learningPathsCreados = learningPathsCreados;
+	}
+    
+	public void addActividadPendiente(ActividadRealizable actividad) {
+		actividadesPendientes.add(actividad);
+	}
 }
