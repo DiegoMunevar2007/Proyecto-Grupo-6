@@ -1,10 +1,17 @@
 package lprs.persistencia;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,9 +22,10 @@ import lprs.manejador.ManejadorSesion;
 
 public class PersistenciaUsuario implements Persistencia {
 
-	public PersistenciaUsuario() {
-		
-	}
+    public PersistenciaUsuario() {
+
+    }
+
     public void guardarUsuario(ManejadorSesion manejadorS) throws IOException {
         Collection<Usuario> usuarios = manejadorS.getUsuariosLista();
         JSONObject jObject = new JSONObject();
@@ -37,6 +45,13 @@ public class PersistenciaUsuario implements Persistencia {
         PrintWriter writer = new PrintWriter(direccionArchivo + "/usuarios.json");
         jObject.write(writer, 2, 0);
         writer.close();
+    }
+
+    public void guardarUsuario2(ManejadorSesion manejadorS) throws IOException {
+        FileOutputStream fos = new FileOutputStream(new File(direccionArchivo + "/usuarios.dat"));
+        ObjectOutput oos = new ObjectOutputStream(fos);
+        oos.writeObject(manejadorS.getUsuarios());
+        oos.close();
     }
 
     public void cargarUsuarios(ManejadorSesion manejadorS) throws Exception {
@@ -71,6 +86,23 @@ public class PersistenciaUsuario implements Persistencia {
             }
         } catch (Exception e) {
             System.out.println("Error creando usuarios o leyendo JSON " + e.getMessage());
+        }
+    }
+
+    public void cargarUsuarios2(ManejadorSesion manejadorS) throws Exception {
+        try {
+            if (!Files.exists(Paths.get(direccionArchivo + "/usuarios.dat"))) {
+                throw new ArchivoException("Archivo no encontrado: usuarios.dat");
+            } else {
+                FileInputStream fis = new FileInputStream(new File(direccionArchivo + "/usuarios.dat"));
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                manejadorS.setUsuarios((HashMap<String, Usuario>) ois.readObject());
+                ois.close();
+            }
+        } catch (ArchivoException e) {
+            System.out.println("Error leyendo el archivo: " + e.getMessage());
+            System.out.println("Creando archivo de usuarios vacio");
+            manejadorS.setUsuarios(new HashMap<String, Usuario>());
         }
     }
 

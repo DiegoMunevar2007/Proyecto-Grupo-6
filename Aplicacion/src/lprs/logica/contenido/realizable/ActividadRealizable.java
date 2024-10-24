@@ -1,5 +1,6 @@
 package lprs.logica.contenido.realizable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import lprs.exceptions.ActividadPreviaException;
@@ -9,7 +10,7 @@ import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.Avance;
 import lprs.logica.learningPath.LearningPath;
 
-public abstract class ActividadRealizable {
+public abstract class ActividadRealizable implements Serializable {
 	protected String comentarios;
 	protected String estado;
 	protected Estudiante estudiante;

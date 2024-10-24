@@ -1,12 +1,14 @@
 package lprs.logica.contenido;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import lprs.logica.contenido.realizable.ActividadRealizable;
 import lprs.logica.cuentas.Estudiante;
+import lprs.logica.cuentas.Usuario;
 import lprs.logica.learningPath.LearningPath;
 
-public abstract class Actividad {
+public abstract class Actividad implements Serializable {
     protected static int actividadesCreadas = 0;
     protected String numeroActividad;
     protected String titulo;
@@ -16,7 +18,6 @@ public abstract class Actividad {
     protected int duracionEsperada;
     protected boolean obligatoria;
     protected String fechaLimite;
-    protected String estado;
     protected ArrayList<Resenia> resenias;
     protected ArrayList<Actividad> actividadesPrevias;
     protected ArrayList<Actividad> actividadesSeguimiento;
@@ -32,7 +33,6 @@ public abstract class Actividad {
         this.duracionEsperada = duracionEsperada;
         this.obligatoria = obligatoria;
         this.fechaLimite = fechaLimite;
-        this.estado = null;
         this.resenias = new ArrayList<Resenia>();
         this.actividadesPrevias = new ArrayList<Actividad>();
         this.actividadesSeguimiento = new ArrayList<Actividad>();
@@ -48,7 +48,6 @@ public abstract class Actividad {
         this.duracionEsperada = actividad.getDuracionEsperada();
         this.obligatoria = actividad.isObligatoria();
         this.fechaLimite = actividad.getFechaLimite();
-        this.estado = actividad.getEstado();
         this.resenias = actividad.getResenias();
         this.actividadesPrevias = actividad.getActividadesPrevias();
         this.actividadesSeguimiento = actividad.getActividadesSeguimiento();
@@ -126,15 +125,6 @@ public abstract class Actividad {
      */
     public String getFechaLimite() {
         return fechaLimite;
-    }
-
-    /**
-     * Obtiene el estado de la actividad.
-     *
-     * @return el estado de la actividad
-     */
-    public String getEstado() {
-        return estado;
     }
 
     /**
@@ -226,15 +216,6 @@ public abstract class Actividad {
      */
     public void setFechaLimite(String fechaLimite) {
         this.fechaLimite = fechaLimite;
-    }
-
-    /**
-     * Establece el estado de la actividad.
-     *
-     * @param estado el nuevo estado de la actividad
-     */
-    public void setEstado(String estado) {
-        this.estado = estado;
     }
 
     /**
@@ -330,4 +311,8 @@ public abstract class Actividad {
         this.numeroActividad = numeroActividad;
     }
 
+    public void hacerResenia(Usuario usuario, String comentario, int rating) {
+        Resenia resenia = new Resenia(usuario, comentario, rating);
+        addResenia(resenia);
+    }
 }

@@ -35,6 +35,7 @@ public class ConsolaProfesor extends ConsolaPrincipal {
                 lprsActual.guardarDatos();
             } catch (Exception e) {
                 System.out.println("Error al guardar los datos");
+                e.printStackTrace();
             }
             return;
         } else {
@@ -291,120 +292,6 @@ public class ConsolaProfesor extends ConsolaPrincipal {
         mostrarConsolaProfesor();
     }
 
-    public void modificarTarea(Tarea tarea) {
-        System.out.println("¿Desea modificar la tarea o alguna de sus secciones? (t/s/n)");
-        String respuesta = lectura.next();
-        if (respuesta.equalsIgnoreCase("t")) {
-            System.out.println("¿Desea modificar el título? (s/n)");
-            respuesta = lectura.next();
-            if (respuesta.equalsIgnoreCase("s")) {
-                System.out.println("Ingrese el nuevo título: ");
-                String titulo = lectura.nextLine();
-                tarea.setTitulo(titulo);
-            }
-            System.out.println("¿Desea modificar la descripción? (s/n)");
-            respuesta = lectura.next();
-            if (respuesta.equalsIgnoreCase("s")) {
-                System.out.println("Ingrese la nueva descripción: ");
-                String descripcion = lectura.nextLine();
-                tarea.setDescripcion(descripcion);
-            }
-            System.out.println("¿Desea modificar el objetivo? (s/n)");
-            respuesta = lectura.next();
-            if (respuesta.equalsIgnoreCase("s")) {
-                System.out.println("Ingrese el nuevo objetivo: ");
-                String objetivo = lectura.nextLine();
-                tarea.setObjetivo(objetivo);
-            }
-            System.out.println("¿Desea modificar la duración? (s/n)");
-            respuesta = lectura.next();
-            if (respuesta.equalsIgnoreCase("s")) {
-                System.out.println("Ingrese la nueva duración: ");
-                int duracion = lectura.nextInt();
-                tarea.setDuracionEsperada(duracion);
-            }
-            System.out.println("¿Desea modificar la obligatoriedad? (s/n)");
-            respuesta = lectura.next();
-            if (respuesta.equalsIgnoreCase("s")) {
-                System.out.println("¿Es obligatoria? (s/n)");
-                respuesta = lectura.next();
-                boolean obligatoria = false;
-                if (respuesta.equalsIgnoreCase("s")) {
-                    obligatoria = true;
-                }
-                tarea.setObligatoria(obligatoria);
-            }
-            System.out.println("¿Desea modificar la fecha de entrega? (s/n)");
-            respuesta = lectura.next();
-            if (respuesta.equalsIgnoreCase("s")) {
-                System.out.println("Ingrese la nueva fecha de entrega en formato DD/MM/YYYY: ");
-                String fechaEntrega = lectura.nextLine();
-                tarea.setFechaLimite(fechaEntrega);
-            }
-            System.out.println("Tarea modificada con éxito.");
-            mostrarLearningPathsHechos();
-        } else if (respuesta.equalsIgnoreCase("s")) {
-            System.out.println("¿Qué sección desea modificar?");
-            for (int i = 0; i < tarea.getSecciones().size(); i++) {
-                System.out.println(i + 1 + ". " + tarea.getSecciones().get(i).getTitulo());
-            }
-            System.out.println("Ingrese el número de la sección que desea modificar: ");
-            int numero = lectura.nextInt();
-            if (numero < 1 || numero > tarea.getSecciones().size()) {
-                System.out.println("Opción no válida. Por favor, seleccione una sección de la lista.");
-                modificarTarea(tarea);
-                return;
-            }
-            System.out.println("¿Qué desea modificar?");
-            String[] opcionesModificar = { "Título", "Descripción", "Tipo", "Contenido", "Ejemplo", "Explicación",
-                    "Pista", "Resultado esperado" };
-            mostrarOpciones(opcionesModificar.length, opcionesModificar);
-            int opcionModificar = lectura.nextInt();
-            if (opcionModificar == 1) {
-                System.out.println("Ingrese el nuevo título: ");
-                String titulo = lectura.nextLine();
-                tarea.getSecciones().get(numero - 1).setTitulo(titulo);
-            } else if (opcionModificar == 2) {
-                System.out.println("Ingrese la nueva descripción: ");
-                String descripcion = lectura.nextLine();
-                tarea.getSecciones().get(numero - 1).setDescripcion(descripcion);
-            } else if (opcionModificar == 3) {
-                System.out.println("Ingrese el nuevo Tipo: ");
-                String objetivo = lectura.nextLine();
-                tarea.getSecciones().get(numero - 1).setTipo(objetivo);
-            } else if (opcionModificar == 4) {
-                System.out.println("Ingrese el nuevo contenido: ");
-                String contenido = lectura.nextLine();
-                tarea.getSecciones().get(numero - 1).setContenido(contenido);
-            } else if (opcionModificar == 5) {
-                System.out.println("Ingrese el nuevo ejemplo: ");
-                String ejemplo = lectura.nextLine();
-                tarea.getSecciones().get(numero - 1).setEjemplo(ejemplo);
-            } else if (opcionModificar == 6) {
-                System.out.println("Ingrese la nueva explicación: ");
-                String explicacion = lectura.nextLine();
-                tarea.getSecciones().get(numero - 1).setExplicacion(explicacion);
-            } else if (opcionModificar == 7) {
-                System.out.println("Ingrese la nueva pista: ");
-                String pista = lectura.nextLine();
-                tarea.getSecciones().get(numero - 1).setPista(pista);
-            } else if (opcionModificar == 8) {
-                System.out.println("Ingrese el nuevo resultado esperado: ");
-                String resultadoEsperado = lectura.nextLine();
-                tarea.getSecciones().get(numero - 1).setResultadoEsperado(resultadoEsperado);
-            } else {
-                System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
-                modificarTarea(tarea);
-            }
-        } else if (respuesta.equalsIgnoreCase("n")) {
-            mostrarLearningPathsHechos();
-        } else {
-            System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
-            modificarTarea(tarea);
-        }
-
-    }
-
     public void crearRecursoEducativo(LearningPath lp) {
         System.out.println("Ingrese el título del recurso educativo: ");
         String titulo = lectura.nextLine();
@@ -446,53 +333,7 @@ public class ConsolaProfesor extends ConsolaPrincipal {
     }
 
     public void modificarLearningPath(LearningPath lp) {
-        System.out.println("¿Desea modificar el título? (s/n)");
-        String respuesta = lectura.next();
-        lectura.nextLine();
-        if (respuesta.equalsIgnoreCase("s")) {
-            System.out.println("Ingrese el nuevo título: ");
-            String titulo = lectura.nextLine();
-            lp.setTitulo(titulo);
-        }
-        System.out.println("¿Desea modificar la descripción? (s/n)");
-        respuesta = lectura.next();
-        lectura.nextLine();
-        if (respuesta.equalsIgnoreCase("s")) {
-            System.out.println("Ingrese la nueva descripción: ");
-            String descripcion = lectura.nextLine();
-            lp.setDescripcion(descripcion);
-        }
-        System.out.println("¿Desea modificar el nivel de dificultad? (s/n)");
-        respuesta = lectura.next();
-        lectura.nextLine();
-        if (respuesta.equalsIgnoreCase("s")) {
-            System.out.println("Ingrese el nuevo nivel de dificultad: ");
-            String nivelDificultad = lectura.next();
-            lp.setNivelDificultad(nivelDificultad);
-        }
-        System.out.println("¿Desea modificar los objetivos? (s/n)");
-        respuesta = lectura.next();
-        if (respuesta.equalsIgnoreCase("s")) {
-            lectura.nextLine();
-            ArrayList<String> objetivos = new ArrayList<>();
-            boolean terminado = false;
-            while (!terminado) {
-                System.out.println("Ingrese un objetivo: ");
-                String objetivo = lectura.nextLine();
-                objetivos.add(objetivo);
 
-                System.out.println("¿Desea agregar otro objetivo? (s/n): ");
-                respuesta = lectura.next();
-                lectura.nextLine();
-                if (respuesta.equalsIgnoreCase("n")) {
-                    terminado = true;
-                }
-            }
-            lp.setObjetivos(objetivos);
-        }
-
-        System.out.println("Learning Path modificado con éxito.");
-        mostrarLearningPathsHechos();
     }
 
     public void mostrarLearningPathCompleto(LearningPath lp) {

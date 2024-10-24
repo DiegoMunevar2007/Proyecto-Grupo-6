@@ -1,5 +1,6 @@
 package lprs.logica.learningPath;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -8,7 +9,7 @@ import java.util.List;
 import lprs.logica.contenido.Actividad;
 import lprs.logica.contenido.realizable.ActividadRealizable;
 
-public class Avance {
+public class Avance implements Serializable {
 	private double actividadesCompletadas;
 	private Date fechaInicio;
 	private Date fechaFin;

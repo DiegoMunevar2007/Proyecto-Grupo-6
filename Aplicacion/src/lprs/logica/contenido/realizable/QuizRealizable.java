@@ -44,6 +44,19 @@ public class QuizRealizable extends ActividadRealizable {
 		}
 		calificacion = (preguntasQuiz.size() / correctas) * 100;
 		System.out.println("Calificacion: " + calificacion + "%");
+		System.out.println("Preguntas correctas: " + correctas);
+		if (calificacion >= actividadBase.getCalificacionMinima()) {
+			System.out.println("Felicidades, ha aprobado el quiz");
+			estudiante.getAvance(actividadBase.getLearningPathAsignado().getID()).addActividadRealizada(this);
+			if (actividadBase.isObligatoria()) {
+				double porcentajeActividades = estudiante.getAvance(actividadBase.getLearningPathAsignado().getID())
+						.getActividadesCompletadas();
+
+			}
+
+		} else {
+			System.out.println("Lo siento, no ha aprobado el quiz");
+		}
 	}
 
 	@Override

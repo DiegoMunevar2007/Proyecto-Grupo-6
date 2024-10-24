@@ -1,20 +1,22 @@
 package lprs.manejador;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import lprs.logica.learningPath.LearningPath;
 
-public class ManejadorLP {
+public class ManejadorLP implements Serializable {
 	private HashMap<String, LearningPath> learningPathsHash;
 	// Dejamos la lista tambien?
-	private ArrayList<LearningPath> learningPathsDisponibles; 
-	
-	public ManejadorLP(){
+	private ArrayList<LearningPath> learningPathsDisponibles;
+
+	public ManejadorLP() {
 		learningPathsHash = new HashMap<String, LearningPath>();
-		learningPathsDisponibles =new ArrayList<LearningPath>();
+		learningPathsDisponibles = new ArrayList<LearningPath>();
 	}
+
 	/**
 	 * Obtener un learning path por su ID
 	 * 
@@ -44,11 +46,11 @@ public class ManejadorLP {
 		return learningPathsDisponibles;
 	}
 
-	
 	public List<LearningPath> learningPathsDisponibles() {
 		return getLearningPaths();
 	}
-	public HashMap<String,LearningPath>learningPathsHashMap(){
+
+	public HashMap<String, LearningPath> learningPathsHashMap() {
 		return learningPathsHash;
 	}
 }

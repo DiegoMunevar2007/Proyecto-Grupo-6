@@ -1,5 +1,6 @@
 package lprs.manejador;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -9,19 +10,17 @@ import lprs.logica.cuentas.Profesor;
 import lprs.logica.cuentas.Usuario;
 import lprs.principal.LPRS;
 
-public class ManejadorSesion {
+public class ManejadorSesion implements Serializable {
 	protected static final String ESTUDIANTE = "Estudiante";
 	protected static final String PROFESOR = "Profesor";
 	private LPRS lprsActual;
 	private HashMap<String, Usuario> usuarios;
-	
+
 	public ManejadorSesion(LPRS lprsActual) {
 		this.lprsActual = lprsActual;
 		usuarios = new HashMap<String, Usuario>();
 	}
-	
-	
-	
+
 	public void crearUsuario(String usuario, String contrasena, int tipo) throws Exception {
 		Usuario nuevoUsuario;
 		if (tipo == 1) {
@@ -71,13 +70,14 @@ public class ManejadorSesion {
 		this.usuarios = usuarios;
 	}
 
-	public HashMap<String,Usuario> getUsuarios() {
+	public HashMap<String, Usuario> getUsuarios() {
 		return usuarios;
 	}
-	
-	public Collection<Usuario> getUsuariosLista(){
+
+	public Collection<Usuario> getUsuariosLista() {
 		return getUsuarios().values();
 	}
+
 	public String getEstudianteFinal() {
 		return ESTUDIANTE;
 	}

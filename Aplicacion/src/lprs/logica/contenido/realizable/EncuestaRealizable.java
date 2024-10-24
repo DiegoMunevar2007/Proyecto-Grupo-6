@@ -8,6 +8,8 @@ import lprs.logica.contenido.Actividad;
 import lprs.logica.contenido.Encuesta;
 import lprs.logica.contenido.pregunta.PreguntaAbierta;
 import lprs.logica.cuentas.Estudiante;
+import lprs.logica.cuentas.Profesor;
+import lprs.logica.learningPath.LearningPath;
 
 public class EncuestaRealizable extends ActividadRealizable {
 
@@ -21,8 +23,7 @@ public class EncuestaRealizable extends ActividadRealizable {
 
     @Override
     public void calificarActividad() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calificarActividad'");
+
     }
 
     @Override
@@ -50,26 +51,35 @@ public class EncuestaRealizable extends ActividadRealizable {
 
     @Override
     public void guardarActividad() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'guardarActividad'");
+        LearningPath lP = actividadBase.getLearningPathAsignado();
+        estudiante.getAvance(lP.getID()).addActividadRealizada(this);
     }
 
     @Override
     public void enviarActividad() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'enviarActividad'");
+        guardarActividad();
+        try {
+            setEstado("Enviado");
+        } catch (EstadoException e) {
+            e.printStackTrace();
+        }
+        Profesor profesor = actividadBase.getLearningPathAsignado().getProfesorCreador();
+        profesor.addActividadPendiente(this);
     }
 
     @Override
     public void setEstado(String estado) throws EstadoException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setEstado'");
+        if (estado.equals("Enviado") || estado.equals("No exitoso") || estado.equals("Exitoso")) {
+            this.estado = estado;
+        } else {
+            throw new EstadoException(this.getActividadBase(), estado);
+        }
     }
 
     @Override
     public Actividad getActividadBase() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getActividadBase'");
+        return actividadBase;
     }
 
 }

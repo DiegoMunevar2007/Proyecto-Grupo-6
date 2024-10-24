@@ -1,17 +1,19 @@
 package lprs.principal;
 
+import java.io.Serializable;
+
 import lprs.consola.ConsolaPrincipal;
 import lprs.manejador.ManejadorLP;
 import lprs.manejador.ManejadorSesion;
 import lprs.persistencia.PersistenciaLP;
 import lprs.persistencia.PersistenciaUsuario;
 
-public class LPRS {
+public class LPRS implements Serializable {
 	ManejadorLP manejadorLP;
 	ManejadorSesion manejadorSesion;
-	
+
 	public LPRS() {
-		manejadorLP= new ManejadorLP();
+		manejadorLP = new ManejadorLP();
 		manejadorSesion = new ManejadorSesion(this);
 	}
 
@@ -27,7 +29,6 @@ public class LPRS {
 			e.printStackTrace();
 		}
 	}
-	
 
 	public ManejadorLP getManejadorLP() {
 		return manejadorLP;
@@ -46,18 +47,18 @@ public class LPRS {
 	}
 
 	public void cargarDatos() throws Exception {
-		
+
 		PersistenciaUsuario persU = new PersistenciaUsuario();
 		PersistenciaLP persLP = new PersistenciaLP();
-		persU.cargarUsuarios(manejadorSesion);
-		persLP.cargarLP(manejadorSesion,manejadorLP);
+		persU.cargarUsuarios2(manejadorSesion);
+		persLP.cargarLP2(manejadorSesion, manejadorLP);
 	}
 
 	public void guardarDatos() throws Exception {
-		
+
 		PersistenciaUsuario persU = new PersistenciaUsuario();
 		PersistenciaLP persLP = new PersistenciaLP();
-		persU.guardarUsuario(manejadorSesion);
-		persLP.guardarLP(manejadorSesion, manejadorLP);
+		persU.guardarUsuario2(manejadorSesion);
+		persLP.guardarLP2(manejadorSesion, manejadorLP);
 	}
 }

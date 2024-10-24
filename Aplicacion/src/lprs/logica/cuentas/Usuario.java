@@ -1,8 +1,10 @@
 package lprs.logica.cuentas;
 
+import java.io.Serializable;
+
 import lprs.principal.LPRS;
 
-public abstract class Usuario {
+public abstract class Usuario implements Serializable {
 	protected String usuario;
 	protected String contrasenia;
 	protected String tipo;

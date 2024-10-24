@@ -3,13 +3,14 @@ package lprs.logica.contenido;
 import lprs.logica.cuentas.Usuario;
 
 public class Resenia {
+    private static int contador = 0;
     private String ID;
     private String contenido;
     private double rating;
     private Usuario autor;
 
-    public Resenia(String ID, String contenido, double rating, Usuario autor) {
-        this.ID = ID;
+    public Resenia(Usuario autor, String contenido, double rating) {
+        this.ID = asignarID();
         this.contenido = contenido;
         this.rating = rating;
         this.autor = autor;
@@ -17,6 +18,11 @@ public class Resenia {
 
     public String getID() {
         return ID;
+    }
+
+    public String asignarID() {
+        contador++;
+        return Integer.toString(contador);
     }
 
     public String getContenido() {

@@ -1,8 +1,10 @@
 package lprs.logica.contenido.realizable;
 
+import java.io.Serializable;
+
 import lprs.logica.contenido.pregunta.Pregunta;
 
-public class PreguntaRealizable {
+public class PreguntaRealizable implements Serializable {
 	Pregunta preguntaBase;
 
 	public PreguntaRealizable(Pregunta preguntaBase) {

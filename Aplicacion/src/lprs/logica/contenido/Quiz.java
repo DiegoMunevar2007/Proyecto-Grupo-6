@@ -2,8 +2,10 @@ package lprs.logica.contenido;
 
 import java.util.ArrayList;
 
+import lprs.logica.contenido.pregunta.Opcion;
 import lprs.logica.contenido.pregunta.PreguntaCerrada;
 import lprs.logica.contenido.realizable.ActividadRealizable;
+import lprs.logica.contenido.realizable.QuizRealizable;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
 
@@ -32,7 +34,27 @@ public class Quiz extends Actividad {
 
 	@Override
 	public ActividadRealizable crearActividadRealizable(Estudiante estudiante) {
-		// TODO Auto-generated method stub
-		return null;
+		return new QuizRealizable(estudiante, this);
+	}
+
+	public void addPreguntaQuiz(PreguntaCerrada pregunta) {
+		preguntasQuiz.add(pregunta);
+	}
+
+	public void crearPreguntaCerrada(String enunciado, Opcion respuestaCorrecta, Opcion[] opciones) {
+		PreguntaCerrada pregunta = new PreguntaCerrada(enunciado, respuestaCorrecta, opciones);
+		addPreguntaQuiz(pregunta);
+	}
+
+	public void removePreguntaQuiz(PreguntaCerrada pregunta) {
+		preguntasQuiz.remove(pregunta);
+	}
+
+	public double getCalificacionMinima() {
+		return calificacionMinima;
+	}
+
+	public void setCalificacionMinima(int calificacionMinima) {
+		this.calificacionMinima = calificacionMinima;
 	}
 }

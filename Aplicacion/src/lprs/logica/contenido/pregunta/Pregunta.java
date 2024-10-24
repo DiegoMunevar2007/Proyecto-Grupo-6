@@ -1,12 +1,14 @@
 package lprs.logica.contenido.pregunta;
 
-public class Pregunta {
+import java.io.Serializable;
+
+public class Pregunta implements Serializable {
     protected String enunciado;
 
     public Pregunta(String enunciado) {
         this.enunciado = enunciado;
     }
-    
+
     public String getEnunciado() {
         return enunciado;
     }

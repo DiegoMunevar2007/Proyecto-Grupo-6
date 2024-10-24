@@ -1,6 +1,12 @@
 package lprs.persistencia;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -21,6 +27,41 @@ public class PersistenciaLP implements Persistencia {
 
 	public PersistenciaLP() {
 
+	}
+
+	public void guardarLP2(ManejadorSesion manejadorS, ManejadorLP manejadorLP) throws IOException {
+		// Se obtienen todos los learning paths creados en formato ArrayList
+		ArrayList<LearningPath> lPS = manejadorLP.getLearningPaths();
+		ObjectOutputStream oos = new ObjectOutputStream(
+				new FileOutputStream(new File(direccionArchivo + "/learningpaths.dat")));
+		oos.writeObject(lPS);
+		oos.close();
+	}
+
+	public void cargarLP2(ManejadorSesion manejadorS, ManejadorLP manejadorLP) throws IOException {
+		ArrayList<LearningPath> lPS = new ArrayList<LearningPath>();
+		try {
+			if (!Files.exists(Paths.get(direccionArchivo + "/learningpaths.dat"))) {
+				throw new ArchivoException("Archivo no encontrado: learningpaths.dat");
+			} else {
+				// Se lee el archivo
+				ObjectInputStream ois = new ObjectInputStream(
+						new FileInputStream(new File(direccionArchivo + "/learningpaths.dat")));
+				lPS = (ArrayList<LearningPath>) ois.readObject();
+				ois.close();
+			}
+		} catch (ArchivoException e) {
+			System.out.println("Error leyendo el archivo: " + e.getMessage());
+			System.out.println("Creando archivo de learning paths vacio");
+			OutputStream os = new FileOutputStream(direccionArchivo + "/learningpaths.dat");
+			os.close();
+		} catch (Exception e) {
+			System.out.println("Error leyendo el archivo: " + e.getMessage());
+		}
+		for (LearningPath lP : lPS) {
+			manejadorLP.addLearningPath(lP);
+			System.out.println("Learning Path: " + lP.getTitulo());
+		}
 	}
 
 	public void guardarLP(ManejadorSesion manejadorS, ManejadorLP manejadorLP) throws IOException {

@@ -1,9 +1,13 @@
 package lprs.logica.learningPath;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Scanner;
 
 import lprs.logica.contenido.Actividad;
+import lprs.logica.contenido.Encuesta;
+import lprs.logica.contenido.Examen;
 import lprs.logica.contenido.Quiz;
 import lprs.logica.contenido.RecursoEducativo;
 import lprs.logica.contenido.Tarea;
@@ -11,7 +15,7 @@ import lprs.logica.cuentas.Estudiante;
 import lprs.logica.cuentas.Profesor;
 import lprs.principal.LPRS;
 
-public class LearningPath {
+public class LearningPath implements Serializable {
 	private static int numeroLP = 0;
 	private String ID;
 	private String titulo;
@@ -26,6 +30,7 @@ public class LearningPath {
 	private Profesor profesorCreador;
 	private Metadato metadatos;
 	private LPRS lprsActual;
+	private int cantidadObligatorias;
 
 	/**
 	 * Constructor para crear un objeto LearningPath.
@@ -53,6 +58,7 @@ public class LearningPath {
 		this.profesorCreador = profesorCreador;
 		this.metadatos = new Metadato("1");
 		this.lprsActual = lprsActual;
+		this.cantidadObligatorias = 0;
 	}
 
 	/**
@@ -82,6 +88,9 @@ public class LearningPath {
 			String fechaEntrega) {
 		Tarea tarea = new Tarea(titulo, descripcion, objetivo, duracion, obligatoria, fechaEntrega, this, objetivo);
 		actividades.add(tarea);
+		if (obligatoria) {
+			cantidadObligatorias++;
+		}
 		return tarea;
 	}
 
@@ -89,6 +98,10 @@ public class LearningPath {
 			boolean obligatoria, String fechaEntrega, String tipoRecurso, String url) {
 		RecursoEducativo recurso = new RecursoEducativo(titulo, descripcion, objetivo, duracion, obligatoria,
 				fechaEntrega, this, objetivo, tipoRecurso, url);
+		actividades.add(recurso);
+		if (obligatoria) {
+			cantidadObligatorias++;
+		}
 		return recurso;
 	}
 
@@ -96,7 +109,88 @@ public class LearningPath {
 			String fechaEntrega, double calificacionMinima) {
 		Quiz quiz = new Quiz(titulo, descripcion, objetivo, duracion, obligatoria, fechaEntrega, this, objetivo,
 				calificacionMinima);
+		actividades.add(quiz);
+		if (obligatoria) {
+			cantidadObligatorias++;
+		}
 		return quiz;
+	}
+
+	public Examen crearExamen(String titulo, String descripcion, String objetivo, int duracion, boolean obligatoria,
+			String fechaEntrega) {
+		Examen examen = new Examen(titulo, descripcion, objetivo, duracion, obligatoria, fechaEntrega, this, objetivo);
+		actividades.add(examen);
+		if (obligatoria) {
+			cantidadObligatorias++;
+		}
+		return examen;
+	}
+
+	public Encuesta crearEncuesta(String titulo, String descripcion, String objetivo, int duracion, boolean obligatoria,
+			String fechaEntrega) {
+		Encuesta encuesta = new Encuesta(titulo, descripcion, objetivo, duracion, obligatoria, fechaEntrega, this,
+				objetivo);
+		actividades.add(encuesta);
+		if (obligatoria) {
+			cantidadObligatorias++;
+		}
+		return encuesta;
+	}
+
+	public int getCantidadObligatorias() {
+		return cantidadObligatorias;
+	}
+
+	public void editarLearningPath() {
+		Scanner lectura = new Scanner(System.in);
+		LearningPath lp = this;
+		System.out.println("¿Desea modificar el título? (s/n)");
+		String respuesta = lectura.next();
+		lectura.nextLine();
+		if (respuesta.equalsIgnoreCase("s")) {
+			System.out.println("Ingrese el nuevo título: ");
+			String titulo = lectura.nextLine();
+			lp.setTitulo(titulo);
+		}
+		System.out.println("¿Desea modificar la descripción? (s/n)");
+		respuesta = lectura.next();
+		lectura.nextLine();
+		if (respuesta.equalsIgnoreCase("s")) {
+			System.out.println("Ingrese la nueva descripción: ");
+			String descripcion = lectura.nextLine();
+			lp.setDescripcion(descripcion);
+		}
+		System.out.println("¿Desea modificar el nivel de dificultad? (s/n)");
+		respuesta = lectura.next();
+		lectura.nextLine();
+		if (respuesta.equalsIgnoreCase("s")) {
+			System.out.println("Ingrese el nuevo nivel de dificultad: ");
+			String nivelDificultad = lectura.next();
+			lp.setNivelDificultad(nivelDificultad);
+		}
+		System.out.println("¿Desea modificar los objetivos? (s/n)");
+		respuesta = lectura.next();
+		if (respuesta.equalsIgnoreCase("s")) {
+			lectura.nextLine();
+			ArrayList<String> objetivos = new ArrayList<>();
+			boolean terminado = false;
+			while (!terminado) {
+				System.out.println("Ingrese un objetivo: ");
+				String objetivo = lectura.nextLine();
+				objetivos.add(objetivo);
+
+				System.out.println("¿Desea agregar otro objetivo? (s/n): ");
+				respuesta = lectura.next();
+				lectura.nextLine();
+				if (respuesta.equalsIgnoreCase("n")) {
+					terminado = true;
+				}
+			}
+			lp.setObjetivos(objetivos);
+		}
+
+		System.out.println("Learning Path modificado con éxito.");
+		lectura.close();
 	}
 
 	public static int getNumeroLP() {
@@ -141,6 +235,10 @@ public class LearningPath {
 
 	public void setProfesorCreador(Profesor profesorCreador) {
 		this.profesorCreador = profesorCreador;
+	}
+
+	public void eliminarActividad(Actividad actividad) {
+		actividades.remove(actividad);
 	}
 
 	/**

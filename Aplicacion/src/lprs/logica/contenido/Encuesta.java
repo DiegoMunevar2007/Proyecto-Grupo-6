@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import lprs.logica.contenido.pregunta.PreguntaAbierta;
 import lprs.logica.contenido.realizable.ActividadRealizable;
+import lprs.logica.contenido.realizable.EncuestaRealizable;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
 
@@ -34,8 +35,7 @@ public class Encuesta extends Actividad {
 
 	@Override
 	public ActividadRealizable crearActividadRealizable(Estudiante estudiante) {
-		// TODO Auto-generated method stub
-		return null;
+		return new EncuestaRealizable(this, estudiante);
 	}
 
 }
