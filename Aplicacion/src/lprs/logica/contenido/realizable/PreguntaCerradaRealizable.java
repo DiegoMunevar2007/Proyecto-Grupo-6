@@ -11,6 +11,7 @@ public class PreguntaCerradaRealizable extends PreguntaRealizable {
 
 	public PreguntaCerradaRealizable(PreguntaCerrada preguntaBase, Opcion opcionEscogida) {
 		super(preguntaBase);
+		this.preguntaBase = preguntaBase;
 		this.opcionEscogida = opcionEscogida;
 		verificarOpcion(opcionEscogida);
 	}

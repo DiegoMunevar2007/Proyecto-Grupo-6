@@ -1,14 +1,13 @@
 package lprs.logica.learningPath;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Metadato implements Serializable {
 	private String fechaCreacion;
 	private String fechaModificacion;
 	private String version;
 
-	public Metadato(String fechaCreacion,String version) {
+	public Metadato(String fechaCreacion, String version) {
 		this.fechaCreacion = fechaCreacion;
 		this.fechaModificacion = fechaCreacion;
 		this.version = version;

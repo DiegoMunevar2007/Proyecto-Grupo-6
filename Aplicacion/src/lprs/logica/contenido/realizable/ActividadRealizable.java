@@ -66,13 +66,18 @@ public abstract class ActividadRealizable implements Serializable {
 		for (Actividad actividadPrevia : actividadBase.getActividadesPrevias()) {
 			// Si no esta en el avance del estudiante, se agrega a la lista de actividades
 			// no completadas
+			for (ActividadRealizable actividadCompletada : avanceEstudiante.getActividadesRealizadas()) {
+				System.out.println("Actividad realizada " + actividadCompletada.getActividadBase().getTitulo());
+			}
 			if (avanceEstudiante.obtenerActividadObligatoria(actividadPrevia.getNumeroActividad()) == null) {
 				todasActividadesPreviasCompletas = false;
 				actividadesNoCompletadas.add(actividadPrevia);
 			}
 		}
 		// Si no se completaron todas las actividades previas, se lanza una excepcion
-		if (!todasActividadesPreviasCompletas) {
+		if (!todasActividadesPreviasCompletas)
+
+		{
 			throw new ActividadPreviaException(actividadesNoCompletadas);
 		}
 		return todasActividadesPreviasCompletas;

@@ -10,11 +10,11 @@ import lprs.logica.contenido.Seccion;
 import lprs.logica.contenido.Tarea;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.Avance;
-import lprs.logica.learningPath.LearningPath;
 
 public class TareaRealizable extends ActividadRealizable {
 	private Tarea actividadBase;
 	private int seccionActual;
+	private Scanner lectura;
 
 	public TareaRealizable(Tarea actividadBase, Estudiante estudiante) {
 		super(estudiante);
@@ -22,11 +22,12 @@ public class TareaRealizable extends ActividadRealizable {
 		this.estado = "No Exitoso";
 		seccionActual = 0;
 		seccionActual = 0;
+		lectura = new Scanner(System.in);
 	}
 
 	@Override
 	public void realizarActividad() {
-		Scanner lectura = new Scanner(System.in);
+
 		try {
 			verificarEligibilidad();
 		} catch (ActividadPreviaException e) {
@@ -34,7 +35,6 @@ public class TareaRealizable extends ActividadRealizable {
 			System.out.println("¿Desea continuar con la actividad sin realizar las demás? (S/N)");
 			String respuesta = lectura.nextLine();
 			if (respuesta.equalsIgnoreCase("N")) {
-				lectura.close();
 				return;
 			} else {
 				System.out.println("Continuando con la actividad...");
@@ -46,9 +46,6 @@ public class TareaRealizable extends ActividadRealizable {
 		System.out.println("Titulo: " + actividadBase.getTitulo());
 		System.out.println("Descripcion: " + actividadBase.getDescripcion());
 		System.out.println("Duracion esperada: " + actividadBase.getDuracionEsperada());
-		System.out.println("Duracion esperada: " + actividadBase.getDuracionEsperada());
-		// TODO: Implementar la realizacion de la tarea teniendo en cuenta si existen
-		// secciones
 		if (!actividadBase.getSecciones().isEmpty()) {
 			System.out.println("Secciones:");
 			ArrayList<Seccion> secciones = actividadBase.getSecciones();
@@ -87,7 +84,6 @@ public class TareaRealizable extends ActividadRealizable {
 				System.out.println("Desea continuar con la siguiente seccion? (S/N)");
 				String respuesta = lectura.nextLine();
 				if (respuesta.equalsIgnoreCase("N")) {
-					lectura.close();
 					guardarActividad();
 					return;
 				}
@@ -99,34 +95,13 @@ public class TareaRealizable extends ActividadRealizable {
 			if (respuesta.equalsIgnoreCase("S")) {
 				enviarActividad();
 			}
-			lectura.close();
-		}
-	}
-
-	public boolean verificarEligibilidad() throws Exception {
-		Scanner lectura = new Scanner(System.in);
-		// Verificar si todas las actividades previas estan completas
-		LearningPath lP = actividadBase.getLearningPathAsignado();
-		Avance avanceEstudiante = estudiante.obtenerAvance(lP.getTitulo());
-		boolean todasActividadesPreviasCompletas = true;
-		// Se crea una lista de actividades no completadas para mostrar al usuario
-		ArrayList<Actividad> actividadesNoCompletadas = new ArrayList<Actividad>();
-		// Por cada actividad previa, se verifica si esta en el avance del estudiante
-		for (Actividad actividadPrevia : actividadBase.getActividadesPrevias()) {
-			// Si no esta en el avance del estudiante, se agrega a la lista de actividades
-			// no completadas
-			if (avanceEstudiante.obtenerActividadObligatoria(actividadPrevia.getNumeroActividad()) == null) {
-				todasActividadesPreviasCompletas = false;
-				actividadesNoCompletadas.add(actividadPrevia);
+		} else {
+			System.out.println("¿Ha enviado la tarea? (S/N)");
+			String respuesta = lectura.nextLine();
+			if (respuesta.equalsIgnoreCase("S")) {
+				enviarActividad();
 			}
 		}
-		if (!todasActividadesPreviasCompletas) {
-			lectura.close();
-			throw new ActividadPreviaException(actividadesNoCompletadas);
-
-		}
-		lectura.close();
-		return todasActividadesPreviasCompletas;
 	}
 
 	@Override
@@ -134,6 +109,7 @@ public class TareaRealizable extends ActividadRealizable {
 		// TODO Auto-generated method stub
 		Avance avance = estudiante.getAvance(actividadBase.getLearningPathAsignado().getID());
 		avance.setActividadesCompletadas(avance.getActividadesCompletadas() + 1);
+		avance.getActividadesRealizadas().add(this);
 
 	}
 

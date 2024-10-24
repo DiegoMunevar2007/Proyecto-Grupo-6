@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Scanner;
 
 import lprs.logica.contenido.Actividad;
 import lprs.logica.contenido.Encuesta;

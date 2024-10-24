@@ -15,10 +15,13 @@ public class EncuestaRealizable extends ActividadRealizable {
 
     private Encuesta actividadBase;
     private ArrayList<PreguntaAbiertaRealizable> preguntasRealizadas;
+    private Scanner lecturaEncuesta;
 
     public EncuestaRealizable(Encuesta actividadBase, Estudiante estudiante) {
         super(estudiante);
         this.actividadBase = actividadBase;
+        lecturaEncuesta = new Scanner(System.in);
+        preguntasRealizadas = new ArrayList<PreguntaAbiertaRealizable>();
     }
 
     @Override
@@ -28,25 +31,29 @@ public class EncuestaRealizable extends ActividadRealizable {
 
     @Override
     public void realizarActividad() {
+        try {
+            verificarEligibilidad();
+        } catch (Exception e) {
+            System.out.println("Ocurrió un error: " + e.getMessage());
+        }
+
         ArrayList<PreguntaAbierta> preguntasEncuesta = actividadBase.getPreguntasEncuesta();
         System.out.println("Realizando encuesta...");
         System.out.println("Titulo: " + actividadBase.getTitulo());
         System.out.println("Descripcion: " + actividadBase.getDescripcion());
         System.out.println("Duracion esperada: " + actividadBase.getDuracionEsperada());
         System.out.println("Preguntas:");
-        Scanner scanner = new Scanner(System.in);
+        String respuesta = "";
         for (int i = 0; i < preguntasEncuesta.size(); i++) {
             PreguntaAbierta pregunta = preguntasEncuesta.get(i);
-            System.out.println("Pregunta " + i + ": " + pregunta.getEnunciado());
+            System.out.println("Pregunta " + (i + 1) + ": " + pregunta.getEnunciado());
             System.out.println("Respuesta: ");
-            String respuesta = scanner.nextLine();
+            respuesta = lecturaEncuesta.nextLine();
             PreguntaAbiertaRealizable preguntaRealizada = new PreguntaAbiertaRealizable(respuesta, pregunta);
             preguntasRealizadas.add(preguntaRealizada);
         }
-        scanner.close();
         enviarActividad();
         System.out.println("Encuesta realizada.");
-
     }
 
     @Override

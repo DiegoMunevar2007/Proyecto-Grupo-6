@@ -1,6 +1,7 @@
 package lprs.metodosPrueba;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lprs.logica.contenido.Actividad;
 import lprs.logica.contenido.Encuesta;
@@ -11,9 +12,11 @@ import lprs.logica.contenido.Tarea;
 import lprs.logica.contenido.pregunta.Opcion;
 import lprs.logica.contenido.pregunta.PreguntaAbierta;
 import lprs.logica.contenido.pregunta.PreguntaCerrada;
+import lprs.logica.contenido.realizable.ActividadRealizable;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.cuentas.Profesor;
 import lprs.logica.cuentas.Usuario;
+import lprs.logica.learningPath.Avance;
 import lprs.logica.learningPath.LearningPath;
 import lprs.principal.LPRS;
 
@@ -228,6 +231,28 @@ public class MetodosPrueba {
 		}
 		System.out.println("----------------------");
 
+	}
+
+	public void RF13() {
+		System.out.println("Requerimiento funcional 13");
+		ArrayList<Actividad> actividades = estudianteIniciado.getLearningPathsInscritos().get(0).getActividades();
+		for (Actividad actividad : actividades) {
+			estudianteIniciado.realizarActividad(actividad);
+		}
+		System.out.println("----------------------");
+	}
+
+	public void RF11() {
+		System.out.println("Requerimiento funcional 11");
+		Avance avanceEstudiante = estudianteIniciado.getAvance("0");
+		List<ActividadRealizable> actividades = avanceEstudiante.getActividadesRealizadas();
+		Actividad actividadBase = actividades.get(0).getActividadBase();
+		actividadBase.addResenia(new Resenia(estudianteIniciado, "Buena actividad", 5));
+		for (Resenia resenia : actividadBase.getResenias()) {
+			System.out.println(resenia.getContenido());
+			System.out.println(resenia.getRating());
+			System.out.println(resenia.getAutor().getUsuario());
+		}
 	}
 
 }

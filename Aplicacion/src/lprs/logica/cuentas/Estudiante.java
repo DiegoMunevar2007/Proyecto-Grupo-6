@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import lprs.logica.contenido.Actividad;
+import lprs.logica.contenido.realizable.ActividadRealizable;
 import lprs.logica.learningPath.Avance;
 import lprs.logica.learningPath.LearningPath;
 import lprs.principal.LPRS;
@@ -55,6 +57,11 @@ public class Estudiante extends Usuario {
 		learningPathsInscritos.remove(lP);
 		lP.eliminarEstudiante(this);
 		avancesEstudiante.remove(ID);
+	}
+
+	public void realizarActividad(Actividad actividad) {
+		ActividadRealizable actividad2 = actividad.crearActividadRealizable(this);
+		actividad2.realizarActividad();
 	}
 
 	public List<LearningPath> getLearningPathsInscritos() {

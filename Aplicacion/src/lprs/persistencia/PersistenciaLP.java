@@ -18,7 +18,6 @@ import org.json.JSONObject;
 import lprs.exceptions.ArchivoException;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.cuentas.Profesor;
-import lprs.logica.cuentas.Usuario;
 import lprs.logica.learningPath.LearningPath;
 import lprs.manejador.ManejadorLP;
 import lprs.manejador.ManejadorSesion;

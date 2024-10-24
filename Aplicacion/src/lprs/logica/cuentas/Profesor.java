@@ -25,6 +25,7 @@ public class Profesor extends Usuario {
         super(usuario, contrasenia, lprsActual);
         this.tipo = PROFESOR;
         learningPathsCreados = new HashMap<String, LearningPath>();
+        actividadesPendientes = new ArrayList<ActividadRealizable>();
     }
 
     /**

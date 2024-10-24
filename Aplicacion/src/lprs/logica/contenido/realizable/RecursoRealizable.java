@@ -13,25 +13,27 @@ import lprs.logica.learningPath.LearningPath;
 public class RecursoRealizable extends ActividadRealizable {
 
 	RecursoEducativo actividadBase;
+	Scanner lecturaRecurso;
 
 	public RecursoRealizable(RecursoEducativo actividadBase, Estudiante estudiante) {
 		super(estudiante);
 		this.estado = "No completado";
+		this.actividadBase = actividadBase;
+		lecturaRecurso = new Scanner(System.in);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void realizarActividad() {
 		// TODO Auto-generated method stub
-		Scanner lectura = new Scanner(System.in);
 		try {
 			verificarEligibilidad();
 		} catch (ActividadPreviaException e) {
 			System.out.println(e.getMessage());
 			System.out.println("¿Desea continuar con la actividad sin realizar las demás? (S/N)");
-			String respuesta = lectura.nextLine();
+			String respuesta = lecturaRecurso.nextLine();
 			if (respuesta.equalsIgnoreCase("N")) {
-				lectura.close();
+				lecturaRecurso.close();
 				return;
 			} else {
 				System.out.println("Continuando con la actividad...");
@@ -43,11 +45,9 @@ public class RecursoRealizable extends ActividadRealizable {
 		System.out.println("Titulo del recurso: " + actividadBase.getTitulo());
 		System.out.println("Descripcion del recurso: " + actividadBase.getDescripcion());
 		System.out.println("Duracion esperada: " + actividadBase.getDuracionEsperada());
-		System.out.println("Tipo de recurso a consultar" + actividadBase.getTipoRecurso());
+		System.out.println("Tipo de recurso a consultar: " + actividadBase.getTipoRecurso());
 		System.out.println("URL del recurso: " + actividadBase.getUrl());
-		lectura.close();
 		enviarActividad();
-
 	}
 
 	@Override
@@ -58,9 +58,8 @@ public class RecursoRealizable extends ActividadRealizable {
 
 	@Override
 	public void enviarActividad() {
-		Scanner lectura = new Scanner(System.in);
 		System.out.println("¿Desea marcar la actividad como completada? (S/N)");
-		String respuesta = lectura.nextLine();
+		String respuesta = lecturaRecurso.nextLine();
 		if (respuesta.equalsIgnoreCase("S")) {
 			try {
 				setEstado("Completado");
@@ -72,7 +71,6 @@ public class RecursoRealizable extends ActividadRealizable {
 		Profesor profesor = actividadBase.getLearningPathAsignado().getProfesorCreador();
 		profesor.addActividadPendiente(this);
 		System.out.println("Actividad completada!");
-		lectura.close();
 
 	}
 

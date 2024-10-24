@@ -37,6 +37,7 @@ public abstract class Actividad {
         this.actividadesSeguimiento = new ArrayList<Actividad>();
         this.learningPathAsignado = lP;
         this.nivelDificultad = dificultad;
+        this.actividadesRealizablesCreadas = new ArrayList<ActividadRealizable>();
     }
 
     public Actividad(Actividad actividad) {
@@ -52,9 +53,17 @@ public abstract class Actividad {
         this.resenias = actividad.getResenias();
         this.actividadesPrevias = actividad.getActividadesPrevias();
         this.actividadesSeguimiento = actividad.getActividadesSeguimiento();
+        this.learningPathAsignado = actividad.getLearningPathAsignado();
+        this.nivelDificultad = actividad.getNivelDificultad();
+        this.actividadesRealizablesCreadas = actividad.getActividadesRealizablesCreadas();
+
     }
 
     public abstract ActividadRealizable crearActividadRealizable(Estudiante estudiante);
+
+    public ArrayList<ActividadRealizable> getActividadesRealizablesCreadas() {
+        return actividadesRealizablesCreadas;
+    }
 
     /**
      * Obtiene el número de la actividad.

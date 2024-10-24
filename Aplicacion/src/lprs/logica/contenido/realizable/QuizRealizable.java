@@ -1,7 +1,9 @@
 package lprs.logica.contenido.realizable;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
+import lprs.exceptions.ActividadPreviaException;
 import lprs.exceptions.EstadoException;
 import lprs.logica.contenido.Actividad;
 import lprs.logica.contenido.Quiz;
@@ -13,19 +15,37 @@ import lprs.logica.learningPath.LearningPath;
 
 public class QuizRealizable extends ActividadRealizable {
 
-	Quiz actividadBase;
-	double calificacion;
-	int correctas;
-	ArrayList<PreguntaCerradaRealizable> preguntas = new ArrayList<PreguntaCerradaRealizable>();
+	private Quiz actividadBase;
+	private double calificacion;
+	private int correctas;
+	private ArrayList<PreguntaCerradaRealizable> preguntas;
+	private Scanner lecturaQuiz;
 
 	public QuizRealizable(Estudiante estudiante, Quiz quizBase) {
 		super(estudiante);
 		this.actividadBase = quizBase;
-		// TODO Auto-generated constructor stub
+		preguntas = new ArrayList<PreguntaCerradaRealizable>();
+		lecturaQuiz = new Scanner(System.in);
 	}
 
 	@Override
 	public void realizarActividad() {
+		try {
+			verificarEligibilidad();
+		} catch (ActividadPreviaException e) {
+			System.out.println(e.getMessage());
+			System.out.println("¿Desea continuar con la actividad sin realizar las demás? (S/N)");
+			String respuesta = lecturaQuiz.nextLine();
+			if (respuesta.equalsIgnoreCase("N")) {
+				return;
+			} else {
+				System.out.println("Continuando con la actividad...");
+			}
+		} catch (Exception e) {
+			System.out.println("Ocurrió un error: " + e.getMessage());
+		}
+
+		System.out.println("Realizando quiz...");
 		ArrayList<PreguntaCerrada> preguntasQuiz = actividadBase.getPreguntasQuiz();
 		for (PreguntaCerrada pregunta : preguntasQuiz) {
 			System.out.println(pregunta.getEnunciado());
@@ -35,28 +55,14 @@ public class QuizRealizable extends ActividadRealizable {
 				System.out.println(i + ". " + opciones[i].getOpcion());
 			}
 			System.out.println("Ingrese el número de la respuesta correcta:");
-			int respuesta = Integer.parseInt(System.console().readLine());
+			int respuesta = lecturaQuiz.nextInt();
 			PreguntaCerradaRealizable preguntaRealizable = new PreguntaCerradaRealizable(pregunta, opciones[respuesta]);
 			preguntas.add(preguntaRealizable);
 			if (preguntaRealizable.verificarOpcion(opciones[respuesta])) {
 				correctas++;
 			}
 		}
-		calificacion = (preguntasQuiz.size() / correctas) * 100;
-		System.out.println("Calificacion: " + calificacion + "%");
-		System.out.println("Preguntas correctas: " + correctas);
-		if (calificacion >= actividadBase.getCalificacionMinima()) {
-			System.out.println("Felicidades, ha aprobado el quiz");
-			estudiante.getAvance(actividadBase.getLearningPathAsignado().getID()).addActividadRealizada(this);
-			if (actividadBase.isObligatoria()) {
-				double porcentajeActividades = estudiante.getAvance(actividadBase.getLearningPathAsignado().getID())
-						.getActividadesCompletadas();
-
-			}
-
-		} else {
-			System.out.println("Lo siento, no ha aprobado el quiz");
-		}
+		enviarActividad();
 	}
 
 	@Override
@@ -68,6 +74,21 @@ public class QuizRealizable extends ActividadRealizable {
 	@Override
 	public void enviarActividad() {
 		guardarActividad();
+		calificacion = (actividadBase.getPreguntasQuiz().size() / correctas) * 100;
+		System.out.println("Calificacion: " + calificacion + "%");
+		System.out.println("Preguntas correctas: " + correctas);
+		if (calificacion >= actividadBase.getCalificacionMinima()) {
+			System.out.println("Felicidades, ha aprobado el quiz");
+			estudiante.getAvance(actividadBase.getLearningPathAsignado().getID()).addActividadRealizada(this);
+			if (actividadBase.isObligatoria()) {
+				double porcentajeActividades = estudiante.getAvance(actividadBase.getLearningPathAsignado().getID())
+						.getActividadesCompletadas();
+			}
+
+		} else {
+			System.out.println("Lo siento, no ha aprobado el quiz");
+		}
+
 		Profesor profesor = actividadBase.getLearningPathAsignado().getProfesorCreador();
 		profesor.addActividadPendiente(this);
 	}
