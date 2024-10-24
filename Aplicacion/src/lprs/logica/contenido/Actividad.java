@@ -1,16 +1,13 @@
 package lprs.logica.contenido;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import lprs.logica.contenido.realizable.ActividadRealizable;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
 
-
-
 public abstract class Actividad {
-	protected static int actividadesCreadas=0;
+    protected static int actividadesCreadas = 0;
     protected String numeroActividad;
     protected String titulo;
     protected String descripcion;
@@ -18,7 +15,7 @@ public abstract class Actividad {
     protected String nivelDificultad;
     protected int duracionEsperada;
     protected boolean obligatoria;
-    protected Date fechaLimite;
+    protected String fechaLimite;
     protected String estado;
     protected ArrayList<Resenia> resenias;
     protected ArrayList<Actividad> actividadesPrevias;
@@ -26,8 +23,8 @@ public abstract class Actividad {
     protected LearningPath learningPathAsignado;
 
     public Actividad(String titulo, String descripcion, String objetivo, int duracionEsperada,
-            boolean obligatoria, Date fechaLimite, LearningPath lP, String dificultad) {
-    	actividadesCreadas++;
+            boolean obligatoria, String fechaLimite, LearningPath lP, String dificultad) {
+        actividadesCreadas++;
         this.numeroActividad = Integer.toString(actividadesCreadas);
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -39,7 +36,7 @@ public abstract class Actividad {
         this.resenias = new ArrayList<Resenia>();
         this.actividadesPrevias = new ArrayList<Actividad>();
         this.actividadesSeguimiento = new ArrayList<Actividad>();
-        this.learningPathAsignado= lP;
+        this.learningPathAsignado = lP;
         this.nivelDificultad = dificultad;
     }
 
@@ -57,7 +54,7 @@ public abstract class Actividad {
         this.actividadesSeguimiento = actividad.getActividadesSeguimiento();
     }
 
-    public abstract ActividadRealizable crearActividadRealizable(Estudiante estudiante	);
+    public abstract ActividadRealizable crearActividadRealizable(Estudiante estudiante);
 
     /**
      * Obtiene el número de la actividad.
@@ -76,7 +73,7 @@ public abstract class Actividad {
     public String getTitulo() {
         return titulo;
     }
-    
+
     /**
      * Obtiene el nivel de dificultad de la actividad.
      *
@@ -127,7 +124,7 @@ public abstract class Actividad {
      *
      * @return la Date límite de la actividad
      */
-    public Date getFechaLimite() {
+    public String getFechaLimite() {
         return fechaLimite;
     }
 
@@ -175,7 +172,7 @@ public abstract class Actividad {
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-    
+
     /**
      * Establece el nivel de dificultad de la actividad.
      *
@@ -227,7 +224,7 @@ public abstract class Actividad {
      *
      * @param fechaLimite la nueva Date límite de la actividad
      */
-    public void setFechaLimite(Date fechaLimite) {
+    public void setFechaLimite(String fechaLimite) {
         this.fechaLimite = fechaLimite;
     }
 
@@ -237,7 +234,7 @@ public abstract class Actividad {
      * @param estado el nuevo estado de la actividad
      */
     public void setEstado(String estado) {
-    	this.estado = estado;
+        this.estado = estado;
     }
 
     /**
@@ -313,24 +310,24 @@ public abstract class Actividad {
         actividadesSeguimiento.remove(actividadSeguimiento);
     }
 
-	public static int getActividadesCreadas() {
-		return actividadesCreadas;
-	}
+    public static int getActividadesCreadas() {
+        return actividadesCreadas;
+    }
 
-	public static void setActividadesCreadas(int actividadesCreadas) {
-		Actividad.actividadesCreadas = actividadesCreadas;
-	}
+    public static void setActividadesCreadas(int actividadesCreadas) {
+        Actividad.actividadesCreadas = actividadesCreadas;
+    }
 
-	public LearningPath getLearningPathAsignado() {
-		return learningPathAsignado;
-	}
+    public LearningPath getLearningPathAsignado() {
+        return learningPathAsignado;
+    }
 
-	public void setLearningPathAsignado(LearningPath learningPathAsignado) {
-		this.learningPathAsignado = learningPathAsignado;
-	}
+    public void setLearningPathAsignado(LearningPath learningPathAsignado) {
+        this.learningPathAsignado = learningPathAsignado;
+    }
 
-	public void setNumeroActividad(String numeroActividad) {
-		this.numeroActividad = numeroActividad;
-	}
-    
+    public void setNumeroActividad(String numeroActividad) {
+        this.numeroActividad = numeroActividad;
+    }
+
 }

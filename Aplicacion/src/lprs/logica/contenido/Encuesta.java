@@ -1,20 +1,19 @@
 package lprs.logica.contenido;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import lprs.logica.contenido.pregunta.PreguntaAbierta;
 import lprs.logica.contenido.realizable.ActividadRealizable;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
 
-public class Encuesta extends Actividad{
+public class Encuesta extends Actividad {
 	public ArrayList<PreguntaAbierta> preguntasEncuesta;
-	
+
 	public Encuesta(String titulo, String descripcion, String objetivo, int duracionEsperada, boolean obligatoria,
-			Date fechaLimite, LearningPath lP, String dificultad, ArrayList<PreguntaAbierta> preguntasEncuesta) {
+			String fechaLimite, LearningPath lP, String dificultad) {
 		super(titulo, descripcion, objetivo, duracionEsperada, obligatoria, fechaLimite, lP, dificultad);
-		this.preguntasEncuesta = preguntasEncuesta;
+		this.preguntasEncuesta = new ArrayList<PreguntaAbierta>();
 	}
 
 	public ArrayList<PreguntaAbierta> getPreguntasEncuesta() {
@@ -22,16 +21,16 @@ public class Encuesta extends Actividad{
 	}
 
 	public void setPreguntasEncuesta(ArrayList<PreguntaAbierta> preguntas) {
-        this.preguntasEncuesta = preguntas;
-    }
-	
+		this.preguntasEncuesta = preguntas;
+	}
+
 	public void addPreguntaEncuesta(PreguntaAbierta pregunta) {
 		preguntasEncuesta.add(pregunta);
-    }
-	
+	}
+
 	public void removePreguntaEncuesta(PreguntaAbierta pregunta) {
 		preguntasEncuesta.remove(pregunta);
-    }
+	}
 
 	@Override
 	public ActividadRealizable crearActividadRealizable(Estudiante estudiante) {
@@ -39,6 +38,4 @@ public class Encuesta extends Actividad{
 		return null;
 	}
 
-	
 }
-	

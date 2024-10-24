@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import lprs.logica.contenido.Actividad;
+import lprs.logica.contenido.Quiz;
+import lprs.logica.contenido.RecursoEducativo;
+import lprs.logica.contenido.Tarea;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.cuentas.Profesor;
 import lprs.principal.LPRS;
@@ -49,6 +52,7 @@ public class LearningPath {
 		this.estudiantesInscritos = new ArrayList<Estudiante>();
 		this.profesorCreador = profesorCreador;
 		this.metadatos = new Metadato("1");
+		this.lprsActual = lprsActual;
 	}
 
 	/**
@@ -69,6 +73,73 @@ public class LearningPath {
 		this.calificaciones = LP.calificaciones;
 		this.actividades = LP.getActividades();
 		this.estudiantesInscritos = new ArrayList<Estudiante>();
+		this.profesorCreador = profesorCreador;
+		this.metadatos = new Metadato("1");
+		this.lprsActual = LP.lprsActual;
+	}
+
+	public Tarea crearTarea(String titulo, String descripcion, String objetivo, int duracion, boolean obligatoria,
+			String fechaEntrega) {
+		Tarea tarea = new Tarea(titulo, descripcion, objetivo, duracion, obligatoria, fechaEntrega, this, objetivo);
+		actividades.add(tarea);
+		return tarea;
+	}
+
+	public RecursoEducativo crearRecursoEducativo(String titulo, String descripcion, String objetivo, int duracion,
+			boolean obligatoria, String fechaEntrega, String tipoRecurso, String url) {
+		RecursoEducativo recurso = new RecursoEducativo(titulo, descripcion, objetivo, duracion, obligatoria,
+				fechaEntrega, this, objetivo, tipoRecurso, url);
+		return recurso;
+	}
+
+	public Quiz crearQuiz(String titulo, String descripcion, String objetivo, int duracion, boolean obligatoria,
+			String fechaEntrega, double calificacionMinima) {
+		Quiz quiz = new Quiz(titulo, descripcion, objetivo, duracion, obligatoria, fechaEntrega, this, objetivo,
+				calificacionMinima);
+		return quiz;
+	}
+
+	public static int getNumeroLP() {
+		return numeroLP;
+	}
+
+	public static void setNumeroLP(int numeroLP) {
+		LearningPath.numeroLP = numeroLP;
+	}
+
+	public int getCalificaciones() {
+		return calificaciones;
+	}
+
+	public void setCalificaciones(int calificaciones) {
+		this.calificaciones = calificaciones;
+	}
+
+	public LPRS getLprsActual() {
+		return lprsActual;
+	}
+
+	public void setLprsActual(LPRS lprsActual) {
+		this.lprsActual = lprsActual;
+	}
+
+	public void setDuracion(int duracion) {
+		this.duracion = duracion;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+
+	public void setActividades(ArrayList<Actividad> actividades) {
+		this.actividades = actividades;
+	}
+
+	public void setEstudiantesInscritos(ArrayList<Estudiante> estudiantesInscritos) {
+		this.estudiantesInscritos = estudiantesInscritos;
+	}
+
+	public void setProfesorCreador(Profesor profesorCreador) {
 		this.profesorCreador = profesorCreador;
 	}
 

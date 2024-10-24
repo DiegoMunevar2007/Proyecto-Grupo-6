@@ -1,7 +1,9 @@
 package lprs.consola;
 
+import java.util.HashMap;
 import java.util.List;
 
+import lprs.logica.contenido.Actividad;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.Avance;
 import lprs.logica.learningPath.LearningPath;
@@ -19,9 +21,10 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
     public void mostrarConsolaEstudiante() {
         System.out.println("Bienvenido " + estudiante.getUsuario());
         String[] opciones = { "Ver mis Leaning Paths", "Inscribir un learning Path", "Ver mi avance",
+                "Realizar una actividad",
                 "Salir" };
 
-        mostrarOpciones(3, opciones);
+        mostrarOpciones(5, opciones);
         int opcion = lectura.nextInt();
 
         if (opcion == 1) {
@@ -32,14 +35,20 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
             estudiante.inscribirLearningPath(id);
             mostrarConsolaEstudiante();
         } else if (opcion == 3) {
-            
-        } else if (opcion==4) {
-        	System.out.println("Hasta luego!");
+
+            escogerAvance();
+            mostrarConsolaEstudiante();
+        } else if (opcion == 4) {
+            Actividad actividad = escogerActividad();
+            RealizarActividad(actividad);
+            mostrarConsolaEstudiante();
+        } else if (opcion == 5) {
+            System.out.println("Hasta luego!");
             CentralPersistencia cp = new CentralPersistencia(lprsActual);
             cp.guardarDatos();
             return;
         }
-        
+
         else {
             System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
             mostrarConsolaEstudiante();
@@ -47,16 +56,14 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
     }
 
     public String mostrarLearningPaths() {
-    	List<LearningPath> learningPathsDisponibles = estudiante.getLearningPathsInscritos();
+        List<LearningPath> learningPathsDisponibles = estudiante.getLearningPathsInscritos();
         if (learningPathsDisponibles.isEmpty()) {
-        	System.out.println("No tienes learning paths inscritos");
+            System.out.println("No tienes learning paths inscritos");
             mostrarConsolaEstudiante();
             return null;
         }
-        else {
-        	for (int i =1; i<learningPathsDisponibles.size(); i++) {
-        		System.out.println(Integer.toString(i)+". "+ learningPathsDisponibles.get(i).getTitulo());
-        	}
+        for (int i = 0; i < learningPathsDisponibles.size(); i++) {
+            System.out.println(Integer.toString(i + 1) + ". " + learningPathsDisponibles.get(i).getTitulo());
         }
         System.out.println("Seleccione un Learning Path: ");
         int opcion = lectura.nextInt();
@@ -79,10 +86,38 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
     }
 
     public void escogerAvance() {
-    String id =mostrarLearningPaths();
-    Avance avance =estudiante.getAvance(id);
-    System.out.println(avance.getTasaExito());
+        String id = mostrarLearningPaths();
+        Avance avance = estudiante.getAvance(id);
+        System.out.println("Este es tu avance en el Learning Path seleccionado: ");
+        int indice = 0;
+        HashMap<String, Actividad> avanceMap = avance.getActividadesObligatorias();
+
     }
+
+    public Actividad escogerActividad() {
+        String ID = mostrarLearningPaths();
+        LearningPath lP = estudiante.getLprsActual().getManejadorLP().getLearningPath(ID);
+        List<Actividad> actividades = lP.getActividades();
+        if (actividades.isEmpty()) {
+            System.out.println("No hay actividades disponibles en este Learning Path.");
+            return null;
+        }
+        System.out.println("Seleccione una actividad: ");
+        for (int i = 0; i < actividades.size(); i++) {
+            System.out.println(i + 1 + ". " + actividades.get(i).getTitulo());
+        }
+        int opcion = lectura.nextInt();
+        if (opcion < 1 || opcion > actividades.size()) {
+            System.out.println("Opción no válida. Por favor, seleccione una actividad de la lista.");
+            return escogerActividad();
+        }
+        return actividades.get(opcion - 1);
+    }
+
+    public void RealizarActividad(Actividad actividad) {
+        actividad.crearActividadRealizable(estudiante).realizarActividad();
+    }
+
     public String escogerLearningPath() {
         List<LearningPath> learningPathsDisponibles = lprsActual.getManejadorLP().learningPathsDisponibles();
         mostrarLearningPathsDisponibles();

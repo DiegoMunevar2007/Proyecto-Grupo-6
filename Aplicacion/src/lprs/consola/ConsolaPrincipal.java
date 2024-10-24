@@ -35,15 +35,16 @@ public class ConsolaPrincipal {
 				mostrarConsolaPrincipal();
 			} else {
 				usuarioActual = usuarioEncontrado;
-			}
-			if (usuarioEncontrado.getTipo() == "Estudiante") {
-				ConsolaEstudiante consolaEstudiante = new ConsolaEstudiante(lprsActual, (Estudiante) usuarioEncontrado);
-				consolaEstudiante.mostrarConsolaEstudiante();
-				return;
-			} else {
-				ConsolaProfesor consolaProfesor = new ConsolaProfesor(lprsActual, (Profesor) usuarioEncontrado);
-				consolaProfesor.mostrarConsolaProfesor();
-				return;
+				if (usuarioEncontrado.getTipo() == "Estudiante") {
+					ConsolaEstudiante consolaEstudiante = new ConsolaEstudiante(lprsActual,
+							(Estudiante) usuarioEncontrado);
+					consolaEstudiante.mostrarConsolaEstudiante();
+					return;
+				} else {
+					ConsolaProfesor consolaProfesor = new ConsolaProfesor(lprsActual, (Profesor) usuarioEncontrado);
+					consolaProfesor.mostrarConsolaProfesor();
+					return;
+				}
 			}
 
 		} else if (opcion == 2) {
