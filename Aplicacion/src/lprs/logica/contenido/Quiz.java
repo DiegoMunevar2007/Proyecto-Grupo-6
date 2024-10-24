@@ -34,7 +34,9 @@ public class Quiz extends Actividad {
 
 	@Override
 	public ActividadRealizable crearActividadRealizable(Estudiante estudiante) {
-		return new QuizRealizable(estudiante, this);
+		QuizRealizable qR = new QuizRealizable(estudiante, this);
+		actividadesRealizablesCreadas.add(qR);
+		return qR;
 	}
 
 	public void addPreguntaQuiz(PreguntaCerrada pregunta) {

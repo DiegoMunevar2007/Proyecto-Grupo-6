@@ -1,6 +1,8 @@
 package lprs.logica.learningPath;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -56,9 +58,17 @@ public class LearningPath implements Serializable {
 		this.actividades = new ArrayList<Actividad>();
 		this.estudiantesInscritos = new ArrayList<Estudiante>();
 		this.profesorCreador = profesorCreador;
-		this.metadatos = new Metadato("1");
+		this.metadatos = new Metadato(obtenerFecha(), "1");
 		this.lprsActual = lprsActual;
 		this.cantidadObligatorias = 0;
+	}
+
+	public String obtenerFecha() {
+		LocalDateTime myDateObj = LocalDateTime.now();
+		DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+		String fechaString = myDateObj.format(myFormatObj);
+		return fechaString;
 	}
 
 	/**
@@ -68,7 +78,7 @@ public class LearningPath implements Serializable {
 	 * @param profesorCreador el profesor que crea la copia de la ruta de
 	 *                        aprendizaje
 	 */
-	public LearningPath(LearningPath LP, Profesor profesorCreador) {
+	public LearningPath(LearningPath LP, Profesor profesorCreador, String fechaCreacion) {
 		this.ID = asignarID();
 		this.titulo = LP.getTitulo();
 		this.descripcion = LP.getDescripcion();
@@ -80,7 +90,7 @@ public class LearningPath implements Serializable {
 		this.actividades = LP.getActividades();
 		this.estudiantesInscritos = new ArrayList<Estudiante>();
 		this.profesorCreador = profesorCreador;
-		this.metadatos = new Metadato("1");
+		this.metadatos = new Metadato(fechaCreacion, "1");
 		this.lprsActual = LP.lprsActual;
 	}
 
@@ -90,6 +100,7 @@ public class LearningPath implements Serializable {
 		actividades.add(tarea);
 		if (obligatoria) {
 			cantidadObligatorias++;
+			this.duracion = this.duracion + duracion;
 		}
 		return tarea;
 	}
@@ -101,6 +112,7 @@ public class LearningPath implements Serializable {
 		actividades.add(recurso);
 		if (obligatoria) {
 			cantidadObligatorias++;
+			this.duracion = this.duracion + duracion;
 		}
 		return recurso;
 	}
@@ -112,6 +124,7 @@ public class LearningPath implements Serializable {
 		actividades.add(quiz);
 		if (obligatoria) {
 			cantidadObligatorias++;
+			this.duracion = this.duracion + duracion;
 		}
 		return quiz;
 	}
@@ -139,58 +152,6 @@ public class LearningPath implements Serializable {
 
 	public int getCantidadObligatorias() {
 		return cantidadObligatorias;
-	}
-
-	public void editarLearningPath() {
-		Scanner lectura = new Scanner(System.in);
-		LearningPath lp = this;
-		System.out.println("¿Desea modificar el título? (s/n)");
-		String respuesta = lectura.next();
-		lectura.nextLine();
-		if (respuesta.equalsIgnoreCase("s")) {
-			System.out.println("Ingrese el nuevo título: ");
-			String titulo = lectura.nextLine();
-			lp.setTitulo(titulo);
-		}
-		System.out.println("¿Desea modificar la descripción? (s/n)");
-		respuesta = lectura.next();
-		lectura.nextLine();
-		if (respuesta.equalsIgnoreCase("s")) {
-			System.out.println("Ingrese la nueva descripción: ");
-			String descripcion = lectura.nextLine();
-			lp.setDescripcion(descripcion);
-		}
-		System.out.println("¿Desea modificar el nivel de dificultad? (s/n)");
-		respuesta = lectura.next();
-		lectura.nextLine();
-		if (respuesta.equalsIgnoreCase("s")) {
-			System.out.println("Ingrese el nuevo nivel de dificultad: ");
-			String nivelDificultad = lectura.next();
-			lp.setNivelDificultad(nivelDificultad);
-		}
-		System.out.println("¿Desea modificar los objetivos? (s/n)");
-		respuesta = lectura.next();
-		if (respuesta.equalsIgnoreCase("s")) {
-			lectura.nextLine();
-			ArrayList<String> objetivos = new ArrayList<>();
-			boolean terminado = false;
-			while (!terminado) {
-				System.out.println("Ingrese un objetivo: ");
-				String objetivo = lectura.nextLine();
-				objetivos.add(objetivo);
-
-				System.out.println("¿Desea agregar otro objetivo? (s/n): ");
-				respuesta = lectura.next();
-				lectura.nextLine();
-				if (respuesta.equalsIgnoreCase("n")) {
-					terminado = true;
-				}
-			}
-			lp.setObjetivos(objetivos);
-		}
-
-		System.out.println("Learning Path modificado con éxito.");
-		lectura.close();
 	}
 
 	public static int getNumeroLP() {
@@ -346,8 +307,8 @@ public class LearningPath implements Serializable {
 	 * @param d la nueva calificación de la ruta de aprendizaje
 	 */
 	public void cambiarRating(double d) {
+		d = (this.rating * calificaciones + d) / (calificaciones + 1);
 		calificaciones++;
-		d = (this.rating * calificaciones + d) / calificaciones;
 		this.rating = d;
 	}
 
@@ -461,7 +422,7 @@ public class LearningPath implements Serializable {
 			this.descripcion = descripcion;
 			this.nivelDificultad = nivelDificultad;
 			this.objetivos = objetivos;
-			this.metadatos.setFechaModificacion(new Date());
+			this.metadatos.setFechaModificacion(obtenerFecha());
 			String versionActual = this.metadatos.getVersion();
 			int versionActualInt = Integer.parseInt(versionActual) + 1;
 			this.metadatos.setVersion(Integer.toString(versionActualInt));

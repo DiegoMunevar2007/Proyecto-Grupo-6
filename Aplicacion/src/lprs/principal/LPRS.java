@@ -2,9 +2,9 @@ package lprs.principal;
 
 import java.io.Serializable;
 
-import lprs.consola.ConsolaPrincipal;
 import lprs.manejador.ManejadorLP;
 import lprs.manejador.ManejadorSesion;
+import lprs.metodosPrueba.MetodosPrueba;
 import lprs.persistencia.PersistenciaLP;
 import lprs.persistencia.PersistenciaUsuario;
 
@@ -20,14 +20,41 @@ public class LPRS implements Serializable {
 	public static void main(String[] args) {
 
 		LPRS lprs = new LPRS();
+		// try {
+		// lprs.cargarDatos();
+		// ConsolaPrincipal consolaP = new ConsolaPrincipal(lprs);
+		// consolaP.mostrarConsolaPrincipal();
+		// } catch (Exception e) {
+		// TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		MetodosPrueba metodoPrueba = new MetodosPrueba(lprs);
 		try {
-			lprs.cargarDatos();
-			ConsolaPrincipal consolaP = new ConsolaPrincipal(lprs);
-			consolaP.mostrarConsolaPrincipal();
+			metodoPrueba.RF1();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.getMessage();
 		}
+		try {
+			metodoPrueba.RF2("Estudiante", "Hola");
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		try {
+			metodoPrueba.RF2("Profe", "Profe");
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		try {
+			metodoPrueba.RF2("Profe2", "Profe2");
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		metodoPrueba.RF3();
+		metodoPrueba.RF4();
+		metodoPrueba.RF5();
+		metodoPrueba.RF7();
+		metodoPrueba.RF8();
+		metodoPrueba.RF10();
 	}
 
 	public ManejadorLP getManejadorLP() {

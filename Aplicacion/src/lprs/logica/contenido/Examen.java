@@ -35,7 +35,9 @@ public class Examen extends Actividad {
 
 	@Override
 	public ActividadRealizable crearActividadRealizable(Estudiante estudiante) {
-		return new ExamenRealizable(estudiante, this);
+		ExamenRealizable eR= new ExamenRealizable(estudiante, this);
+		actividadesRealizablesCreadas.add(eR);
+		return eR;
 	}
 
 }

@@ -1,14 +1,12 @@
 package lprs.logica.contenido;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import lprs.logica.contenido.realizable.ActividadRealizable;
 import lprs.logica.cuentas.Estudiante;
-import lprs.logica.cuentas.Usuario;
 import lprs.logica.learningPath.LearningPath;
 
-public abstract class Actividad implements Serializable {
+public abstract class Actividad {
     protected static int actividadesCreadas = 0;
     protected String numeroActividad;
     protected String titulo;
@@ -22,6 +20,7 @@ public abstract class Actividad implements Serializable {
     protected ArrayList<Actividad> actividadesPrevias;
     protected ArrayList<Actividad> actividadesSeguimiento;
     protected LearningPath learningPathAsignado;
+    protected ArrayList<ActividadRealizable> actividadesRealizablesCreadas;
 
     public Actividad(String titulo, String descripcion, String objetivo, int duracionEsperada,
             boolean obligatoria, String fechaLimite, LearningPath lP, String dificultad) {
@@ -41,13 +40,15 @@ public abstract class Actividad implements Serializable {
     }
 
     public Actividad(Actividad actividad) {
-        this.numeroActividad = actividad.getNumeroActividad();
+        actividadesCreadas++;
+        this.numeroActividad = Integer.toString(actividadesCreadas);
         this.titulo = actividad.getTitulo();
         this.descripcion = actividad.getDescripcion();
         this.objetivo = actividad.getObjetivo();
         this.duracionEsperada = actividad.getDuracionEsperada();
         this.obligatoria = actividad.isObligatoria();
         this.fechaLimite = actividad.getFechaLimite();
+
         this.resenias = actividad.getResenias();
         this.actividadesPrevias = actividad.getActividadesPrevias();
         this.actividadesSeguimiento = actividad.getActividadesSeguimiento();
@@ -311,8 +312,4 @@ public abstract class Actividad implements Serializable {
         this.numeroActividad = numeroActividad;
     }
 
-    public void hacerResenia(Usuario usuario, String comentario, int rating) {
-        Resenia resenia = new Resenia(usuario, comentario, rating);
-        addResenia(resenia);
-    }
 }

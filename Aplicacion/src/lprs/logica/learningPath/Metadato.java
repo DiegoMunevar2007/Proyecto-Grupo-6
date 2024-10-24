@@ -4,22 +4,22 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Metadato implements Serializable {
-	private Date fechaCreacion;
-	private Date fechaModificacion;
+	private String fechaCreacion;
+	private String fechaModificacion;
 	private String version;
 
-	public Metadato(String version) {
-		this.fechaCreacion = new Date();
-		this.fechaModificacion = new Date();
+	public Metadato(String fechaCreacion,String version) {
+		this.fechaCreacion = fechaCreacion;
+		this.fechaModificacion = fechaCreacion;
 		this.version = version;
 	}
 
-	public Date getFechaModificacion() {
+	public String getFechaModificacion() {
 		return fechaModificacion;
 	}
 
-	public void setFechaModificacion(Date fechaModificacion) {
-		this.fechaModificacion = fechaModificacion;
+	public void setFechaModificacion(String fechaString) {
+		this.fechaModificacion = fechaString;
 	}
 
 	public String getVersion() {
@@ -30,11 +30,11 @@ public class Metadato implements Serializable {
 		this.version = version;
 	}
 
-	public Date getFechaCreacion() {
+	public String getFechaCreacion() {
 		return fechaCreacion;
 	}
 
-	public void setFechaCreacion(Date fecha) {
+	public void setFechaCreacion(String fecha) {
 		this.fechaCreacion = fecha;
 	}
 

@@ -37,7 +37,6 @@ public class Estudiante extends Usuario {
 	 * @param ID el ID de la ruta de aprendizaje en la que inscribir al estudiante
 	 */
 	public void inscribirLearningPath(String ID) {
-		System.out.println(lprsActual.getManejadorLP().getLearningPaths());
 		LearningPath lP = lprsActual.getManejadorLP().getLearningPath(ID);
 		learningPathsInscritos.add(lP);
 		lP.aniadirEstudiante(this);

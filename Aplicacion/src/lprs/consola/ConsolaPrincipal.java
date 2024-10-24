@@ -35,7 +35,7 @@ public class ConsolaPrincipal {
 				mostrarConsolaPrincipal();
 			} else {
 				usuarioActual = usuarioEncontrado;
-				if (usuarioEncontrado.getTipo() == "Estudiante") {
+				if (usuarioEncontrado.getTipo().equals("Estudiante")) {
 					ConsolaEstudiante consolaEstudiante = new ConsolaEstudiante(lprsActual,
 							(Estudiante) usuarioEncontrado);
 					consolaEstudiante.mostrarConsolaEstudiante();

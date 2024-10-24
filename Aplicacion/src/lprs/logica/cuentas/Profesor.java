@@ -1,6 +1,7 @@
 package lprs.logica.cuentas;
 
-import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -98,7 +99,12 @@ public class Profesor extends Usuario {
      */
     public void clonarLearningPath(String ID) {
         LearningPath lP = lprsActual.getManejadorLP().getLearningPath(ID);
-        LearningPath lPClon = new LearningPath(lP, this);
+        LocalDateTime myDateObj = LocalDateTime.now();
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        String fechaString = myDateObj.format(myFormatObj);
+        ;
+        LearningPath lPClon = new LearningPath(lP, this, fechaString);
         lprsActual.getManejadorLP().addLearningPath(lPClon);
         learningPathsCreados.put(lPClon.getID(), lPClon);
     }
@@ -109,6 +115,10 @@ public class Profesor extends Usuario {
 
     public ArrayList<ActividadRealizable> getActividadesPendientes() {
         return actividadesPendientes;
+    }
+
+    public LearningPath getLearningPathCreado(String ID) {
+        return learningPathsCreados.get(ID);
     }
 
     public void setActividadesPendientes(ArrayList<ActividadRealizable> actividadesPendientes) {
@@ -126,4 +136,5 @@ public class Profesor extends Usuario {
     public void addActividadPendiente(ActividadRealizable actividad) {
         actividadesPendientes.add(actividad);
     }
+
 }

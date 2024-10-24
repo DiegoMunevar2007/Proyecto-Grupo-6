@@ -35,7 +35,9 @@ public class Encuesta extends Actividad {
 
 	@Override
 	public ActividadRealizable crearActividadRealizable(Estudiante estudiante) {
-		return new EncuestaRealizable(this, estudiante);
+		EncuestaRealizable eR =new EncuestaRealizable(this, estudiante);
+		actividadesRealizablesCreadas.add(eR);
+		return eR;
 	}
 
 }

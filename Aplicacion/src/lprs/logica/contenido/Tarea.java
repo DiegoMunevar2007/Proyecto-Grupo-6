@@ -48,7 +48,9 @@ public class Tarea extends Actividad {
 	}
 
 	public ActividadRealizable crearActividadRealizable(Estudiante estudiante) {
-		return new TareaRealizable(this, estudiante);
+		TareaRealizable tR= new TareaRealizable(this, estudiante);
+		actividadesRealizablesCreadas.add(tR);
+		return tR;
 	}
 
 }
