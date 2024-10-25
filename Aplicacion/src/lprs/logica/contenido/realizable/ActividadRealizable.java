@@ -15,11 +15,13 @@ public abstract class ActividadRealizable implements Serializable {
 	protected String estado;
 	protected Estudiante estudiante;
 	protected Actividad actividadBase;
+	protected int tiempoTomado;
 
 	public ActividadRealizable(Estudiante estudiante) {
 		this.comentarios = "";
 		this.estado = "";
 		this.estudiante = estudiante;
+		tiempoTomado = 0;
 	}
 
 	public abstract void calificarActividad();
@@ -29,6 +31,18 @@ public abstract class ActividadRealizable implements Serializable {
 	public abstract void guardarActividad();
 
 	public abstract void enviarActividad();
+
+	public int getTiempoTomado() {
+		return tiempoTomado;
+	}
+
+	public void setTiempoTomado(int tiempoTomado) {
+		this.tiempoTomado = tiempoTomado;
+	}
+
+	public void setActividadBase(Actividad actividadBase) {
+		this.actividadBase = actividadBase;
+	}
 
 	public String getComentarios() {
 		return comentarios;
@@ -66,6 +80,10 @@ public abstract class ActividadRealizable implements Serializable {
 		for (Actividad actividadPrevia : actividadBase.getActividadesPrevias()) {
 			// Si no esta en el avance del estudiante, se agrega a la lista de actividades
 			// no completadas
+			for (Actividad actividadCompletada : avanceEstudiante.getActividadesCompletadasLista()) {
+				System.out.println("Actividad realizada " + actividadCompletada);
+			}
+			if (!avanceEstudiante.getActividadesPendientes().contains(actividadPrevia)) {
 			for (ActividadRealizable actividadCompletada : avanceEstudiante.getActividadesRealizadas()) {
 				System.out.println("Actividad realizada " + actividadCompletada.getActividadBase().getTitulo());
 			}
@@ -75,6 +93,9 @@ public abstract class ActividadRealizable implements Serializable {
 			}
 		}
 		// Si no se completaron todas las actividades previas, se lanza una excepcion
+		if (!todasActividadesPreviasCompletas)
+
+		{
 		if (!todasActividadesPreviasCompletas)
 
 		{

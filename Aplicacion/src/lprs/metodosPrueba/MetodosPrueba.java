@@ -235,9 +235,9 @@ public class MetodosPrueba {
 
 	public void RF13() {
 		System.out.println("Requerimiento funcional 13");
-		ArrayList<Actividad> actividades = estudianteIniciado.getLearningPathsInscritos().get(0).getActividades();
-		for (Actividad actividad : actividades) {
-			estudianteIniciado.realizarActividad(actividad);
+		ArrayList<Actividad> actividades = estudianteIniciado.obtenerAvance("0").getActividadesPendientes();
+		while (!actividades.isEmpty()) {
+			estudianteIniciado.realizarActividad(actividades.get(0));
 		}
 		System.out.println("----------------------");
 	}
@@ -245,8 +245,8 @@ public class MetodosPrueba {
 	public void RF11() {
 		System.out.println("Requerimiento funcional 11");
 		Avance avanceEstudiante = estudianteIniciado.getAvance("0");
-		List<ActividadRealizable> actividades = avanceEstudiante.getActividadesRealizadas();
-		Actividad actividadBase = actividades.get(0).getActividadBase();
+		ArrayList<Actividad> actividades = avanceEstudiante.getActividadesCompletadasLista();
+		Actividad actividadBase = actividades.get(0);
 		actividadBase.addResenia(new Resenia(estudianteIniciado, "Buena actividad", 5));
 		for (Resenia resenia : actividadBase.getResenias()) {
 			System.out.println(resenia.getContenido());

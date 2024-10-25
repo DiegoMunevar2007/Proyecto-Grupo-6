@@ -41,12 +41,15 @@ public class RecursoRealizable extends ActividadRealizable {
 		} catch (Exception e) {
 			System.out.println("Ocurrió un error: " + e.getMessage());
 		}
+		long tiempoInicial = System.currentTimeMillis();
 		System.out.println("Realizando recurso...");
 		System.out.println("Titulo del recurso: " + actividadBase.getTitulo());
 		System.out.println("Descripcion del recurso: " + actividadBase.getDescripcion());
 		System.out.println("Duracion esperada: " + actividadBase.getDuracionEsperada());
 		System.out.println("Tipo de recurso a consultar: " + actividadBase.getTipoRecurso());
 		System.out.println("URL del recurso: " + actividadBase.getUrl());
+		long tiempoFinal = System.currentTimeMillis();
+		tiempoTomado = (int) (tiempoFinal - tiempoInicial) * 1000;
 		enviarActividad();
 	}
 

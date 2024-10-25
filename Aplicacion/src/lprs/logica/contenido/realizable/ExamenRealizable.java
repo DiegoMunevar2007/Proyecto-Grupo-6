@@ -15,11 +15,13 @@ public class ExamenRealizable extends ActividadRealizable {
 
     private Examen actividadBase;
     private ArrayList<PreguntaAbiertaRealizable> preguntasRealizadas;
+    private int tiempoTomado;
 
     public ExamenRealizable(Estudiante estudiante, Examen examen) {
         super(estudiante);
         this.actividadBase = examen;
         this.preguntasRealizadas = new ArrayList<PreguntaAbiertaRealizable>();
+        this.tiempoTomado=0;
         // TODO Auto-generated constructor stub
     }
 
@@ -62,6 +64,7 @@ public class ExamenRealizable extends ActividadRealizable {
         // TODO Auto-generated method stub
         ArrayList<PreguntaAbierta> preguntasExamen = actividadBase.getPreguntasExamen();
         Scanner scanner = new Scanner(System.in);
+        long tiempoInicial = System.currentTimeMillis();
         for (int i = 0; i < preguntasExamen.size(); i++) {
             scanner.nextLine();
             PreguntaAbierta pregunta = preguntasExamen.get(i);
@@ -73,8 +76,9 @@ public class ExamenRealizable extends ActividadRealizable {
         }
         scanner.close();
         System.out.println("Examen completado.");
-
-        throw new UnsupportedOperationException("Unimplemented method 'realizarActividad'");
+        long tiempoFinal = System.currentTimeMillis();
+        tiempoTomado = (int)(tiempoFinal-tiempoInicial)*1000;
+        enviarActividad();
     }
 
     @Override

@@ -9,6 +9,7 @@ import lprs.logica.contenido.Actividad;
 import lprs.logica.contenido.Seccion;
 import lprs.logica.contenido.Tarea;
 import lprs.logica.cuentas.Estudiante;
+import lprs.logica.cuentas.Profesor;
 import lprs.logica.learningPath.Avance;
 
 public class TareaRealizable extends ActividadRealizable {
@@ -23,6 +24,7 @@ public class TareaRealizable extends ActividadRealizable {
 		seccionActual = 0;
 		seccionActual = 0;
 		lectura = new Scanner(System.in);
+
 	}
 
 	@Override
@@ -42,6 +44,7 @@ public class TareaRealizable extends ActividadRealizable {
 		} catch (Exception e) {
 			System.out.println("Ocurrió un error: " + e.getMessage());
 		}
+		long tiempoInicial = System.currentTimeMillis();
 		System.out.println("Realizando tarea...");
 		System.out.println("Titulo: " + actividadBase.getTitulo());
 		System.out.println("Descripcion: " + actividadBase.getDescripcion());
@@ -93,12 +96,16 @@ public class TareaRealizable extends ActividadRealizable {
 			System.out.println("¿Ha enviado la tarea? (S/N)");
 			String respuesta = lectura.nextLine();
 			if (respuesta.equalsIgnoreCase("S")) {
+				long tiempoFinal = System.currentTimeMillis();
+				tiempoTomado = (int) (tiempoFinal - tiempoInicial) * 1000;
 				enviarActividad();
 			}
 		} else {
 			System.out.println("¿Ha enviado la tarea? (S/N)");
 			String respuesta = lectura.nextLine();
 			if (respuesta.equalsIgnoreCase("S")) {
+				long tiempoFinal = System.currentTimeMillis();
+				tiempoTomado = (int) (tiempoFinal - tiempoInicial) * 1000;
 				enviarActividad();
 			}
 		}
@@ -107,9 +114,14 @@ public class TareaRealizable extends ActividadRealizable {
 	@Override
 	public void enviarActividad() {
 		// TODO Auto-generated method stub
-		Avance avance = estudiante.getAvance(actividadBase.getLearningPathAsignado().getID());
-		avance.setActividadesCompletadas(avance.getActividadesCompletadas() + 1);
-		avance.getActividadesRealizadas().add(this);
+		guardarActividad();
+		try {
+			setEstado("No Exitoso");
+		} catch (EstadoException e) {
+			e.printStackTrace();
+		}
+		Profesor profesor = actividadBase.getLearningPathAsignado().getProfesorCreador();
+		profesor.addActividadPendiente(this);
 
 	}
 
@@ -133,7 +145,8 @@ public class TareaRealizable extends ActividadRealizable {
 
 	@Override
 	public void guardarActividad() {
-
+		LearningPath lP = actividadBase.getLearningPathAsignado();
+		estudiante.getAvance(lP.getID()).addActividadRealizada(this);
 	}
 
 	@Override

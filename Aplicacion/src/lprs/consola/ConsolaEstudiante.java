@@ -36,7 +36,6 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
             mostrarConsolaEstudiante();
         } else if (opcion == 3) {
 
-            escogerAvance();
             mostrarConsolaEstudiante();
         } else if (opcion == 4) {
             Actividad actividad = escogerActividad();
@@ -85,14 +84,7 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
         return lP.getID();
     }
 
-    public void escogerAvance() {
-        String id = mostrarLearningPaths();
-        Avance avance = estudiante.getAvance(id);
-        System.out.println("Este es tu avance en el Learning Path seleccionado: ");
-        int indice = 0;
-        HashMap<String, Actividad> avanceMap = avance.getActividadesObligatorias();
 
-    }
 
     public Actividad escogerActividad() {
         String ID = mostrarLearningPaths();

@@ -36,7 +36,7 @@ public class EncuestaRealizable extends ActividadRealizable {
         } catch (Exception e) {
             System.out.println("Ocurrió un error: " + e.getMessage());
         }
-
+        long tiempoInicial = System.currentTimeMillis();
         ArrayList<PreguntaAbierta> preguntasEncuesta = actividadBase.getPreguntasEncuesta();
         System.out.println("Realizando encuesta...");
         System.out.println("Titulo: " + actividadBase.getTitulo());
@@ -52,6 +52,8 @@ public class EncuestaRealizable extends ActividadRealizable {
             PreguntaAbiertaRealizable preguntaRealizada = new PreguntaAbiertaRealizable(respuesta, pregunta);
             preguntasRealizadas.add(preguntaRealizada);
         }
+        long tiempoFinal = System.currentTimeMillis();
+        tiempoTomado = (int) (tiempoFinal - tiempoInicial) * 1000;
         enviarActividad();
         System.out.println("Encuesta realizada.");
     }
@@ -66,7 +68,7 @@ public class EncuestaRealizable extends ActividadRealizable {
     public void enviarActividad() {
         guardarActividad();
         try {
-            setEstado("Enviado");
+            setEstado("Completado");
         } catch (EstadoException e) {
             e.printStackTrace();
         }
@@ -76,7 +78,7 @@ public class EncuestaRealizable extends ActividadRealizable {
 
     @Override
     public void setEstado(String estado) throws EstadoException {
-        if (estado.equals("Enviado") || estado.equals("No exitoso") || estado.equals("Exitoso")) {
+        if (estado.equals("Completado")) {
             this.estado = estado;
         } else {
             throw new EstadoException(this.getActividadBase(), estado);

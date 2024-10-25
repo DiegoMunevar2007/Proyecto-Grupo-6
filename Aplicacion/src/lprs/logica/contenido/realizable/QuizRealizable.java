@@ -46,22 +46,39 @@ public class QuizRealizable extends ActividadRealizable {
 		}
 
 		System.out.println("Realizando quiz...");
+		try {
+			verificarEligibilidad();
+		} catch (ActividadPreviaException e) {
+			System.out.println(e.getMessage());
+			System.out.println("¿Desea continuar con la actividad sin realizar las demás? (S/N)");
+			String respuesta = lecturaQuiz.nextLine();
+			if (respuesta.equalsIgnoreCase("N")) {
+				return;
+			} else {
+				System.out.println("Continuando con la actividad...");
+			}
+		} catch (Exception e) {
+			System.out.println("Ocurrió un error: " + e.getMessage());
+		}
 		ArrayList<PreguntaCerrada> preguntasQuiz = actividadBase.getPreguntasQuiz();
+		long tiempoInicial = System.currentTimeMillis();
 		for (PreguntaCerrada pregunta : preguntasQuiz) {
 			System.out.println(pregunta.getEnunciado());
 			System.out.println("Opciones:");
 			Opcion[] opciones = pregunta.getOpciones();
 			for (int i = 0; i < pregunta.getOpciones().length; i++) {
-				System.out.println(i + ". " + opciones[i].getOpcion());
+				System.out.println(i + 1 + ". " + opciones[i].getOpcion());
 			}
 			System.out.println("Ingrese el número de la respuesta correcta:");
 			int respuesta = lecturaQuiz.nextInt();
 			PreguntaCerradaRealizable preguntaRealizable = new PreguntaCerradaRealizable(pregunta, opciones[respuesta]);
 			preguntas.add(preguntaRealizable);
-			if (preguntaRealizable.verificarOpcion(opciones[respuesta])) {
+			if (preguntaRealizable.verificarOpcion(opciones[respuesta - 1])) {
 				correctas++;
 			}
 		}
+		long tiempoFinal = System.currentTimeMillis();
+		tiempoTomado = (int) (tiempoFinal - tiempoInicial) * 1000;
 		enviarActividad();
 	}
 
@@ -80,11 +97,6 @@ public class QuizRealizable extends ActividadRealizable {
 		if (calificacion >= actividadBase.getCalificacionMinima()) {
 			System.out.println("Felicidades, ha aprobado el quiz");
 			estudiante.getAvance(actividadBase.getLearningPathAsignado().getID()).addActividadRealizada(this);
-			if (actividadBase.isObligatoria()) {
-				double porcentajeActividades = estudiante.getAvance(actividadBase.getLearningPathAsignado().getID())
-						.getActividadesCompletadas();
-			}
-
 		} else {
 			System.out.println("Lo siento, no ha aprobado el quiz");
 		}

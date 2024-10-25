@@ -17,7 +17,7 @@ public class LPRS implements Serializable {
 		manejadorSesion = new ManejadorSesion(this);
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		LPRS lprs = new LPRS();
 		// try {
@@ -51,6 +51,7 @@ public class LPRS implements Serializable {
 		}
 		metodoPrueba.RF3();
 		metodoPrueba.RF4();
+		lprs.guardarDatos();
 		metodoPrueba.RF5();
 		metodoPrueba.RF7();
 		metodoPrueba.RF8();

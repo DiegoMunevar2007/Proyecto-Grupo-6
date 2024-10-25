@@ -1,12 +1,13 @@
 package lprs.logica.contenido;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import lprs.logica.contenido.realizable.ActividadRealizable;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
 
-public abstract class Actividad {
+public abstract class Actividad implements Serializable{
     protected static int actividadesCreadas = 0;
     protected String numeroActividad;
     protected String titulo;

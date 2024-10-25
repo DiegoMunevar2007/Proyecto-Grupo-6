@@ -10,49 +10,47 @@ import lprs.logica.contenido.Actividad;
 import lprs.logica.contenido.realizable.ActividadRealizable;
 
 public class Avance implements Serializable {
-	private double actividadesCompletadas;
-	private Date fechaInicio;
-	private Date fechaFin;
+	private double actividadesCompletadasPorcentaje;
+	private int cantidadActividadesObligatorias;
+	private String fechaInicio;
+	private String fechaFin;
 	private double tiempoDedicado;
 	private double tasaExito;
 	private double tasaFracaso;
 	private LearningPath learningPathCorrespondiente;
-	private List<ActividadRealizable> actividadesRealizadas;
-	private HashMap<String, Actividad> actividadesObligatorias;
+	private ArrayList<Actividad> actividadesPendientes;
+	private HashMap<Actividad, ActividadRealizable> actividadesCompletadas;
+	private ArrayList<Actividad> actividadesCompletadasLista;
+	
 
-	public Avance(Date fechaInicio, LearningPath learningPathCorrespondiente) {
-		this.actividadesCompletadas = 0.0;
+	public Avance(String fechaInicio, LearningPath learningPathCorrespondiente) {
+		this.actividadesCompletadasPorcentaje = 0.0;
+		this.cantidadActividadesObligatorias = learningPathCorrespondiente.getCantidadObligatorias();
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = null;
 		this.tiempoDedicado = 0.0;
 		this.tasaExito = 0.0;
 		this.tasaFracaso = 0.0;
 		this.learningPathCorrespondiente = learningPathCorrespondiente;
-		this.actividadesRealizadas = new ArrayList<ActividadRealizable>();
-		this.setActividadesObligatorias(new HashMap<String, Actividad>());
+		this.actividadesPendientes = learningPathCorrespondiente.getActividades();
+		this.actividadesCompletadas = new HashMap<Actividad,ActividadRealizable>();
+		this.actividadesCompletadasLista = new ArrayList<Actividad>();
 	}
 
-	public double getActividadesCompletadas() {
-		return actividadesCompletadas;
-	}
 
-	public void setActividadesCompletadas(double actividadesCompletadas) {
-		this.actividadesCompletadas = actividadesCompletadas;
-	}
-
-	public Date getFechaInicio() {
+	public String getFechaInicio() {
 		return fechaInicio;
 	}
 
-	public void setFechaInicio(Date fechaInicio) {
+	public void setFechaInicio(String fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
 
-	public Date getFechaFin() {
+	public String getFechaFin() {
 		return fechaFin;
 	}
 
-	public void setFechaFin(Date fechaFin) {
+	public void setFechaFin(String fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 
@@ -87,34 +85,70 @@ public class Avance implements Serializable {
 	public void setLearningPathCorrespondiente(LearningPath learningPathCorrespondiente) {
 		this.learningPathCorrespondiente = learningPathCorrespondiente;
 	}
+	public void addActividadPendiente(Actividad actividad) {
+		actividadesPendientes.add(actividad);
+		if (actividad.isObligatoria()) {
+			cantidadActividadesObligatorias++;
+		}
+	}
+	
+	
 
-	public List<ActividadRealizable> getActividadesRealizadas() {
-		return actividadesRealizadas;
+	public int getCantidadActividadesObligatorias() {
+		return cantidadActividadesObligatorias;
 	}
 
-	public void setActividadesRealizadas(List<ActividadRealizable> actividadesRealizadas) {
-		this.actividadesRealizadas = actividadesRealizadas;
+
+	public void setCantidadActividadesObligatorias(int cantidadActividadesObligatorias) {
+		this.cantidadActividadesObligatorias = cantidadActividadesObligatorias;
 	}
 
-	public HashMap<String, Actividad> getActividadesObligatorias() {
-		return actividadesObligatorias;
+
+	public ArrayList<Actividad> getActividadesCompletadasLista() {
+		return actividadesCompletadasLista;
 	}
 
-	public void setActividadesObligatorias(HashMap<String, Actividad> actividadesObligatorias) {
-		this.actividadesObligatorias = actividadesObligatorias;
+
+	public void setActividadesCompletadasLista(ArrayList<Actividad> actividadesCompletadasLista) {
+		this.actividadesCompletadasLista = actividadesCompletadasLista;
 	}
 
-	public Actividad obtenerActividadObligatoria(String numeroActividad) {
-		return this.actividadesObligatorias.get(numeroActividad);
+
+	public HashMap<Actividad, ActividadRealizable> getActividadesCompletadas() {
+		return actividadesCompletadas;
+	}
+
+
+	public double getActividadesCompletadasPorcentaje() {
+		return actividadesCompletadasPorcentaje;
+	}
+
+	public void setActividadesCompletadasPorcentaje(double actividadesCompletadasPorcentaje) {
+		this.actividadesCompletadasPorcentaje = actividadesCompletadasPorcentaje;
+	}
+
+	public ArrayList<Actividad> getActividadesPendientes() {
+		return actividadesPendientes;
+	}
+
+	public void setActividadesPendientes(ArrayList<Actividad> actividadesPendientes) {
+		this.actividadesPendientes = actividadesPendientes;
+	}
+
+	public void setActividadesCompletadas(HashMap<Actividad, ActividadRealizable> actividadesCompletadas) {
+		this.actividadesCompletadas = actividadesCompletadas;
 	}
 
 	public void addActividadRealizada(ActividadRealizable actividadRealizada) {
-		this.actividadesRealizadas.add(actividadRealizada);
+		this.actividadesPendientes.remove(actividadRealizada.getActividadBase());
 		Actividad actividadBase = actividadRealizada.getActividadBase();
 		if (actividadBase.isObligatoria()) {
-			actividadesObligatorias.put(actividadBase.getNumeroActividad(), actividadBase);
+			cantidadActividadesObligatorias--;
 		}
-		this.actividadesCompletadas++;
+		actividadesCompletadas.put(actividadBase, actividadRealizada);
+		actividadesCompletadasLista.add(actividadBase);
+		tiempoDedicado+=actividadRealizada.getTiempoTomado();
+		  
 	}
 
 }

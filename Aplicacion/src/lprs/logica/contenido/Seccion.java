@@ -1,8 +1,9 @@
 package lprs.logica.contenido;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Seccion {
+public class Seccion implements Serializable{
 	
 	private int numero;
 	private String titulo;
