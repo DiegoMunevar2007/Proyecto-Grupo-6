@@ -11,6 +11,7 @@ import lprs.logica.contenido.Tarea;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.cuentas.Profesor;
 import lprs.logica.learningPath.Avance;
+import lprs.logica.learningPath.LearningPath;
 
 public class TareaRealizable extends ActividadRealizable {
 	private Tarea actividadBase;
@@ -151,7 +152,7 @@ public class TareaRealizable extends ActividadRealizable {
 
 	@Override
 	public void calificarActividad() {
-		Scanner lectura = new Scanner(System.in);
+
 		System.out.println("Calificacion de la tarea: ");
 		System.out.println("Estudiante: " + estudiante.getUsuario());
 		System.out.println("Tarea: " + actividadBase.getTitulo());
@@ -170,8 +171,6 @@ public class TareaRealizable extends ActividadRealizable {
 		} catch (EstadoException e) {
 			System.out.println(e.getMessage());
 		}
-		lectura.close();
-
 	}
 
 }

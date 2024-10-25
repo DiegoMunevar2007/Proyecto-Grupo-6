@@ -84,22 +84,17 @@ public abstract class ActividadRealizable implements Serializable {
 				System.out.println("Actividad realizada " + actividadCompletada);
 			}
 			if (!avanceEstudiante.getActividadesPendientes().contains(actividadPrevia)) {
-			for (ActividadRealizable actividadCompletada : avanceEstudiante.getActividadesRealizadas()) {
-				System.out.println("Actividad realizada " + actividadCompletada.getActividadBase().getTitulo());
+					todasActividadesPreviasCompletas = false;
+					actividadesNoCompletadas.add(actividadPrevia);
 			}
-			if (avanceEstudiante.obtenerActividadObligatoria(actividadPrevia.getNumeroActividad()) == null) {
-				todasActividadesPreviasCompletas = false;
-				actividadesNoCompletadas.add(actividadPrevia);
-			}
-		}
-		// Si no se completaron todas las actividades previas, se lanza una excepcion
-		if (!todasActividadesPreviasCompletas)
+			// Si no se completaron todas las actividades previas, se lanza una excepcion
+				if (!todasActividadesPreviasCompletas)
 
-		{
-		if (!todasActividadesPreviasCompletas)
-
-		{
-			throw new ActividadPreviaException(actividadesNoCompletadas);
+				{
+					throw new ActividadPreviaException(actividadesNoCompletadas);
+				}
+				
+			
 		}
 		return todasActividadesPreviasCompletas;
 	}

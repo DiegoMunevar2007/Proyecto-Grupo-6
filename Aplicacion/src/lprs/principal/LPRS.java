@@ -57,6 +57,7 @@ public class LPRS implements Serializable {
 		metodoPrueba.RF8();
 		metodoPrueba.RF10();
 		metodoPrueba.RF13();
+		metodoPrueba.RF6();
 	}
 
 	public ManejadorLP getManejadorLP() {

@@ -2,9 +2,7 @@ package lprs.logica.learningPath;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import lprs.logica.contenido.Actividad;
 import lprs.logica.contenido.realizable.ActividadRealizable;
@@ -21,7 +19,6 @@ public class Avance implements Serializable {
 	private ArrayList<Actividad> actividadesPendientes;
 	private HashMap<Actividad, ActividadRealizable> actividadesCompletadas;
 	private ArrayList<Actividad> actividadesCompletadasLista;
-	
 
 	public Avance(String fechaInicio, LearningPath learningPathCorrespondiente) {
 		this.actividadesCompletadasPorcentaje = 0.0;
@@ -33,10 +30,9 @@ public class Avance implements Serializable {
 		this.tasaFracaso = 0.0;
 		this.learningPathCorrespondiente = learningPathCorrespondiente;
 		this.actividadesPendientes = learningPathCorrespondiente.getActividades();
-		this.actividadesCompletadas = new HashMap<Actividad,ActividadRealizable>();
+		this.actividadesCompletadas = new HashMap<Actividad, ActividadRealizable>();
 		this.actividadesCompletadasLista = new ArrayList<Actividad>();
 	}
-
 
 	public String getFechaInicio() {
 		return fechaInicio;
@@ -85,39 +81,33 @@ public class Avance implements Serializable {
 	public void setLearningPathCorrespondiente(LearningPath learningPathCorrespondiente) {
 		this.learningPathCorrespondiente = learningPathCorrespondiente;
 	}
+
 	public void addActividadPendiente(Actividad actividad) {
 		actividadesPendientes.add(actividad);
 		if (actividad.isObligatoria()) {
 			cantidadActividadesObligatorias++;
 		}
 	}
-	
-	
 
 	public int getCantidadActividadesObligatorias() {
 		return cantidadActividadesObligatorias;
 	}
 
-
 	public void setCantidadActividadesObligatorias(int cantidadActividadesObligatorias) {
 		this.cantidadActividadesObligatorias = cantidadActividadesObligatorias;
 	}
-
 
 	public ArrayList<Actividad> getActividadesCompletadasLista() {
 		return actividadesCompletadasLista;
 	}
 
-
 	public void setActividadesCompletadasLista(ArrayList<Actividad> actividadesCompletadasLista) {
 		this.actividadesCompletadasLista = actividadesCompletadasLista;
 	}
 
-
 	public HashMap<Actividad, ActividadRealizable> getActividadesCompletadas() {
 		return actividadesCompletadas;
 	}
-
 
 	public double getActividadesCompletadasPorcentaje() {
 		return actividadesCompletadasPorcentaje;
@@ -147,8 +137,8 @@ public class Avance implements Serializable {
 		}
 		actividadesCompletadas.put(actividadBase, actividadRealizada);
 		actividadesCompletadasLista.add(actividadBase);
-		tiempoDedicado+=actividadRealizada.getTiempoTomado();
-		  
+		tiempoDedicado += actividadRealizada.getTiempoTomado();
+
 	}
 
 }

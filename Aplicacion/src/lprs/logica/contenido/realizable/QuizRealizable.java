@@ -71,7 +71,8 @@ public class QuizRealizable extends ActividadRealizable {
 			}
 			System.out.println("Ingrese el número de la respuesta correcta:");
 			int respuesta = lecturaQuiz.nextInt();
-			PreguntaCerradaRealizable preguntaRealizable = new PreguntaCerradaRealizable(pregunta, opciones[respuesta]);
+			PreguntaCerradaRealizable preguntaRealizable = new PreguntaCerradaRealizable(pregunta,
+					opciones[respuesta - 1]);
 			preguntas.add(preguntaRealizable);
 			if (preguntaRealizable.verificarOpcion(opciones[respuesta - 1])) {
 				correctas++;
@@ -91,7 +92,11 @@ public class QuizRealizable extends ActividadRealizable {
 	@Override
 	public void enviarActividad() {
 		guardarActividad();
-		calificacion = (actividadBase.getPreguntasQuiz().size() / correctas) * 100;
+		if (correctas == 0) {
+			calificacion = 0;
+		} else {
+			calificacion = ((double) correctas / actividadBase.getPreguntasQuiz().size()) * 100;
+		}
 		System.out.println("Calificacion: " + calificacion + "%");
 		System.out.println("Preguntas correctas: " + correctas);
 		if (calificacion >= actividadBase.getCalificacionMinima()) {

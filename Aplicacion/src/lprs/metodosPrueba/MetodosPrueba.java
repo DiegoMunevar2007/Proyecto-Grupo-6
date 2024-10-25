@@ -1,7 +1,6 @@
 package lprs.metodosPrueba;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import lprs.logica.contenido.Actividad;
 import lprs.logica.contenido.Encuesta;
@@ -252,6 +251,14 @@ public class MetodosPrueba {
 			System.out.println(resenia.getContenido());
 			System.out.println(resenia.getRating());
 			System.out.println(resenia.getAutor().getUsuario());
+		}
+	}
+
+	public void RF6() {
+		System.out.println("Requerimiento funcional 6");
+		ArrayList<ActividadRealizable> actividadesPendientes = profesorIniciado1.getActividadesPendientes();
+		for (ActividadRealizable actividad : actividadesPendientes) {
+			actividad.calificarActividad();
 		}
 	}
 
