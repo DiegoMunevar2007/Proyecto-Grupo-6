@@ -1,7 +1,5 @@
 package lprs.logica.cuentas;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -13,6 +11,7 @@ import lprs.principal.LPRS;
 public class Profesor extends Usuario {
     private final String PROFESOR = "Profesor";
     private HashMap<String, LearningPath> learningPathsCreados;
+    private ArrayList<LearningPath> learningPathsCreadosLista;
     private ArrayList<ActividadRealizable> actividadesPendientes;
 
     /**
@@ -26,6 +25,7 @@ public class Profesor extends Usuario {
         this.tipo = PROFESOR;
         learningPathsCreados = new HashMap<String, LearningPath>();
         actividadesPendientes = new ArrayList<ActividadRealizable>();
+        learningPathsCreadosLista = new ArrayList<LearningPath>();
     }
 
     /**
@@ -44,6 +44,7 @@ public class Profesor extends Usuario {
         LearningPath lP = new LearningPath(titulo, descripcion, nivelDificultad, objetivos, this, lprsActual);
         lprsActual.getManejadorLP().addLearningPath(lP);
         learningPathsCreados.put(lP.getID(), lP);
+        learningPathsCreadosLista.add(lP);
         return lP.getID();
     }
 
@@ -61,7 +62,7 @@ public class Profesor extends Usuario {
     public void modificarLearningPath(String ID, String titulo, String descripcion, String nivelDificultad,
             ArrayList<String> objetivos) {
 
-        LearningPath lP = lprsActual.getManejadorLP().getLearningPath(ID);
+        LearningPath lP = learningPathsCreados.get(ID);
         if (lP.getProfesorCreador() != this) {
             System.out.println("No tienes permiso para modificar esta ruta de aprendizaje.");
             return;
@@ -100,12 +101,7 @@ public class Profesor extends Usuario {
      */
     public void clonarLearningPath(String ID) {
         LearningPath lP = lprsActual.getManejadorLP().getLearningPath(ID);
-        LocalDateTime myDateObj = LocalDateTime.now();
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-        String fechaString = myDateObj.format(myFormatObj);
-        ;
-        LearningPath lPClon = new LearningPath(lP, this, fechaString);
+        LearningPath lPClon = new LearningPath(lP, this, lP.obtenerFecha());
         lprsActual.getManejadorLP().addLearningPath(lPClon);
         learningPathsCreados.put(lPClon.getID(), lPClon);
     }
@@ -136,6 +132,14 @@ public class Profesor extends Usuario {
 
     public void addActividadPendiente(ActividadRealizable actividad) {
         actividadesPendientes.add(actividad);
+    }
+
+    public ArrayList<LearningPath> getLearningPathsCreadosLista() {
+        return learningPathsCreadosLista;
+    }
+
+    public void setLearningPathsCreadosLista(ArrayList<LearningPath> learningPathsCreadosLista) {
+        this.learningPathsCreadosLista = learningPathsCreadosLista;
     }
 
 }

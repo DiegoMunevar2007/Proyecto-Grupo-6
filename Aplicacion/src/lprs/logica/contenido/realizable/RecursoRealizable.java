@@ -49,7 +49,7 @@ public class RecursoRealizable extends ActividadRealizable {
 		System.out.println("Tipo de recurso a consultar: " + actividadBase.getTipoRecurso());
 		System.out.println("URL del recurso: " + actividadBase.getUrl());
 		long tiempoFinal = System.currentTimeMillis();
-		tiempoTomado = (int) (tiempoFinal - tiempoInicial) * 1000;
+		tiempoTomado = (int) (tiempoFinal - tiempoInicial) / 1000;
 		enviarActividad();
 	}
 
@@ -74,6 +74,7 @@ public class RecursoRealizable extends ActividadRealizable {
 		Profesor profesor = actividadBase.getLearningPathAsignado().getProfesorCreador();
 		profesor.addActividadPendiente(this);
 		System.out.println("Actividad completada!");
+		
 
 	}
 

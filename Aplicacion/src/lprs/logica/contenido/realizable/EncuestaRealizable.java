@@ -53,7 +53,7 @@ public class EncuestaRealizable extends ActividadRealizable {
             preguntasRealizadas.add(preguntaRealizada);
         }
         long tiempoFinal = System.currentTimeMillis();
-        tiempoTomado = (int) (tiempoFinal - tiempoInicial) * 1000;
+        tiempoTomado = (int) (tiempoFinal - tiempoInicial) / 1000;
         enviarActividad();
         System.out.println("Encuesta realizada.");
     }

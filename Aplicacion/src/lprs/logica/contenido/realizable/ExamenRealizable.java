@@ -56,6 +56,7 @@ public class ExamenRealizable extends ActividadRealizable {
                 e.printStackTrace();
             }
         }
+        lecturaExamen.close();
     }
 
     @Override
@@ -64,7 +65,6 @@ public class ExamenRealizable extends ActividadRealizable {
         ArrayList<PreguntaAbierta> preguntasExamen = actividadBase.getPreguntasExamen();
         long tiempoInicial = System.currentTimeMillis();
         for (int i = 0; i < preguntasExamen.size(); i++) {
-            lecturaExamen.nextLine();
             PreguntaAbierta pregunta = preguntasExamen.get(i);
             System.out.println("Pregunta " + i + ": " + pregunta.getEnunciado());
             System.out.println("A continuación, ingrese su respuesta: ");
@@ -74,7 +74,7 @@ public class ExamenRealizable extends ActividadRealizable {
         }
         System.out.println("Examen completado.");
         long tiempoFinal = System.currentTimeMillis();
-        tiempoTomado = (int) (tiempoFinal - tiempoInicial) * 1000;
+        tiempoTomado = (int) (tiempoFinal - tiempoInicial) / 1000;
         enviarActividad();
     }
 

@@ -252,6 +252,7 @@ public class MetodosPrueba {
 			System.out.println(resenia.getRating());
 			System.out.println(resenia.getAutor().getUsuario());
 		}
+		System.out.println("---------------------");
 	}
 
 	public void RF6() {
@@ -260,6 +261,45 @@ public class MetodosPrueba {
 		for (ActividadRealizable actividad : actividadesPendientes) {
 			actividad.calificarActividad();
 		}
+	}
+
+	public void RF9() {
+		System.out.println("Requerimiento funcional 9");
+		ArrayList<LearningPath> learningPaths = profesorIniciado1.getLearningPathsCreadosLista();
+		LearningPath lP = learningPaths.get(0);
+		Estudiante estudiante = lP.getEstudiantesInscritos().get(0);
+		Avance avanceEstudiante = estudiante.getAvance(lP.getID());
+		System.out.println(avanceEstudiante.getFechaInicio());
+		System.out.println(avanceEstudiante.getFechaFin());
+		System.out.println(avanceEstudiante.getTasaExito());
+		System.out.println(avanceEstudiante.getTiempoDedicado());
+		for (Actividad actividad : avanceEstudiante.getActividadesCompletadasLista()) {
+			System.out.println(actividad.getTitulo());
+			System.out.println(actividad.getDescripcion());
+			System.out.println(actividad.getObjetivo());
+			System.out.println(actividad.getDuracionEsperada());
+			System.out.println(actividad.getFechaLimite());
+		}
+		System.out.println("----------------------");
+	}
+
+	public void RF12() {
+		System.out.println("Requerimiento funcional 12");
+		Avance avanceEstudiante = estudianteIniciado.getAvance("0");
+		ArrayList<Actividad> actividades = avanceEstudiante.getActividadesCompletadasLista();
+		System.out.println("Avance del estudiante");
+		System.out.println(avanceEstudiante.getFechaInicio());
+		System.out.println(avanceEstudiante.getFechaFin());
+		System.out.println(avanceEstudiante.getTasaExito());
+		System.out.println(avanceEstudiante.getTiempoDedicado());
+		for (Actividad actividad : actividades) {
+			System.out.println(actividad.getTitulo());
+			System.out.println(actividad.getDescripcion());
+			System.out.println(actividad.getObjetivo());
+			System.out.println(actividad.getDuracionEsperada());
+			System.out.println(actividad.getFechaLimite());
+		}
+		System.out.println("----------------------");
 	}
 
 }

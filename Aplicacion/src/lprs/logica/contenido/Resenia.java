@@ -1,8 +1,10 @@
 package lprs.logica.contenido;
 
+import java.io.Serializable;
+
 import lprs.logica.cuentas.Usuario;
 
-public class Resenia {
+public class Resenia implements Serializable {
     private static int contador = 0;
     private String ID;
     private String contenido;

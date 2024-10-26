@@ -79,7 +79,7 @@ public class QuizRealizable extends ActividadRealizable {
 			}
 		}
 		long tiempoFinal = System.currentTimeMillis();
-		tiempoTomado = (int) (tiempoFinal - tiempoInicial) * 1000;
+		tiempoTomado = (int) (tiempoFinal - tiempoInicial) / 1000;
 		enviarActividad();
 	}
 
@@ -108,6 +108,7 @@ public class QuizRealizable extends ActividadRealizable {
 
 		Profesor profesor = actividadBase.getLearningPathAsignado().getProfesorCreador();
 		profesor.addActividadPendiente(this);
+		
 	}
 
 	@Override

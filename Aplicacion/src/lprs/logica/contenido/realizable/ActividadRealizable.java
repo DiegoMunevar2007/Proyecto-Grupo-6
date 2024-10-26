@@ -2,6 +2,7 @@ package lprs.logica.contenido.realizable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import lprs.exceptions.ActividadPreviaException;
 import lprs.exceptions.EstadoException;
@@ -16,6 +17,7 @@ public abstract class ActividadRealizable implements Serializable {
 	protected Estudiante estudiante;
 	protected Actividad actividadBase;
 	protected int tiempoTomado;
+	protected Scanner scanner;
 
 	public ActividadRealizable(Estudiante estudiante) {
 		this.comentarios = "";
@@ -80,10 +82,7 @@ public abstract class ActividadRealizable implements Serializable {
 		for (Actividad actividadPrevia : actividadBase.getActividadesPrevias()) {
 			// Si no esta en el avance del estudiante, se agrega a la lista de actividades
 			// no completadas
-			for (Actividad actividadCompletada : avanceEstudiante.getActividadesCompletadasLista()) {
-				System.out.println("Actividad realizada " + actividadCompletada);
-			}
-			if (!avanceEstudiante.getActividadesPendientes().contains(actividadPrevia)) {
+			if (!avanceEstudiante.getActividadesCompletadasLista().contains(actividadPrevia)) {
 					todasActividadesPreviasCompletas = false;
 					actividadesNoCompletadas.add(actividadPrevia);
 			}

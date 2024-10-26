@@ -1,6 +1,7 @@
 package lprs.principal;
 
 import java.io.Serializable;
+import java.util.Scanner;
 
 import lprs.manejador.ManejadorLP;
 import lprs.manejador.ManejadorSesion;
@@ -29,35 +30,71 @@ public class LPRS implements Serializable {
 		// e.printStackTrace();
 		// }
 		MetodosPrueba metodoPrueba = new MetodosPrueba(lprs);
-		try {
-			metodoPrueba.RF1();
-		} catch (Exception e) {
-			e.getMessage();
+		System.out.println("Pruebas de los metodos");
+		System.out.println("¿Desea crear los usuarios nuevos o cargar los datos?");
+		System.out.println("1. Crear nuevos");
+		System.out.println("2. Cargar datos");
+		int opcion = 2;
+		if (opcion == 1) {
+			try {
+				metodoPrueba.RF1();
+			} catch (Exception e) {
+				e.getMessage();
+			}
+			
+			try {
+				metodoPrueba.RF2("Estudiante", "Hola");
+			} catch (Exception e) {
+				e.getMessage();
+			}
+			try {
+				metodoPrueba.RF2("Profe", "Profe");
+			} catch (Exception e) {
+				e.getMessage();
+			}
+			try {
+				metodoPrueba.RF2("Profe2", "Profe2");
+			} catch (Exception e) {
+				e.getMessage();
+			}
+			metodoPrueba.RF3();
+			metodoPrueba.RF4();
+			metodoPrueba.RF5();
+			metodoPrueba.RF7();
+			metodoPrueba.RF8();
+			metodoPrueba.RF10();
+
+		} else {
+			try {
+				lprs.cargarDatos();
+			} catch (Exception e) {
+				e.getMessage();
+			}
+			try {
+				metodoPrueba.RF2("Estudiante", "Hola");
+			} catch (Exception e) {
+				e.getMessage();
+			}
+			try {
+				metodoPrueba.RF2("Profe", "Profe");
+			} catch (Exception e) {
+				e.getMessage();
+			}
+			try {
+				metodoPrueba.RF2("Profe2", "Profe2");
+			} catch (Exception e) {
+				e.getMessage();
+			}
 		}
-		try {
-			metodoPrueba.RF2("Estudiante", "Hola");
-		} catch (Exception e) {
-			e.getMessage();
-		}
-		try {
-			metodoPrueba.RF2("Profe", "Profe");
-		} catch (Exception e) {
-			e.getMessage();
-		}
-		try {
-			metodoPrueba.RF2("Profe2", "Profe2");
-		} catch (Exception e) {
-			e.getMessage();
-		}
-		metodoPrueba.RF3();
-		metodoPrueba.RF4();
-		lprs.guardarDatos();
-		metodoPrueba.RF5();
-		metodoPrueba.RF7();
-		metodoPrueba.RF8();
-		metodoPrueba.RF10();
+		
+		//lprs.guardarDatos();
+		// Debido a un error con scanner, no se pueden guardar las respuestas del estudiante
 		metodoPrueba.RF13();
+		metodoPrueba.RF11();
 		metodoPrueba.RF6();
+		metodoPrueba.RF12();
+		metodoPrueba.RF9();
+
 	}
 
 	public ManejadorLP getManejadorLP() {

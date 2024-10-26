@@ -7,7 +7,6 @@ import lprs.logica.contenido.Actividad;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.Avance;
 import lprs.logica.learningPath.LearningPath;
-import lprs.persistencia.CentralPersistencia;
 import lprs.principal.LPRS;
 
 public class ConsolaEstudiante extends ConsolaPrincipal {
@@ -43,8 +42,6 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
             mostrarConsolaEstudiante();
         } else if (opcion == 5) {
             System.out.println("Hasta luego!");
-            CentralPersistencia cp = new CentralPersistencia(lprsActual);
-            cp.guardarDatos();
             return;
         }
 
@@ -83,8 +80,6 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
         System.out.println("Rating: " + lP.getRating());
         return lP.getID();
     }
-
-
 
     public Actividad escogerActividad() {
         String ID = mostrarLearningPaths();

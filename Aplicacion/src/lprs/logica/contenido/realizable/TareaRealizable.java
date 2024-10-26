@@ -10,7 +10,6 @@ import lprs.logica.contenido.Seccion;
 import lprs.logica.contenido.Tarea;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.cuentas.Profesor;
-import lprs.logica.learningPath.Avance;
 import lprs.logica.learningPath.LearningPath;
 
 public class TareaRealizable extends ActividadRealizable {
@@ -98,7 +97,7 @@ public class TareaRealizable extends ActividadRealizable {
 			String respuesta = lectura.nextLine();
 			if (respuesta.equalsIgnoreCase("S")) {
 				long tiempoFinal = System.currentTimeMillis();
-				tiempoTomado = (int) (tiempoFinal - tiempoInicial) * 1000;
+				tiempoTomado = (int) (tiempoFinal - tiempoInicial) / 1000;
 				enviarActividad();
 			}
 		} else {
@@ -106,7 +105,7 @@ public class TareaRealizable extends ActividadRealizable {
 			String respuesta = lectura.nextLine();
 			if (respuesta.equalsIgnoreCase("S")) {
 				long tiempoFinal = System.currentTimeMillis();
-				tiempoTomado = (int) (tiempoFinal - tiempoInicial) * 1000;
+				tiempoTomado = (int) (tiempoFinal - tiempoInicial) / 1000;
 				enviarActividad();
 			}
 		}

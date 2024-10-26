@@ -24,6 +24,9 @@ public class ManejadorSesion implements Serializable {
 	public void crearUsuario(String usuario, String contrasena, int tipo) throws Exception {
 		Usuario nuevoUsuario;
 		if (tipo == 1) {
+			if (usuarios.containsKey(usuario)) {
+				throw new Exception("El usuario ya existe");
+			}
 			nuevoUsuario = new Estudiante(usuario, contrasena, lprsActual);
 
 		} else if (tipo == 2) {

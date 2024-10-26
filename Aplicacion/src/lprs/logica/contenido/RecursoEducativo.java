@@ -40,7 +40,6 @@ public class RecursoEducativo extends Actividad {
 
 	@Override
 	public ActividadRealizable crearActividadRealizable(Estudiante estudiante) {
-		// TODO Auto-generated method stub
 		RecursoRealizable recursoR = new RecursoRealizable(this, estudiante);
 		actividadesRealizablesCreadas.add(recursoR);
 		return recursoR;
