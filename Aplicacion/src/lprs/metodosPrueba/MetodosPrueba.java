@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import lprs.logica.contenido.Actividad;
 import lprs.logica.contenido.Encuesta;
 import lprs.logica.contenido.Examen;
-import lprs.logica.contenido.Quiz;
+import lprs.logica.contenido.QuizMultiple;
 import lprs.logica.contenido.Resenia;
 import lprs.logica.contenido.Tarea;
 import lprs.logica.contenido.pregunta.Opcion;
@@ -114,13 +114,15 @@ public class MetodosPrueba {
 				lP.obtenerFecha());
 		encuesta.addPreguntaEncuesta(new PreguntaAbierta("Enunciado de una pregunta abierta de la encuesta 1 "));
 
-		Quiz quiz = lP.crearQuiz("Quiz 1", "Descripcion de quiz 1", "Objetivo de quiz 1", 10, false, lP.obtenerFecha(),
+		QuizMultiple quiz = lP.crearQuizMultiple("Quiz 1", "Descripcion de quiz 1", "Objetivo de quiz 1", 10, false, lP.obtenerFecha(),
 				20);
 		Opcion opcion1 = new Opcion("Opcion 1", "Es incorrecta");
 		Opcion opcion2 = new Opcion("Opcion 2", "Es correcta");
 		Opcion opcion3 = new Opcion("Opcion 3", "Es incorrecta");
 		Opcion opcion4 = new Opcion("Opcion 4", "Es incorrecta");
 		Opcion[] opcionesCreadas = { opcion1, opcion2, opcion3, opcion4 };
+		
+		
 		quiz.addPreguntaQuiz(new PreguntaCerrada("Enunciado de una pregunta del quiz", opcion2, opcionesCreadas));
 
 		Examen examen = lP.crearExamen("Examen 1", "Descripcion de examen 1", "Objetivo de examen 1", 10, false,

@@ -34,7 +34,7 @@ public class LPRS implements Serializable {
 		System.out.println("¿Desea crear los usuarios nuevos o cargar los datos?");
 		System.out.println("1. Crear nuevos");
 		System.out.println("2. Cargar datos");
-		int opcion = 2;
+		int opcion = 1;
 		if (opcion == 1) {
 			try {
 				metodoPrueba.RF1();

@@ -5,12 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import lprs.logica.contenido.Actividad;
-import lprs.logica.contenido.Encuesta;
-import lprs.logica.contenido.Examen;
-import lprs.logica.contenido.Quiz;
-import lprs.logica.contenido.RecursoEducativo;
-import lprs.logica.contenido.Tarea;
+import lprs.logica.contenido.*;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.cuentas.Profesor;
 import lprs.principal.LPRS;
@@ -39,8 +34,6 @@ public class LearningPath implements Serializable {
 	 * @param descripcion     la descripción de la ruta de aprendizaje
 	 * @param nivelDificultad el nivel de dificultad de la ruta de aprendizaje
 	 * @param objetivos       una lista de los objetivos de la ruta de aprendizaje
-	 * @param duracion        la duración de la ruta de aprendizaje
-	 * @param rating          la calificación de la ruta de aprendizaje
 	 * @param profesorCreador el profesor que crea la ruta de aprendizaje
 	 */
 	public LearningPath(String titulo, String descripcion, String nivelDificultad, ArrayList<String> objetivos,
@@ -115,9 +108,9 @@ public class LearningPath implements Serializable {
 		return recurso;
 	}
 
-	public Quiz crearQuiz(String titulo, String descripcion, String objetivo, int duracion, boolean obligatoria,
+	public QuizMultiple crearQuizMultiple(String titulo, String descripcion, String objetivo, int duracion, boolean obligatoria,
 			String fechaEntrega, double calificacionMinima) {
-		Quiz quiz = new Quiz(titulo, descripcion, objetivo, duracion, obligatoria, fechaEntrega, this, objetivo,
+		QuizMultiple quiz = new QuizMultiple(titulo, descripcion, objetivo, duracion, obligatoria, fechaEntrega, this, objetivo,
 				calificacionMinima);
 		actividades.add(quiz);
 		if (obligatoria) {
@@ -403,8 +396,7 @@ public class LearningPath implements Serializable {
 
 	/**
 	 * Obtiene el profesor creador de la ruta de aprendizaje.
-	 * 
-	 * @param profesorCreador el profesor creador de la ruta de aprendizaje
+	 *
 	 */
 	public Profesor getProfesorCreador() {
 		return profesorCreador;
