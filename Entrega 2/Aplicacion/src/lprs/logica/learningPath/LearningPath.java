@@ -9,6 +9,7 @@ import lprs.logica.contenido.Actividad;
 import lprs.logica.contenido.Encuesta;
 import lprs.logica.contenido.Examen;
 import lprs.logica.contenido.Quiz;
+import lprs.logica.contenido.QuizMultiple;
 import lprs.logica.contenido.RecursoEducativo;
 import lprs.logica.contenido.Tarea;
 import lprs.logica.cuentas.Estudiante;
@@ -115,9 +116,9 @@ public class LearningPath implements Serializable {
 		return recurso;
 	}
 
-	public Quiz crearQuiz(String titulo, String descripcion, String objetivo, int duracion, boolean obligatoria,
+	public Quiz crearQuizMultiple(String titulo, String descripcion, String objetivo, int duracion, boolean obligatoria,
 			String fechaEntrega, double calificacionMinima) {
-		Quiz quiz = new Quiz(titulo, descripcion, objetivo, duracion, obligatoria, fechaEntrega, this, objetivo,
+		QuizMultiple quiz = new QuizMultiple(titulo, descripcion, objetivo, duracion, obligatoria, fechaEntrega, this, objetivo,
 				calificacionMinima);
 		actividades.add(quiz);
 		if (obligatoria) {

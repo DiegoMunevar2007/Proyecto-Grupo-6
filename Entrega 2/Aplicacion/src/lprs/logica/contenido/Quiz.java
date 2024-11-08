@@ -9,7 +9,7 @@ import lprs.logica.contenido.realizable.QuizRealizable;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
 
-public class Quiz extends Actividad {
+public abstract class Quiz extends Actividad {
 	private double calificacionMinima;
 	public ArrayList<PreguntaCerrada> preguntasQuiz;
 
@@ -33,21 +33,13 @@ public class Quiz extends Actividad {
 	}
 
 	@Override
-	public ActividadRealizable crearActividadRealizable(Estudiante estudiante) {
-		QuizRealizable qR = new QuizRealizable(estudiante, this);
-		actividadesRealizablesCreadas.add(qR);
-		return qR;
-	}
+	public abstract ActividadRealizable crearActividadRealizable(Estudiante estudiante);
 
 	public void addPreguntaQuiz(PreguntaCerrada pregunta) {
 		preguntasQuiz.add(pregunta);
 	}
 
-	public void crearPreguntaCerrada(String enunciado, Opcion respuestaCorrecta, Opcion[] opciones) {
-		PreguntaCerrada pregunta = new PreguntaCerrada(enunciado, respuestaCorrecta, opciones);
-		addPreguntaQuiz(pregunta);
-	}
-
+	public abstract void crearPreguntaCerrada(String enunciado, Opcion respuestaCorrecta, Opcion[] opciones) throws Exception; 
 	public void removePreguntaQuiz(PreguntaCerrada pregunta) {
 		preguntasQuiz.remove(pregunta);
 	}
