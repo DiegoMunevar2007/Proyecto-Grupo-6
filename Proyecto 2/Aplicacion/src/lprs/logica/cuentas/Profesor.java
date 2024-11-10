@@ -112,6 +112,7 @@ public class Profesor extends Usuario {
         String IDClon = lprsActual.getManejadorLP().generarID();
         LearningPath lPClon = new LearningPath(IDClon, lP, this, lP.obtenerFecha());
         lprsActual.getManejadorLP().addLearningPath(lPClon);
+        learningPathsCreadosLista.add(lPClon);
         learningPathsCreados.put(lPClon.getID(), lPClon);
     }
 

@@ -65,7 +65,6 @@ public class ConsolaProfesor extends ConsolaPrincipal {
             System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
             mostrarConsolaProfesor();
         }
-
     }
 
     public static void main(String[] args) {

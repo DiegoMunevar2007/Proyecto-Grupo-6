@@ -3,12 +3,9 @@ package lprs.consola.profesor;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import lprs.logica.contenido.Actividad;
-import lprs.logica.contenido.Quiz;
-import lprs.logica.contenido.QuizMultiple;
-import lprs.logica.contenido.QuizVerdaderoFalso;
-import lprs.logica.contenido.Tarea;
+import lprs.logica.contenido.*;
 import lprs.logica.contenido.pregunta.Opcion;
+import lprs.logica.contenido.pregunta.PreguntaAbierta;
 import lprs.logica.learningPath.LearningPath;
 import lprs.principal.LPRS;
 
@@ -26,7 +23,7 @@ public class ConsolaActividadProfesor {
     public void mostrarConsolaActividad() {
         Scanner lectura = consolaProfesor.getLectura();
         System.out.println("Seleccione un Learning Path: ");
-        ArrayList<LearningPath> learningPaths = lprsActual.getManejadorLP().getLearningPaths();
+        ArrayList<LearningPath> learningPaths = consolaProfesor.getProfesor().getLearningPathsCreadosLista();
         for (int i = 0; i < learningPaths.size(); i++) {
             System.out.println(i + 1 + ". " + learningPaths.get(i).getTitulo());
         }
@@ -54,7 +51,7 @@ public class ConsolaActividadProfesor {
             } else if (opcionActividad == 3) {
                 crearQuiz(lp);
             } else if (opcionActividad == 4) {
-
+                crearExamen(lp);
             } else if (opcionActividad == 5) {
 
             } else {
@@ -139,6 +136,41 @@ public class ConsolaActividadProfesor {
         mostrarConsolaActividad();
     }
 
+    public void crearExamen(LearningPath lp) {
+        Scanner lectura = consolaProfesor.getLectura();
+        System.out.println("Ingrese el título del examen: ");
+        String titulo = lectura.nextLine();
+        System.out.println("Ingrese la descripción del examen: ");
+        String descripcion = lectura.nextLine();
+        System.out.println("Ingrese el objetivo del examen: ");
+        String objetivo = lectura.nextLine();
+        System.out.println("Ingrese la duración del examen: ");
+        int duracion = lectura.nextInt();
+        System.out.println("¿Es un examen obligatorio (s/n)?");
+        String respuesta = lectura.next();
+        boolean obligatoria = false;
+        if (respuesta.equalsIgnoreCase("s")) {
+            obligatoria = true;
+        }
+        System.out.println("¿Tiene una fecha de entrega? (s/n)");
+        respuesta = lectura.next();
+        String fechaEntrega = null;
+        if (respuesta.equalsIgnoreCase("s")) {
+            lectura.nextLine();
+            System.out.println("Ingrese la fecha de entrega en formato DD/MM/YYYY: ");
+            fechaEntrega = lectura.nextLine();
+        }
+        Examen examen = lp.crearExamen(titulo, descripcion, objetivo, duracion, obligatoria, fechaEntrega);
+        aniadirPrerequisitos(lp, examen);
+        System.out.println("Ingrese el número de preguntas que desea añadir: ");
+        int numeroPreguntas = lectura.nextInt();
+        lectura.nextLine();
+        for (int i = 0; i < numeroPreguntas; i++) {
+            crearPreguntaAbiertaExamen(examen);
+        }
+        System.out.println("Examen creado con éxito.");
+        mostrarConsolaActividad();
+    }
     public void crearTarea(LearningPath lp) {
         Scanner lectura = consolaProfesor.getLectura();
         Tarea tareaCreada = null;
@@ -302,7 +334,7 @@ public class ConsolaActividadProfesor {
             numeroPreguntas = lectura.nextInt();
             lectura.nextLine();
             for (int i = 0; i < numeroPreguntas; i++) {
-                crearPregunta(quiz, tipo);
+                crearPreguntaCerrada(quiz, tipo);
             }
         } else if (tipo.equalsIgnoreCase("vf")) {
             QuizVerdaderoFalso quiz = lp.crearQuizVerdaderoFalso(titulo, descripcion, objetivo, duracion, obligatoria,
@@ -313,7 +345,7 @@ public class ConsolaActividadProfesor {
             numeroPreguntas = lectura.nextInt();
             lectura.nextLine();
             for (int i = 0; i < numeroPreguntas; i++) {
-                crearPregunta(quiz, tipo);
+                crearPreguntaCerrada(quiz, tipo);
             }
         } else {
             System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
@@ -323,7 +355,7 @@ public class ConsolaActividadProfesor {
         mostrarConsolaActividad();
     }
 
-    public void crearPregunta(Quiz quiz, String tipo) {
+    public void crearPreguntaCerrada(Quiz quiz, String tipo) {
         Scanner lectura = consolaProfesor.getLectura();
         System.out.println("Ingrese el enunciado de la pregunta: ");
         String enunciado = lectura.nextLine();
@@ -341,7 +373,7 @@ public class ConsolaActividadProfesor {
                     quiz.crearPreguntaCerrada(enunciado, opcion, opciones);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
-                    crearPregunta(quiz, tipo);
+                    crearPreguntaCerrada(quiz, tipo);
                 }
             } else {
                 System.out.println("Justificación: ");
@@ -353,7 +385,7 @@ public class ConsolaActividadProfesor {
                     quiz.crearPreguntaCerrada(enunciado, opcion2, opciones);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
-                    crearPregunta(quiz, tipo);
+                    crearPreguntaCerrada(quiz, tipo);
                 }
             }
         } else if (tipo.equals("m")) {
@@ -372,10 +404,18 @@ public class ConsolaActividadProfesor {
                 quiz.crearPreguntaCerrada(enunciado, opciones[respuesta - 1], opciones);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                crearPregunta(quiz, tipo);
+                crearPreguntaCerrada(quiz, tipo);
             }
         }
 
+    }
+
+    public void crearPreguntaAbiertaExamen (Examen actividad){
+        Scanner lectura = consolaProfesor.getLectura();
+        System.out.println("Ingrese el enunciado de la pregunta: ");
+        String enunciado = lectura.nextLine();
+        PreguntaAbierta pregunta = new PreguntaAbierta(enunciado);
+        actividad.addPreguntaExamen(pregunta);
     }
 
     public void aniadirPrerequisitos(LearningPath lp, Actividad actividad) {
@@ -407,5 +447,4 @@ public class ConsolaActividadProfesor {
         }
         actividad.setActividadesPrevias(prerequisitos);
     }
-
 }
