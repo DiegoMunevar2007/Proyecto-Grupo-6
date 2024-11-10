@@ -102,6 +102,10 @@ public class PersistenciaUsuario implements Persistencia {
         } catch (ArchivoException e) {
             System.out.println("Error leyendo el archivo: " + e.getMessage());
             System.out.println("Creando archivo de usuarios vacio");
+            FileOutputStream fos = new FileOutputStream(new File(direccionArchivo + "/usuarios.dat"));
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(new HashMap<String, Usuario>());
+            oos.close();
             manejadorS.setUsuarios(new HashMap<String, Usuario>());
         }
     }

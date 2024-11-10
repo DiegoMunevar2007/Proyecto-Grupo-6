@@ -32,7 +32,10 @@ public class ManejadorLP implements Serializable {
 	 * @param learningPath
 	 */
 	public void addLearningPath(LearningPath learningPath) {
+		System.out.println("Añadiendo learning path: " + learningPath.getTitulo());
+		System.out.println(learningPathsDisponibles.size());
 		learningPathsDisponibles.add(learningPath);
+		System.out.println(learningPathsDisponibles.size());
 		learningPathsHash.put(learningPath.getID(), learningPath);
 	}
 
@@ -68,5 +71,8 @@ public class ManejadorLP implements Serializable {
 	public void setLearningPathsDisponibles(ArrayList<LearningPath> learningPathsDisponibles) {
 		this.learningPathsDisponibles = learningPathsDisponibles;
 	}
-	
+
+	public String generarID() {
+		return (Integer.toString(learningPathsHash.size()));
+	}
 }

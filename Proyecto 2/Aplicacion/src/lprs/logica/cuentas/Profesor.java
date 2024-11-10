@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import lprs.exceptions.ClonarLPException;
 import lprs.logica.contenido.realizable.ActividadRealizable;
 import lprs.logica.learningPath.LearningPath;
 import lprs.principal.LPRS;
@@ -41,7 +42,8 @@ public class Profesor extends Usuario {
      */
     public String crearLearningPath(String titulo, String descripcion, String nivelDificultad,
             ArrayList<String> objetivos) {
-        LearningPath lP = new LearningPath(titulo, descripcion, nivelDificultad, objetivos, this, lprsActual);
+        String ID = lprsActual.getManejadorLP().generarID();
+        LearningPath lP = new LearningPath(ID, titulo, descripcion, nivelDificultad, objetivos, this, lprsActual);
         lprsActual.getManejadorLP().addLearningPath(lP);
         learningPathsCreados.put(lP.getID(), lP);
         learningPathsCreadosLista.add(lP);
@@ -99,9 +101,16 @@ public class Profesor extends Usuario {
      * 
      * @param ID el ID de la ruta de aprendizaje a clonar
      */
-    public void clonarLearningPath(String ID) {
+    public void clonarLearningPath(String ID) throws ClonarLPException {
+        if (lprsActual.getManejadorLP().getLearningPath(ID) == null) {
+            System.out.println("No existe un learning path con ese ID.");
+            return;
+        } else if (learningPathsCreados.containsKey(ID)) {
+            throw new ClonarLPException(lprsActual.getManejadorLP().getLearningPath(ID));
+        }
         LearningPath lP = lprsActual.getManejadorLP().getLearningPath(ID);
-        LearningPath lPClon = new LearningPath(lP, this, lP.obtenerFecha());
+        String IDClon = lprsActual.getManejadorLP().generarID();
+        LearningPath lPClon = new LearningPath(IDClon, lP, this, lP.obtenerFecha());
         lprsActual.getManejadorLP().addLearningPath(lPClon);
         learningPathsCreados.put(lPClon.getID(), lPClon);
     }
@@ -141,8 +150,9 @@ public class Profesor extends Usuario {
     public void setLearningPathsCreadosLista(ArrayList<LearningPath> learningPathsCreadosLista) {
         this.learningPathsCreadosLista = learningPathsCreadosLista;
     }
+
     public void actividadCalificada(ActividadRealizable actividadCalificada) {
-    	actividadesPendientes.remove(actividadCalificada);
+        actividadesPendientes.remove(actividadCalificada);
     }
 
 }

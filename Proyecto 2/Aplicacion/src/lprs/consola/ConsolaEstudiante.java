@@ -2,6 +2,7 @@ package lprs.consola;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 import lprs.logica.contenido.Actividad;
 import lprs.logica.cuentas.Estudiante;
@@ -10,11 +11,13 @@ import lprs.logica.learningPath.LearningPath;
 import lprs.principal.LPRS;
 
 public class ConsolaEstudiante extends ConsolaPrincipal {
-    Estudiante estudiante;
+    private Estudiante estudiante;
+    private Scanner lectura;
 
     public ConsolaEstudiante(LPRS lprsActual, Estudiante estudiante) {
         super(lprsActual);
         this.estudiante = estudiante;
+        Scanner lectura = new Scanner(System.in);
     }
 
     public void mostrarConsolaEstudiante() {
@@ -52,6 +55,7 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
     }
 
     public String mostrarLearningPaths() {
+        Scanner lectura = new Scanner(System.in);
         List<LearningPath> learningPathsDisponibles = estudiante.getLearningPathsInscritos();
         if (learningPathsDisponibles.isEmpty()) {
             System.out.println("No tienes learning paths inscritos");
@@ -82,6 +86,7 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
     }
 
     public Actividad escogerActividad() {
+        Scanner lectura = new Scanner(System.in);
         String ID = mostrarLearningPaths();
         LearningPath lP = estudiante.getLprsActual().getManejadorLP().getLearningPath(ID);
         List<Actividad> actividades = lP.getActividades();
@@ -105,7 +110,20 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
         actividad.crearActividadRealizable(estudiante).realizarActividad();
     }
 
+    public void mostrarLearningPathsDisponibles() {
+
+        List<LearningPath> learningPathsDisponibles = lprsActual.getManejadorLP().getLearningPathsDisponibles();
+        if (learningPathsDisponibles.isEmpty()) {
+            System.out.println("No hay Learning Paths disponibles.");
+            return;
+        }
+        for (int i = 0; i < learningPathsDisponibles.size(); i++) {
+            System.out.println(i + 1 + ". " + learningPathsDisponibles.get(i).getTitulo());
+        }
+    }
+
     public String escogerLearningPath() {
+        Scanner lectura = new Scanner(System.in);
         List<LearningPath> learningPathsDisponibles = lprsActual.getManejadorLP().learningPathsDisponibles();
         mostrarLearningPathsDisponibles();
         if (learningPathsDisponibles.isEmpty()) {

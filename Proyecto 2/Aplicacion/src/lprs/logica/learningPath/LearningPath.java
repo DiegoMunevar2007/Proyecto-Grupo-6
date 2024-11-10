@@ -36,9 +36,10 @@ public class LearningPath implements Serializable {
 	 * @param objetivos       una lista de los objetivos de la ruta de aprendizaje
 	 * @param profesorCreador el profesor que crea la ruta de aprendizaje
 	 */
-	public LearningPath(String titulo, String descripcion, String nivelDificultad, ArrayList<String> objetivos,
+	public LearningPath(String ID, String titulo, String descripcion, String nivelDificultad,
+			ArrayList<String> objetivos,
 			Profesor profesorCreador, LPRS lprsActual) {
-		this.ID = asignarID();
+		this.ID = ID;
 		this.titulo = titulo;
 		this.descripcion = descripcion;
 		this.nivelDificultad = nivelDificultad;
@@ -69,15 +70,15 @@ public class LearningPath implements Serializable {
 	 * @param profesorCreador el profesor que crea la copia de la ruta de
 	 *                        aprendizaje
 	 */
-	public LearningPath(LearningPath LP, Profesor profesorCreador, String fechaCreacion) {
-		this.ID = asignarID();
+	public LearningPath(String ID, LearningPath LP, Profesor profesorCreador, String fechaCreacion) {
+		this.ID = ID;
 		this.titulo = LP.getTitulo();
 		this.descripcion = LP.getDescripcion();
 		this.nivelDificultad = LP.getNivelDificultad();
 		this.objetivos = LP.getObjetivos();
 		this.duracion = LP.getDuracion();
-		this.rating = LP.getRating();
-		this.calificaciones = LP.calificaciones;
+		this.rating = 0;
+		this.calificaciones = 0;
 		this.actividades = LP.getActividades();
 		this.estudiantesInscritos = new ArrayList<Estudiante>();
 		this.profesorCreador = profesorCreador;
@@ -108,9 +109,26 @@ public class LearningPath implements Serializable {
 		return recurso;
 	}
 
-	public QuizMultiple crearQuizMultiple(String titulo, String descripcion, String objetivo, int duracion, boolean obligatoria,
+	public QuizMultiple crearQuizMultiple(String titulo, String descripcion, String objetivo, int duracion,
+			boolean obligatoria,
 			String fechaEntrega, double calificacionMinima) {
-		QuizMultiple quiz = new QuizMultiple(titulo, descripcion, objetivo, duracion, obligatoria, fechaEntrega, this, objetivo,
+		QuizMultiple quiz = new QuizMultiple(titulo, descripcion, objetivo, duracion, obligatoria, fechaEntrega, this,
+				objetivo,
+				calificacionMinima);
+		actividades.add(quiz);
+		if (obligatoria) {
+			cantidadObligatorias++;
+			this.duracion = this.duracion + duracion;
+		}
+		return quiz;
+	}
+
+	public QuizVerdaderoFalso crearQuizVerdaderoFalso(String titulo, String descripcion, String objetivo, int duracion,
+			boolean obligatoria,
+			String fechaEntrega, double calificacionMinima) {
+		QuizVerdaderoFalso quiz = new QuizVerdaderoFalso(titulo, descripcion, objetivo, duracion, obligatoria,
+				fechaEntrega, this,
+				objetivo,
 				calificacionMinima);
 		actividades.add(quiz);
 		if (obligatoria) {
@@ -352,17 +370,6 @@ public class LearningPath implements Serializable {
 	 */
 	public void aniadirActividad(Actividad actividad) {
 		actividades.add(actividad);
-	}
-
-	/**
-	 * Asigna un nuevo ID a la ruta de aprendizaje.
-	 *
-	 * @return el nuevo ID asignado
-	 */
-	private static String asignarID() {
-		String idRetorno = Integer.toString(numeroLP);
-		numeroLP++;
-		return idRetorno;
 	}
 
 	/**

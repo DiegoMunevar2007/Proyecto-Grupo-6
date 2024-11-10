@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import lprs.exceptions.UsuarioNotFoundException;
+import lprs.exceptions.UsuarioRepetidoException;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.cuentas.Profesor;
 import lprs.logica.cuentas.Usuario;
@@ -23,13 +24,14 @@ public class ManejadorSesion implements Serializable {
 
 	public void crearUsuario(String usuario, String contrasena, int tipo) throws Exception {
 		Usuario nuevoUsuario;
-		if (tipo == 1) {
-			if (usuarios.containsKey(usuario)) {
-				throw new Exception("El usuario ya existe");
-			}
-			nuevoUsuario = new Estudiante(usuario, contrasena, lprsActual);
 
+		if (usuarios.containsKey(usuario)) {
+			throw new UsuarioRepetidoException(usuario);
+		}
+		if (tipo == 1) {
+			nuevoUsuario = new Estudiante(usuario, contrasena, lprsActual);
 		} else if (tipo == 2) {
+
 			nuevoUsuario = new Profesor(usuario, contrasena, lprsActual);
 		} else {
 			throw new Exception("Este no es un tipo valido, vuelva a intentar");
@@ -104,5 +106,5 @@ public class ManejadorSesion implements Serializable {
 	public static String getProfesor() {
 		return PROFESOR;
 	}
-	
+
 }

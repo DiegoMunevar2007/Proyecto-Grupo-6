@@ -10,10 +10,10 @@ import lprs.logica.learningPath.LearningPath;
 
 public class QuizVerdaderoFalso extends Quiz {
 
-	
 	public QuizVerdaderoFalso(String titulo, String descripcion, String objetivo, int duracionEsperada,
 			boolean obligatoria, String fechaLimite, LearningPath lP, String dificultad, double calificacionMinima) {
-		super(titulo, descripcion, objetivo, duracionEsperada, obligatoria, fechaLimite, lP, dificultad, calificacionMinima);
+		super(titulo, descripcion, objetivo, duracionEsperada, obligatoria, fechaLimite, lP, dificultad,
+				calificacionMinima);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -32,7 +32,7 @@ public class QuizVerdaderoFalso extends Quiz {
 		}
 		PreguntaCerrada pregunta = new PreguntaCerrada(enunciado, respuestaCorrecta, opciones);
 		addPreguntaQuiz(pregunta);
-		
+
 	}
 
 }

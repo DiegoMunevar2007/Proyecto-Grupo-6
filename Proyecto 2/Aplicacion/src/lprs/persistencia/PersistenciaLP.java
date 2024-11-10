@@ -31,6 +31,9 @@ public class PersistenciaLP implements Persistencia {
 	public void guardarLP2(ManejadorSesion manejadorS, ManejadorLP manejadorLP) throws IOException {
 		// Se obtienen todos los learning paths creados en formato ArrayList
 		ArrayList<LearningPath> lPS = manejadorLP.getLearningPaths();
+		for (LearningPath lP : lPS) {
+			System.out.println("Learning Path: " + lP.getTitulo());
+		}
 		ObjectOutputStream oos = new ObjectOutputStream(
 				new FileOutputStream(new File(direccionArchivo + "/learningpaths.dat")));
 		oos.writeObject(lPS);
