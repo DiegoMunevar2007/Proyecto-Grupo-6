@@ -1,6 +1,6 @@
-package lprs.consola.profesor.actividad;
+package lprs.consola.profesor.learningPath.actividad;
 
-import lprs.consola.profesor.ConsolaActividadProfesor;
+import lprs.consola.profesor.learningPath.ConsolaActividadProfesor;
 import lprs.logica.contenido.Examen;
 import lprs.logica.contenido.pregunta.PreguntaAbierta;
 import lprs.logica.learningPath.LearningPath;

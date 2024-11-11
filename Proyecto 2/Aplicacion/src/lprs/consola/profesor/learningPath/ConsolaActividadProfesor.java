@@ -1,16 +1,14 @@
-package lprs.consola.profesor;
+package lprs.consola.profesor.learningPath;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import lprs.consola.profesor.actividad.ConsolaEncuestaProfesor;
-import lprs.consola.profesor.actividad.ConsolaExamenProfesor;
-import lprs.consola.profesor.actividad.ConsolaQuizProfesor;
-import lprs.consola.profesor.actividad.ConsolaTareaProfesor;
-import lprs.consola.profesor.actividad.ConsolaRecursoProfesor;
+import lprs.consola.profesor.learningPath.actividad.ConsolaEncuestaProfesor;
+import lprs.consola.profesor.learningPath.actividad.ConsolaExamenProfesor;
+import lprs.consola.profesor.learningPath.actividad.ConsolaQuizProfesor;
+import lprs.consola.profesor.learningPath.actividad.ConsolaTareaProfesor;
+import lprs.consola.profesor.learningPath.actividad.ConsolaRecursoProfesor;
 import lprs.logica.contenido.*;
-import lprs.logica.contenido.pregunta.Opcion;
-import lprs.logica.contenido.pregunta.PreguntaAbierta;
 import lprs.logica.learningPath.LearningPath;
 import lprs.principal.LPRS;
 

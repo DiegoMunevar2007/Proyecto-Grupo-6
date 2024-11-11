@@ -1,6 +1,6 @@
-package lprs.consola.profesor.actividad;
+package lprs.consola.profesor.learningPath.actividad;
 
-import lprs.consola.profesor.ConsolaActividadProfesor;
+import lprs.consola.profesor.learningPath.ConsolaActividadProfesor;
 import lprs.logica.contenido.Quiz;
 import lprs.logica.contenido.QuizMultiple;
 import lprs.logica.contenido.QuizVerdaderoFalso;

@@ -1,8 +1,8 @@
-package lprs.consola.profesor.actividad;
+package lprs.consola.profesor.learningPath.actividad;
 
 import lprs.logica.contenido.RecursoEducativo;
 import lprs.logica.learningPath.LearningPath;
-import lprs.consola.profesor.ConsolaActividadProfesor;
+import lprs.consola.profesor.learningPath.ConsolaActividadProfesor;
 import java.util.Scanner;
 
 public class ConsolaRecursoProfesor {

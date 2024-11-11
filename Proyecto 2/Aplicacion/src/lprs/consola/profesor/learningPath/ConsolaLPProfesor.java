@@ -1,4 +1,4 @@
-package lprs.consola.profesor;
+package lprs.consola.profesor.learningPath;
 
 import java.util.ArrayList;
 import java.util.Collection;
