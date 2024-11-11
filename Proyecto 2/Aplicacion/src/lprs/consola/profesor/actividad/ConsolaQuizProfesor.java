@@ -53,7 +53,7 @@ public class ConsolaQuizProfesor {
         Scanner lectura = consolaProfesor.getLectura();
         System.out.println("Ingrese el enunciado de la pregunta: ");
         String enunciado = lectura.nextLine();
-        if (quiz instanceof QuizMultiple) {
+        if (quiz instanceof QuizVerdaderoFalso) {
             System.out.println("¿Es verdadera o falsa? (v/f)");
             String respuesta = lectura.next();
             lectura.nextLine();
@@ -82,7 +82,7 @@ public class ConsolaQuizProfesor {
                     crearPreguntaCerrada(quiz);
                 }
             }
-        } else if (quiz instanceof QuizVerdaderoFalso) {
+        } else if (quiz instanceof QuizMultiple) {
             Opcion[] opciones = new Opcion[4];
             for (int i = 0; i < 4; i++) {
                 System.out.println("Opción " + (i + 1) + ": ");
@@ -193,6 +193,26 @@ public class ConsolaQuizProfesor {
         for (int i = 0; i < pregunta.getOpciones().length; i++) {
             System.out.println(i + 1 + ". " + pregunta.getOpciones()[i].getOpcion());
         }
+    }
+
+    public void verQuiz(Quiz quiz){
+        System.out.println("Título: " + quiz.getTitulo());
+        System.out.println("Descripción: " + quiz.getDescripcion());
+        System.out.println("Objetivo: " + quiz.getObjetivo());
+        System.out.println("Duración: " + quiz.getDuracionEsperada());
+        System.out.println("Obligatoria: " + quiz.isObligatoria());
+        System.out.println("Fecha de entrega: " + quiz.getFechaLimite());
+        System.out.println("Calificación mínima: " + quiz.getCalificacionMinima());
+        System.out.println("Preguntas: ");
+        for (int i = 0; i < quiz.getPreguntasQuiz().size(); i++) {
+            PreguntaCerrada pregunta = quiz.getPreguntasQuiz().get(i);
+            System.out.println(i + 1 + ". " + pregunta.getEnunciado());
+            for (int j = 0; j < pregunta.getOpciones().length; j++) {
+                System.out.println("Opción " + (j + 1) + ": " + pregunta.getOpciones()[j].getOpcion());
+            }
+            System.out.println("Respuesta correcta: " + pregunta.getCorrecta().getOpcion());
+        }
+        consolaProfesor.mostrarConsolaActividad();
     }
 
 }

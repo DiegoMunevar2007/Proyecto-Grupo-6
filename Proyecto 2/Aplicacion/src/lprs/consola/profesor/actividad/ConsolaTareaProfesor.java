@@ -209,4 +209,25 @@ public class ConsolaTareaProfesor {
         tarea.eliminarSeccion(seccion);
         System.out.println("Sección eliminada con éxito.");
     }
+    public void verTarea(Tarea tarea) {
+        System.out.println("Título: " + tarea.getTitulo());
+        System.out.println("Descripción: " + tarea.getDescripcion());
+        System.out.println("Objetivo: " + tarea.getObjetivo());
+        System.out.println("Duración: " + tarea.getDuracionEsperada());
+        System.out.println("Obligatoria: " + tarea.isObligatoria());
+        System.out.println("Fecha de entrega: " + tarea.getFechaLimite());
+        System.out.println("Secciones: ");
+        for (int i = 0; i < tarea.getSecciones().size(); i++) {
+            Seccion seccion = tarea.getSecciones().get(i);
+            System.out.println(i + 1 + ". " + seccion.getTitulo());
+            System.out.println("Descripción: " + seccion.getDescripcion());
+            System.out.println("Tipo de contenido: " + seccion.getTipo());
+            System.out.println("Contenido: " + seccion.getContenido());
+            System.out.println("Ejemplo: " + seccion.getEjemplo());
+            System.out.println("Explicación: " + seccion.getExplicacion());
+            System.out.println("Pista: " + seccion.getPista());
+            System.out.println("Resultado esperado: " + seccion.getResultadoEsperado());
+        }
+        consolaProfesor.mostrarConsolaActividad();
+    }
 }

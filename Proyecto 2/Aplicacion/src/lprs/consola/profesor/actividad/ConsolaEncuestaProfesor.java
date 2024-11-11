@@ -105,4 +105,18 @@ public class ConsolaEncuestaProfesor {
         actividad.removePreguntaEncuesta(actividad.getPreguntasEncuesta().get(numeroPregunta - 1));
         consolaProfesor.mostrarConsolaActividad();
     }
+    public void verEncuesta(Encuesta encuesta) {
+        System.out.println("Título: " + encuesta.getTitulo());
+        System.out.println("Descripción: " + encuesta.getDescripcion());
+        System.out.println("Objetivo: " + encuesta.getObjetivo());
+        System.out.println("Duración: " + encuesta.getDuracionEsperada());
+        System.out.println("Obligatoria: " + encuesta.isObligatoria());
+        System.out.println("Fecha de entrega: " + encuesta.getFechaLimite());
+        System.out.println("Preguntas: ");
+        for (int i = 0; i < encuesta.getPreguntasEncuesta().size(); i++) {
+            PreguntaAbierta pregunta = encuesta.getPreguntasEncuesta().get(i);
+            System.out.println(i + 1 + ". " + pregunta.getEnunciado());
+        }
+        consolaProfesor.mostrarConsolaActividad();
+    }
 }

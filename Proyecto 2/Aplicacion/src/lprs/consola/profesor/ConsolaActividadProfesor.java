@@ -94,8 +94,41 @@ public class ConsolaActividadProfesor {
             System.out.println("Actividad eliminada con éxito.");
             mostrarConsolaActividad();
         } else if (opcion == 4) {
+            if (lp.getActividades().isEmpty()) {
+                System.out.println("No hay actividades en este Learning Path.");
+                mostrarConsolaActividad();
+                consolaProfesor.mostrarConsolaProfesor();
+            }
+            for (int i = 0; i < lp.getActividades().size(); i++) {
+                System.out.println(i + 1 + ". " + lp.getActividades().get(i).getTitulo());
+            }
+            System.out.println("Seleccione una actividad para ver más detalles: ");
+            int numero = lectura.nextInt();
+            if (numero < 1 || numero > lp.getActividades().size()) {
+                System.out.println("Opción no válida. Por favor, seleccione una actividad de la lista.");
+                mostrarConsolaActividad();
+                return;
+            }
+            Actividad actividad = lp.getActividades().get(numero - 1);
+            if (actividad instanceof Quiz){
+                consolaQuiz.verQuiz((Quiz) actividad);
+            }
+            else if (actividad instanceof Examen){
+                consolaExamen.verExamen((Examen) actividad);
+            }
+            else if (actividad instanceof Encuesta){
+                consolaEncuesta.verEncuesta((Encuesta) actividad);
+            }
+            else if (actividad instanceof Tarea){
+                consolaTarea.verTarea((Tarea) actividad);
+            }
+            else if (actividad instanceof RecursoEducativo){
+                consolaRecursoEducativo.verRecurso((RecursoEducativo) actividad);
+            }
+        } else if (opcion == 5){
             consolaProfesor.mostrarConsolaProfesor();
-        } else {
+        }
+        else {
             System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
             mostrarConsolaActividad();
         }

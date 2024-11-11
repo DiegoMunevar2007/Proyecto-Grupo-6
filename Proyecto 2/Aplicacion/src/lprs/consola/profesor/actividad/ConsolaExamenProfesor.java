@@ -101,5 +101,19 @@ public class ConsolaExamenProfesor{
         consolaProfesor.mostrarConsolaActividad();
     }
 
+    public void verExamen(Examen examen) {
+        System.out.println("Título: " + examen.getTitulo());
+        System.out.println("Descripción: " + examen.getDescripcion());
+        System.out.println("Objetivo: " + examen.getObjetivo());
+        System.out.println("Duración: " + examen.getDuracionEsperada());
+        System.out.println("Obligatoria: " + examen.isObligatoria());
+        System.out.println("Fecha de entrega: " + examen.getFechaLimite());
+        System.out.println("Preguntas: ");
+        for (int i = 0; i < examen.getPreguntasExamen().size(); i++) {
+            PreguntaAbierta pregunta = examen.getPreguntasExamen().get(i);
+            System.out.println(i + 1 + ". " + pregunta.getEnunciado());
+        }
+        consolaProfesor.mostrarConsolaActividad();
+    }
 
 }

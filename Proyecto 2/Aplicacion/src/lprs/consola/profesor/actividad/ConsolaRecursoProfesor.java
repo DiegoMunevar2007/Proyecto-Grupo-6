@@ -80,4 +80,15 @@ public class ConsolaRecursoProfesor {
             modificarRecursoEducativo(recurso);
         }
     }
+    public void verRecurso(RecursoEducativo recurso) {
+        System.out.println("Título: " + recurso.getTitulo());
+        System.out.println("Descripción: " + recurso.getDescripcion());
+        System.out.println("Objetivo: " + recurso.getObjetivo());
+        System.out.println("Duración: " + recurso.getDuracionEsperada());
+        System.out.println("Obligatoria: " + recurso.isObligatoria());
+        System.out.println("Fecha de entrega: " + recurso.getFechaLimite());
+        System.out.println("Tipo: " + recurso.getTipoRecurso());
+        System.out.println("Link: " + recurso.getUrl());
+        consolaProfesor.mostrarConsolaActividad();
+    }
 }
