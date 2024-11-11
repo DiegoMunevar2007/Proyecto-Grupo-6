@@ -1,7 +1,6 @@
 package lprs.principal;
 
 import java.io.Serializable;
-import java.util.Scanner;
 
 import lprs.manejador.ManejadorLP;
 import lprs.manejador.ManejadorSesion;

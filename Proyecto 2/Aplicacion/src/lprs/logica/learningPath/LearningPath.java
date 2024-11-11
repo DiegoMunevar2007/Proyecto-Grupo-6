@@ -5,7 +5,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import lprs.logica.contenido.*;
+import lprs.logica.contenido.Actividad;
+import lprs.logica.contenido.Encuesta;
+import lprs.logica.contenido.Examen;
+import lprs.logica.contenido.QuizMultiple;
+import lprs.logica.contenido.QuizVerdaderoFalso;
+import lprs.logica.contenido.RecursoEducativo;
+import lprs.logica.contenido.Tarea;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.cuentas.Profesor;
 import lprs.principal.LPRS;

@@ -63,7 +63,7 @@ public class ConsolaSesionProfesor {
     }
 
     public void mostrarConsolaSesion() {
-        System.out.println("Bienvenido a Learning Paths Recommendation System");
+        System.out.println("Bienvenido a Learning Path Recommendation System - Profesor Learning Path");
         String[] opciones = { "Iniciar sesión", "Crear una cuenta", "Salir" };
         consolaProfesor.mostrarOpciones(opciones.length, opciones);
         Scanner lectura = consolaProfesor.getLectura();

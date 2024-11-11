@@ -1,12 +1,10 @@
 package lprs.consola;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
 import lprs.logica.contenido.Actividad;
 import lprs.logica.cuentas.Estudiante;
-import lprs.logica.learningPath.Avance;
 import lprs.logica.learningPath.LearningPath;
 import lprs.principal.LPRS;
 

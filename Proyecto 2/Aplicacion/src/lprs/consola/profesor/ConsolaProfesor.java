@@ -83,6 +83,7 @@ public class ConsolaProfesor extends ConsolaPrincipal {
             System.out.println("Error al guardar los datos");
             e.printStackTrace();
         }
+        consola.getLectura().close();
         return;
     }
 }

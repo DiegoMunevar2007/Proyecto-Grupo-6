@@ -53,4 +53,7 @@ public class Tarea extends Actividad {
 		return tR;
 	}
 
+	public void eliminarSeccion(Seccion seccion) {
+		secciones.remove(seccion);
+	}
 }
