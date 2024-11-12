@@ -1,8 +1,90 @@
 package lprs.consola.estudiante;
 
+import java.util.Scanner;
+
+import lprs.exceptions.ContraseniaIncorrectaException;
+import lprs.exceptions.TipoUsuarioIncorrectoException;
+import lprs.logica.cuentas.Estudiante;
+import lprs.logica.cuentas.Usuario;
+import lprs.principal.LPRS;
+
 public class ConsolaSesionEstudiante {
     private ConsolaEstudiante consolaEstudiante;
-    public ConsolaSesionEstudiante(ConsolaEstudiante consolaEstudiante){
+    private LPRS lprsActual;
+    public ConsolaSesionEstudiante(LPRS lprsActual, ConsolaEstudiante consolaEstudiante){
         this.consolaEstudiante=consolaEstudiante;
+        this.lprsActual=lprsActual;
+    }
+    public void crearCuenta() {
+        Scanner lectura = consolaEstudiante.getLectura();
+        System.out.println("Ingrese su nombre de usuario: ");
+        String usuario = lectura.nextLine();
+        System.out.println("Ingrese su contraseña: ");
+        String contrasenia = lectura.nextLine();
+        try {
+            lprsActual.getManejadorSesion().crearUsuario(usuario, contrasenia, 2);
+        } catch (Exception e) {
+            System.out.println("Error al crear la cuenta");
+            e.printStackTrace();
+        }
+        System.out.println("Cuenta creada con éxito.");
+        mostrarConsolaSesion();
+    }
+
+    public void iniciarSesion() {
+        Scanner lectura = consolaEstudiante.getLectura();
+        System.out.println("Ingrese su nombre de usuario: ");
+        String ID = lectura.nextLine();
+        System.out.println("Ingrese su contraseña: ");
+        String contrasenia = lectura.nextLine();
+        try {
+            Usuario usuario = lprsActual.getManejadorSesion().iniciarSesion(ID, contrasenia);
+            if (usuario == null) {
+                mostrarConsolaSesion();
+                return;
+            }
+            if (usuario.getTipo().equals("PROFESOR")) {
+                throw new TipoUsuarioIncorrectoException("PROFESOR");
+            } else {
+                Estudiante estudiante = (Estudiante) usuario;
+                consolaEstudiante.setEstudiante(estudiante);
+                consolaEstudiante.mostrarConsolaEstudiante();
+            }
+        } catch (TipoUsuarioIncorrectoException | ContraseniaIncorrectaException e) {
+            System.out.println(e.getMessage());
+            mostrarConsolaSesion();
+        } catch (Exception e) {
+            System.out.println("Error al iniciar sesión");
+            e.printStackTrace();
+        }
+
+    }
+
+    public void mostrarConsolaSesion() {
+        System.out.println("Bienvenido a Learning Path Recommendation System - Profesor Learning Path");
+        String[] opciones = { "Iniciar sesión", "Crear una cuenta", "Salir" };
+        consolaEstudiante.mostrarOpciones(opciones.length, opciones);
+        Scanner lectura = consolaEstudiante.getLectura();
+        int opcion = lectura.nextInt();
+        lectura.nextLine();
+        if (opcion == 1) {
+            iniciarSesion();
+        } else if (opcion == 2) {
+            crearCuenta();
+        } else if (opcion == 3) {
+            System.out.println("Hasta luego!");
+            try {
+                lprsActual.guardarDatos();
+            } catch (Exception e) {
+                System.out.println("Error al guardar los datos");
+                e.printStackTrace();
+            }
+            lectura.close();
+            return;
+        } else {
+            System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
+            lectura.close();
+            mostrarConsolaSesion();
+        }
     }
 }

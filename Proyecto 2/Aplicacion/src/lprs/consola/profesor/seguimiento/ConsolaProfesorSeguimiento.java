@@ -3,8 +3,10 @@ package lprs.consola.profesor.seguimiento;
 import lprs.consola.ConsolaPrincipal;
 import lprs.consola.profesor.learningPath.ConsolaActividadProfesor;
 import lprs.consola.profesor.learningPath.ConsolaLPProfesor;
+import lprs.consola.profesor.learningPath.ConsolaProfesor;
 import lprs.consola.profesor.learningPath.ConsolaSesionProfesor;
 import lprs.logica.cuentas.Profesor;
+import lprs.persistencia.PersistenciaGeneral;
 import lprs.principal.LPRS;
 import java.util.Scanner;
 
@@ -58,6 +60,30 @@ public class ConsolaProfesorSeguimiento extends ConsolaPrincipal {
 
     public ConsolaLPSeguimientoProfesor getConsolaLP() {
         return consolaLP;
+    }
+    public ConsolaSesionProfesorSeguimiento getConsolaSesion() {
+    	return consolaSesion;
+    }
+    
+    
+    public static void main(String[] args) {
+        LPRS lprs = new LPRS();
+        try {
+            lprs = PersistenciaGeneral.cargarDatos();
+        } catch (Exception e) {
+            System.out.println("Error al cargar los datos");
+            e.printStackTrace();
+        }
+        ConsolaProfesorSeguimiento consola = new ConsolaProfesorSeguimiento(lprs);
+        consola.getConsolaSesion().mostrarConsolaSesion();
+        try {
+            PersistenciaGeneral.guardarDatos(lprs);
+        } catch (Exception e) {
+            System.out.println("Error al guardar los datos");
+            e.printStackTrace();
+        }
+        consola.getLectura().close();
+        return;
     }
 
 }
