@@ -39,8 +39,12 @@ public class ConsolaActividadProfesor {
     }
     public void mostrarConsolaActividad() {
         Scanner lectura = consolaProfesor.getLectura();
-        System.out.println("Seleccione un Learning Path: ");
         ArrayList<LearningPath> learningPaths = consolaProfesor.getProfesor().getLearningPathsCreadosLista();
+        if (learningPaths.isEmpty()) {
+            System.out.println("No hay Learning Paths creados.");
+            consolaProfesor.mostrarConsolaProfesor();
+        }
+        System.out.println("Seleccione un Learning Path: ");
         for (int i = 0; i < learningPaths.size(); i++) {
             System.out.println(i + 1 + ". " + learningPaths.get(i).getTitulo());
         }

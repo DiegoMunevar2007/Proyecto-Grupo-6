@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 
+import lprs.exceptions.ContraseniaIncorrectaException;
 import lprs.exceptions.UsuarioNotFoundException;
 import lprs.exceptions.UsuarioRepetidoException;
 import lprs.logica.cuentas.Estudiante;
@@ -66,7 +67,7 @@ public class ManejadorSesion implements Serializable {
 		if (usuario.getContrasenia().equals(contrasena)) {
 			return usuario;
 		} else {
-			throw new Exception("La contraseña ingresada no es valida");
+			throw new ContraseniaIncorrectaException("La contraseña ingresada no es valida");
 
 		}
 	}

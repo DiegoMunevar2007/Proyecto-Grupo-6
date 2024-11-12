@@ -46,7 +46,7 @@ public class ConsolaRecursoProfesor {
         int opcion = lectura.nextInt();
         lectura.nextLine();
         if (opcion == 1) {
-        recurso.setTitulo(consolaProfesor.pedirTitulo());
+            recurso.setTitulo(consolaProfesor.pedirTitulo());
         } else if (opcion == 2) {
             recurso.setDescripcion(consolaProfesor.pedirDescripcion());
         } else if (opcion == 3) {

@@ -1,19 +1,18 @@
-package lprs.consola.profesor.learningPath;
+package lprs.consola.profesor.seguimiento;
 
 import java.util.Scanner;
 
-import lprs.exceptions.ContraseniaIncorrectaException;
 import lprs.exceptions.TipoUsuarioIncorrectoException;
 import lprs.logica.cuentas.Profesor;
 import lprs.logica.cuentas.Usuario;
 import lprs.principal.LPRS;
 
-public class ConsolaSesionProfesor {
+public class ConsolaSesionProfesorSeguimiento {
 
     private LPRS lprsActual;
-    private ConsolaProfesor consolaProfesor;
+    private ConsolaProfesorSeguimiento consolaProfesor;
 
-    public ConsolaSesionProfesor(LPRS lprsActual, ConsolaProfesor consolaProfesor) {
+    public ConsolaSesionProfesorSeguimiento(LPRS lprsActual, ConsolaProfesorSeguimiento consolaProfesor) {
         this.lprsActual = lprsActual;
         this.consolaProfesor = consolaProfesor;
     }
@@ -53,7 +52,7 @@ public class ConsolaSesionProfesor {
                 consolaProfesor.setProfesor(profesor);
                 consolaProfesor.mostrarConsolaProfesor();
             }
-        } catch (TipoUsuarioIncorrectoException | ContraseniaIncorrectaException e) {
+        } catch (TipoUsuarioIncorrectoException e) {
             System.out.println(e.getMessage());
             mostrarConsolaSesion();
         } catch (Exception e) {
@@ -64,7 +63,7 @@ public class ConsolaSesionProfesor {
     }
 
     public void mostrarConsolaSesion() {
-        System.out.println("Bienvenido a Learning Path Recommendation System - Profesor Learning Path");
+        System.out.println("Bienvenido a Learning Path Recommendation System - Profesor Seguimiento");
         String[] opciones = { "Iniciar sesión", "Crear una cuenta", "Salir" };
         consolaProfesor.mostrarOpciones(opciones.length, opciones);
         Scanner lectura = consolaProfesor.getLectura();
