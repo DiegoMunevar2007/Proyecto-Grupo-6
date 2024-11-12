@@ -20,7 +20,7 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
         super(lprsActual);
         this.estudiante = null;
         this.consolaSesion = new ConsolaSesionEstudiante(lprsActual,this);
-        Scanner lectura = new Scanner(System.in);
+        this.lectura = new Scanner(System.in);
     }
     public ConsolaSesionEstudiante getConsolaSesion() {
         return consolaSesion;

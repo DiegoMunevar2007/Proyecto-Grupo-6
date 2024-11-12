@@ -6,6 +6,7 @@ import lprs.exceptions.ContraseniaIncorrectaException;
 import lprs.exceptions.TipoUsuarioIncorrectoException;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.cuentas.Usuario;
+import lprs.consola.estudiante.ConsolaEstudiante;
 import lprs.principal.LPRS;
 
 public class ConsolaSesionEstudiante {
@@ -22,7 +23,7 @@ public class ConsolaSesionEstudiante {
         System.out.println("Ingrese su contraseña: ");
         String contrasenia = lectura.nextLine();
         try {
-            lprsActual.getManejadorSesion().crearUsuario(usuario, contrasenia, 2);
+            lprsActual.getManejadorSesion().crearUsuario(usuario, contrasenia, 1);
         } catch (Exception e) {
             System.out.println("Error al crear la cuenta");
             e.printStackTrace();
@@ -61,7 +62,7 @@ public class ConsolaSesionEstudiante {
     }
 
     public void mostrarConsolaSesion() {
-        System.out.println("Bienvenido a Learning Path Recommendation System - Profesor Learning Path");
+        System.out.println("Bienvenido a Learning Path Recommendation System - Estudiante");
         String[] opciones = { "Iniciar sesión", "Crear una cuenta", "Salir" };
         consolaEstudiante.mostrarOpciones(opciones.length, opciones);
         Scanner lectura = consolaEstudiante.getLectura();
