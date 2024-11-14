@@ -41,7 +41,7 @@ public class Estudiante extends Usuario {
 		LearningPath lP = lprsActual.getManejadorLP().getLearningPath(ID);
 		learningPathsInscritos.add(lP);
 		lP.aniadirEstudiante(this);
-		Avance nuevoAvance = new Avance(lP.obtenerFecha(), lP); // TODO: Verificar que Date de esta manera si sea valido
+		Avance nuevoAvance = new Avance(lP.obtenerFecha(), lP); //
 		avancesEstudiante.put(ID, nuevoAvance);
 	}
 

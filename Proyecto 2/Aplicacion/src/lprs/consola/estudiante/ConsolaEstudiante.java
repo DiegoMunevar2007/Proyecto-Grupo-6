@@ -5,7 +5,9 @@ import java.util.Scanner;
 
 import lprs.consola.ConsolaPrincipal;
 import lprs.consola.profesor.learningPath.ConsolaProfesor;
+import lprs.exceptions.NoLearningPathsException;
 import lprs.logica.contenido.*;
+import lprs.logica.contenido.realizable.ActividadRealizable;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
 import lprs.persistencia.PersistenciaGeneral;
@@ -13,7 +15,6 @@ import lprs.principal.LPRS;
 
 public class ConsolaEstudiante extends ConsolaPrincipal {
     private Estudiante estudiante;
-    private Scanner lectura;
     private ConsolaSesionEstudiante consolaSesion;
     private ConsolaActividadEstudiante consolaActividad;
 
@@ -21,7 +22,6 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
         super(lprsActual);
         this.estudiante = null;
         this.consolaSesion = new ConsolaSesionEstudiante(lprsActual, this);
-        this.lectura = new Scanner(System.in);
         this.consolaActividad = new ConsolaActividadEstudiante( this);
     }
 
@@ -29,9 +29,6 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
         return consolaSesion;
     }
 
-    public Scanner getLectura() {
-        return lectura;
-    }
 
     public Estudiante getEstudiante() {
         return estudiante;
@@ -48,21 +45,35 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
                 "Salir"};
 
         mostrarOpciones(opciones.length, opciones);
-        int opcion = lectura.nextInt();
-
+        int opcion = pedirInt("Seleccione una opción: ");
         if (opcion == 1) {
-            mostrarLearningPaths();
+            try {
+                mostrarLearningPaths();
+            } catch (NoLearningPathsException e) {
+                System.out.println(e.getMessage());
+            }
             mostrarConsolaEstudiante();
         } else if (opcion == 2) {
-            String id = escogerLearningPath();
-            estudiante.inscribirLearningPath(id);
-            mostrarConsolaEstudiante();
+            String id = "";
+            try {
+                id = escogerLearningPath();
+                estudiante.inscribirLearningPath(id);
+            } catch (NoLearningPathsException e) {
+                System.out.println(e.getMessage());
+            } finally {
+                mostrarConsolaEstudiante();
+            }
         } else if (opcion == 3) {
             mostrarConsolaEstudiante();
         } else if (opcion == 4) {
-            Actividad actividad = escogerActividad();
+            Actividad actividad = null;
+            try {
+                actividad = escogerActividad();
+            } catch (NoLearningPathsException e) {
+                System.out.println(e.getMessage());
+                mostrarConsolaEstudiante();
+            }
             if (actividad == null) {
-                System.out.println("No hay actividades disponibles para realizar en este Learning Path.");
                 mostrarConsolaEstudiante();
             }
             if (actividad instanceof Quiz) {
@@ -79,7 +90,13 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
             mostrarConsolaEstudiante();
         } else if (opcion == 5) {
             System.out.println("Seleccione una actividad para reseñar: ");
-            Actividad actividad = escogerActividad();
+            Actividad actividad = null;
+            try {
+                actividad = escogerActividad();
+            } catch (NoLearningPathsException e) {
+                System.out.println(e.getMessage());
+                mostrarConsolaEstudiante();
+            }
             if (actividad == null) {
                 System.out.println("No hay actividades disponibles para reseñar en este Learning Path.");
                 mostrarConsolaEstudiante();
@@ -97,19 +114,12 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
         }
     }
 
-    public String mostrarLearningPaths() {
-        Scanner lectura = new Scanner(System.in);
+    public String mostrarLearningPaths() throws NoLearningPathsException {
         List<LearningPath> learningPathsDisponibles = estudiante.getLearningPathsInscritos();
         if (learningPathsDisponibles.isEmpty()) {
-            System.out.println("No tienes learning paths inscritos");
-            mostrarConsolaEstudiante();
-            return null;
+            throw new NoLearningPathsException("No hay Learning Paths disponibles.");
         }
-        for (int i = 0; i < learningPathsDisponibles.size(); i++) {
-            System.out.println(Integer.toString(i + 1) + ". " + learningPathsDisponibles.get(i).getTitulo());
-        }
-        System.out.println("Seleccione un Learning Path: ");
-        int opcion = lectura.nextInt();
+        int opcion = pedirInt("Seleccione un Learning Path: ");
         if (opcion < 1 || opcion > learningPathsDisponibles.size()) {
             System.out.println("Opción no válida. Por favor, seleccione un Learning Path de la lista.");
             mostrarLearningPaths();
@@ -128,9 +138,14 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
         return lP.getID();
     }
 
-    public Actividad escogerActividad() {
+    public Actividad escogerActividad() throws  NoLearningPathsException {
         Scanner lectura = new Scanner(System.in);
-        String ID = mostrarLearningPaths();
+        String ID = null;
+        try {
+            ID = mostrarLearningPaths();
+        } catch (NoLearningPathsException e) {
+            throw e;
+        }
         LearningPath lP = estudiante.getLprsActual().getManejadorLP().getLearningPath(ID);
         List<Actividad> actividades = lP.getActividades();
         if (actividades.isEmpty()) {
@@ -149,6 +164,9 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
         return actividades.get(opcion - 1);
     }
 
+    public ActividadRealizable RealizarActividad(Actividad actividad) {
+        return actividad.crearActividadRealizable(estudiante);
+    }
 
     public void mostrarLearningPathsDisponibles() {
 
@@ -162,16 +180,13 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
         }
     }
 
-    public String escogerLearningPath() {
-        Scanner lectura = new Scanner(System.in);
+    public String escogerLearningPath() throws NoLearningPathsException {
         List<LearningPath> learningPathsDisponibles = lprsActual.getManejadorLP().learningPathsDisponibles();
         mostrarLearningPathsDisponibles();
         if (learningPathsDisponibles.isEmpty()) {
-            mostrarConsolaEstudiante();
-            return null;
+           throw new NoLearningPathsException("No hay Learning Paths disponibles.");
         }
-        System.out.println("Seleccione un Learning Path: ");
-        int opcion = lectura.nextInt();
+        int opcion = pedirInt("Seleccione un Learning Path: ");
         if (opcion < 1 || opcion > learningPathsDisponibles.size()) {
             System.out.println("Opción no válida. Por favor, seleccione un Learning Path de la lista.");
             return escogerLearningPath();
@@ -186,8 +201,7 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
         }
         System.out.println("Duracion: " + learningPathsDisponibles.get(opcion - 1).getDuracion());
         System.out.println("Rating: " + learningPathsDisponibles.get(opcion - 1).getRating());
-        System.out.println("Desea inscribirse en este Learning Path? (s/n)");
-        String respuesta = lectura.next();
+        String respuesta = pedirString("Desea inscribirse en este Learning Path? (s/n)");
         if (respuesta.equals("s")) {
             return learningPathsDisponibles.get(opcion - 1).getID();
         } else {
@@ -205,15 +219,13 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
         }
         ConsolaEstudiante consola = new ConsolaEstudiante(lprs);
         consola.getConsolaSesion().mostrarConsolaSesion();
-        consola.getLectura().close();
+        consola.cerrarLectura();
         try {
             PersistenciaGeneral.guardarDatos(lprs);
         } catch (Exception e) {
             System.out.println("Error al guardar los datos");
             e.printStackTrace();
         }
-
-        return;
     }
 
 }

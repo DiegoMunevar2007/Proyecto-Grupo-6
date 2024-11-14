@@ -54,7 +54,7 @@ public class ConsolaProfesor extends ConsolaPrincipal {
         String[] opciones = { "Manejar Learning Paths",
                 "Manejar actividades", "Salir" };
         mostrarOpciones(opciones.length, opciones);
-        int opcion = lectura.nextInt();
+        int opcion = pedirInt("Seleccione una opción: ");
         if (opcion == 1) {
             consolaLP.mostrarConsolaLP();
         } else if (opcion == 2) {

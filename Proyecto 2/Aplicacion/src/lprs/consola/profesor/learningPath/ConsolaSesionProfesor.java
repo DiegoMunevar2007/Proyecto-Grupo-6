@@ -35,11 +35,10 @@ public class ConsolaSesionProfesor {
     }
 
     public void iniciarSesion() {
-        Scanner lectura = consolaProfesor.getLectura();
-        System.out.println("Ingrese su nombre de usuario: ");
-        String ID = lectura.nextLine();
+
+        String ID = consolaProfesor.pedirString("Ingrese su nombre de usuario: ");
         System.out.println("Ingrese su contraseña: ");
-        String contrasenia = lectura.nextLine();
+        String contrasenia = consolaProfesor.pedirString("Ingrese su contraseña: ");
         try {
             Usuario usuario = lprsActual.getManejadorSesion().iniciarSesion(ID, contrasenia);
             if (usuario == null) {
@@ -67,26 +66,16 @@ public class ConsolaSesionProfesor {
         System.out.println("Bienvenido a Learning Path Recommendation System - Profesor Learning Path");
         String[] opciones = { "Iniciar sesión", "Crear una cuenta", "Salir" };
         consolaProfesor.mostrarOpciones(opciones.length, opciones);
-        Scanner lectura = consolaProfesor.getLectura();
-        int opcion = lectura.nextInt();
-        lectura.nextLine();
+        int opcion = consolaProfesor.pedirInt("Seleccione una opción: ");
         if (opcion == 1) {
             iniciarSesion();
         } else if (opcion == 2) {
             crearCuenta();
         } else if (opcion == 3) {
             System.out.println("Hasta luego!");
-            try {
-                lprsActual.guardarDatos();
-            } catch (Exception e) {
-                System.out.println("Error al guardar los datos");
-                e.printStackTrace();
-            }
-            lectura.close();
             return;
         } else {
             System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
-            lectura.close();
             mostrarConsolaSesion();
         }
     }

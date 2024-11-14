@@ -17,11 +17,8 @@ public class ConsolaSesionEstudiante {
         this.lprsActual=lprsActual;
     }
     public void crearCuenta() {
-        Scanner lectura = consolaEstudiante.getLectura();
-        System.out.println("Ingrese su nombre de usuario: ");
-        String usuario = lectura.nextLine();
-        System.out.println("Ingrese su contraseña: ");
-        String contrasenia = lectura.nextLine();
+        String usuario = consolaEstudiante.pedirString("Ingrese su nombre de usuario: ");
+        String contrasenia = consolaEstudiante.pedirString("Ingrese su contraseña: ");
         try {
             lprsActual.getManejadorSesion().crearUsuario(usuario, contrasenia, 1);
         } catch (Exception e) {
@@ -33,11 +30,8 @@ public class ConsolaSesionEstudiante {
     }
 
     public void iniciarSesion() {
-        Scanner lectura = consolaEstudiante.getLectura();
-        System.out.println("Ingrese su nombre de usuario: ");
-        String ID = lectura.nextLine();
-        System.out.println("Ingrese su contraseña: ");
-        String contrasenia = lectura.nextLine();
+        String ID = consolaEstudiante.pedirString("Ingrese su nombre de usuario: ");
+        String contrasenia = consolaEstudiante.pedirString("Ingrese su contraseña: ");
         try {
             Usuario usuario = lprsActual.getManejadorSesion().iniciarSesion(ID, contrasenia);
             if (usuario == null) {
@@ -65,26 +59,16 @@ public class ConsolaSesionEstudiante {
         System.out.println("Bienvenido a Learning Path Recommendation System - Estudiante");
         String[] opciones = { "Iniciar sesión", "Crear una cuenta", "Salir" };
         consolaEstudiante.mostrarOpciones(opciones.length, opciones);
-        Scanner lectura = consolaEstudiante.getLectura();
-        int opcion = lectura.nextInt();
-        lectura.nextLine();
+        int opcion = consolaEstudiante.pedirInt("Seleccione una opción: ");
         if (opcion == 1) {
             iniciarSesion();
         } else if (opcion == 2) {
             crearCuenta();
         } else if (opcion == 3) {
             System.out.println("Hasta luego!");
-            try {
-                lprsActual.guardarDatos();
-            } catch (Exception e) {
-                System.out.println("Error al guardar los datos");
-                e.printStackTrace();
-            }
-            lectura.close();
             return;
         } else {
             System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
-            lectura.close();
             mostrarConsolaSesion();
         }
     }
