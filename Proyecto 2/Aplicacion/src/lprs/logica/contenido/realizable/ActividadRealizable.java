@@ -16,21 +16,23 @@ public abstract class ActividadRealizable implements Serializable {
 	protected Estudiante estudiante;
 	protected Actividad actividadBase;
 	protected int tiempoTomado;
+	protected boolean bypassActividadPrevia;
 
 	public ActividadRealizable(Estudiante estudiante) {
 		this.comentarios = "";
 		this.estado = "";
 		this.estudiante = estudiante;
 		tiempoTomado = 0;
+		bypassActividadPrevia = false;
 	}
 
 	public abstract void calificarActividad();
 
-	public abstract void realizarActividad();
+	public abstract ArrayList realizarActividad() throws ActividadPreviaException;
 
-	public abstract void guardarActividad();
+	public abstract void guardarActividad(ArrayList respuestasEsperadas);
 
-	public abstract void enviarActividad();
+	public abstract void enviarActividad(ArrayList respuestasEsperadas);
 
 	public int getTiempoTomado() {
 		return tiempoTomado;
@@ -55,6 +57,12 @@ public abstract class ActividadRealizable implements Serializable {
 	public String getEstado() {
 		return estado;
 	}
+	public boolean isBypassActividadPrevia() {
+		return bypassActividadPrevia;
+	}
+	public void setBypassActividadPrevia(boolean bypassActividadPrevia) {
+		this.bypassActividadPrevia = bypassActividadPrevia;
+	}
 
 	public abstract void setEstado(String estado) throws EstadoException;
 
@@ -68,7 +76,7 @@ public abstract class ActividadRealizable implements Serializable {
 
 	public abstract Actividad getActividadBase();
 
-	public boolean verificarEligibilidad() throws Exception {
+	public boolean verificarEligibilidad() throws ActividadPreviaException {
 		// Verificar si todas las actividades previas estan completas
 		Actividad actividadBase = getActividadBase();
 		LearningPath lP = actividadBase.getLearningPathAsignado();
@@ -85,7 +93,7 @@ public abstract class ActividadRealizable implements Serializable {
 				actividadesNoCompletadas.add(actividadPrevia);
 			}
 			// Si no se completaron todas las actividades previas, se lanza una excepcion
-			if (!todasActividadesPreviasCompletas)
+			if (!todasActividadesPreviasCompletas && !bypassActividadPrevia)
 
 			{
 				throw new ActividadPreviaException(actividadesNoCompletadas);
@@ -93,5 +101,8 @@ public abstract class ActividadRealizable implements Serializable {
 
 		}
 		return todasActividadesPreviasCompletas;
+	}
+	public Avance getAvance() {
+		return estudiante.getAvance(actividadBase.getLearningPathAsignado().getID());
 	}
 }

@@ -3,6 +3,7 @@ package lprs.logica.contenido.realizable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import lprs.exceptions.ActividadPreviaException;
 import lprs.exceptions.EstadoException;
 import lprs.logica.contenido.Actividad;
 import lprs.logica.contenido.Examen;
@@ -27,6 +28,7 @@ public class ExamenRealizable extends ActividadRealizable {
     }
 
     @Override
+    //TODO: Mover esta consola al seguimiento de profesor
     public void calificarActividad() {
         System.out.println("Información del examen:");
         System.out.println("Preguntas: " + preguntasRealizadas.size());
@@ -37,7 +39,7 @@ public class ExamenRealizable extends ActividadRealizable {
         for (int i = 0; i < preguntasRealizadas.size(); i++) {
             PreguntaAbiertaRealizable preguntaRealizada = preguntasRealizadas.get(i);
             PreguntaAbierta preguntaBase = preguntaRealizada.getPreguntaBase();
-            System.out.println("Pregunta " + i + ": " + preguntaBase.getEnunciado());
+            System.out.println("Pregunta " + i+1 + ": " + preguntaBase.getEnunciado());
             System.out.println("Respuesta: " + preguntaRealizada.getRespuesta());
         }
         System.out.println("Desea calificar el examen como exitoso o no exitoso? (1. Exitoso, 2. No exitoso)");
@@ -61,33 +63,27 @@ public class ExamenRealizable extends ActividadRealizable {
       }
 
     @Override
-    public void realizarActividad() {
-        // TODO Auto-generated method stub
-        ArrayList<PreguntaAbierta> preguntasExamen = actividadBase.getPreguntasExamen();
-        long tiempoInicial = System.currentTimeMillis();
-        for (int i = 0; i < preguntasExamen.size(); i++) {
-            PreguntaAbierta pregunta = preguntasExamen.get(i);
-            System.out.println("Pregunta " + i + ": " + pregunta.getEnunciado());
-            System.out.println("A continuación, ingrese su respuesta: ");
-            String respuesta = lecturaExamen.nextLine();
-            PreguntaAbiertaRealizable preguntaRealizable = new PreguntaAbiertaRealizable(respuesta, pregunta);
-            preguntasRealizadas.add(preguntaRealizable);
+    public ArrayList realizarActividad() throws ActividadPreviaException {
+        try {
+            verificarEligibilidad();
+        } catch (ActividadPreviaException e) {
+            throw e;
         }
-        System.out.println("Examen completado.");
-        long tiempoFinal = System.currentTimeMillis();
-        tiempoTomado = (int) (tiempoFinal - tiempoInicial) / 1000;
-        enviarActividad();
+        ArrayList preguntasExamen = actividadBase.getPreguntasExamen();
+        tiempoTomado = (int) System.currentTimeMillis();
+        return preguntasExamen;
     }
 
     @Override
-    public void guardarActividad() {
+    public void guardarActividad(ArrayList respuestas) {
+        tiempoTomado = (int) (System.currentTimeMillis() - tiempoTomado)/1000 ;
         LearningPath lP = actividadBase.getLearningPathAsignado();
         estudiante.getAvance(lP.getID()).addActividadRealizada(this);
     }
 
     @Override
-    public void enviarActividad() {
-        guardarActividad();
+    public void enviarActividad(ArrayList respuestas) {
+        guardarActividad(respuestas);
         try {
             setEstado("Enviado");
         } catch (EstadoException e) {

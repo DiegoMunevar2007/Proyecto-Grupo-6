@@ -32,6 +32,7 @@ public class ConsolaEncuestaProfesor {
             crearPreguntaAbiertaEncuesta(encuesta);
         }
         System.out.println("Encuesta creada con éxito.");
+        consolaProfesor.aniadirActividadesSeguimiento(lp, encuesta);
         consolaProfesor.mostrarConsolaActividad();
     }
 

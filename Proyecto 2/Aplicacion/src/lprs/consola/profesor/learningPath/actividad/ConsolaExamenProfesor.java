@@ -31,6 +31,7 @@ public class ConsolaExamenProfesor{
             crearPreguntaAbiertaExamen(examen);
         }
         System.out.println("Examen creado con éxito.");
+        consolaProfesor.aniadirActividadesSeguimiento(lp, examen);
         consolaProfesor.mostrarConsolaActividad();
     }
     public void modificarExamen(Examen examen) {

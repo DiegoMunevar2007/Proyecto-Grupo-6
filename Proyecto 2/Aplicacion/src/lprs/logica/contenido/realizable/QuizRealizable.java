@@ -29,69 +29,29 @@ public class QuizRealizable extends ActividadRealizable {
 		}
 	
 		@Override
-		public void realizarActividad() {
+		public ArrayList realizarActividad() throws ActividadPreviaException {
 			try {
 				verificarEligibilidad();
 			} catch (ActividadPreviaException e) {
-				System.out.println(e.getMessage());
-				System.out.println("¿Desea continuar con la actividad sin realizar las demás? (S/N)");
-				String respuesta = lecturaQuiz.nextLine();
-				if (respuesta.equalsIgnoreCase("N")) {
-					return;
-				} else {
-					System.out.println("Continuando con la actividad...");
-				}
-			} catch (Exception e) {
-				System.out.println("Ocurrió un error: " + e.getMessage());
+				throw e;
 			}
 	
 			System.out.println("Realizando quiz...");
-			try {
-				verificarEligibilidad();
-			} catch (ActividadPreviaException e) {
-				System.out.println(e.getMessage());
-				System.out.println("¿Desea continuar con la actividad sin realizar las demás? (S/N)");
-				String respuesta = lecturaQuiz.nextLine();
-				if (respuesta.equalsIgnoreCase("N")) {
-					return;
-				} else {
-					System.out.println("Continuando con la actividad...");
-				}
-			} catch (Exception e) {
-				System.out.println("Ocurrió un error: " + e.getMessage());
-			}
 			ArrayList<PreguntaCerrada> preguntasQuiz = actividadBase.getPreguntasQuiz();
-			long tiempoInicial = System.currentTimeMillis();
-			for (PreguntaCerrada pregunta : preguntasQuiz) {
-				System.out.println(pregunta.getEnunciado());
-				System.out.println("Opciones:");
-				Opcion[] opciones = pregunta.getOpciones();
-				for (int i = 0; i < pregunta.getOpciones().length; i++) {
-					System.out.println(i + 1 + ". " + opciones[i].getOpcion());
-				}
-				System.out.println("Ingrese el número de la respuesta correcta:");
-				int respuesta = lecturaQuiz.nextInt();
-				PreguntaCerradaRealizable preguntaRealizable = new PreguntaCerradaRealizable(pregunta,
-						opciones[respuesta - 1]);
-				preguntas.add(preguntaRealizable);
-				if (preguntaRealizable.verificarOpcion(opciones[respuesta - 1])) {
-					correctas++;
-				}
-			}
-			long tiempoFinal = System.currentTimeMillis();
-			tiempoTomado = (int) (tiempoFinal - tiempoInicial) / 1000;
-			enviarActividad();
+			tiempoTomado = (int) System.currentTimeMillis();
+			return preguntasQuiz;
 		}
 	
 		@Override
-		public void guardarActividad() {
+		public void guardarActividad(ArrayList respuestas) {
+			preguntas = respuestas;
 			LearningPath lP = actividadBase.getLearningPathAsignado();
 			estudiante.getAvance(lP.getID()).addActividadRealizada(this);
 		}
 	
 		@Override
-		public void enviarActividad() {
-			guardarActividad();
+		public void enviarActividad(ArrayList respuestas) {
+			guardarActividad(respuestas);
 			if (correctas == 0) {
 				calificacion = 0;
 			} else {
@@ -119,6 +79,9 @@ public class QuizRealizable extends ActividadRealizable {
 		public Actividad getActividadBase() {
 			// TODO Auto-generated method stub
 			return actividadBase;
+		}
+		public void incCorrectas() {
+			correctas++;
 		}
 	
 		@Override

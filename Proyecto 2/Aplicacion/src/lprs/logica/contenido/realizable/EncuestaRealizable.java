@@ -1,8 +1,10 @@
 package lprs.logica.contenido.realizable;
 
+import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import lprs.exceptions.ActividadPreviaException;
 import lprs.exceptions.EstadoException;
 import lprs.logica.contenido.Actividad;
 import lprs.logica.contenido.Encuesta;
@@ -15,12 +17,12 @@ public class EncuestaRealizable extends ActividadRealizable {
 
     private Encuesta actividadBase;
     private ArrayList<PreguntaAbiertaRealizable> preguntasRealizadas;
-    private Scanner lecturaEncuesta;
+    private long tiempoInicial;
+    private long tiempoFinal;
 
     public EncuestaRealizable(Encuesta actividadBase, Estudiante estudiante) {
         super(estudiante);
-        this.actividadBase = actividadBase;
-        lecturaEncuesta = new Scanner(System.in);
+        this.actividadBase = actividadBase;;
         preguntasRealizadas = new ArrayList<PreguntaAbiertaRealizable>();
     }
 
@@ -42,43 +44,35 @@ public class EncuestaRealizable extends ActividadRealizable {
     }
 
     @Override
-    public void realizarActividad() {
+    public ArrayList realizarActividad() throws ActividadPreviaException {
         try {
             verificarEligibilidad();
-        } catch (Exception e) {
-            System.out.println("Ocurrió un error: " + e.getMessage());
+        } catch (ActividadPreviaException e) {
+            throw e;
         }
-        long tiempoInicial = System.currentTimeMillis();
-        ArrayList<PreguntaAbierta> preguntasEncuesta = actividadBase.getPreguntasEncuesta();
-        System.out.println("Realizando encuesta...");
-        System.out.println("Titulo: " + actividadBase.getTitulo());
-        System.out.println("Descripcion: " + actividadBase.getDescripcion());
-        System.out.println("Duracion esperada: " + actividadBase.getDuracionEsperada());
-        System.out.println("Preguntas:");
-        String respuesta = "";
-        for (int i = 0; i < preguntasEncuesta.size(); i++) {
-            PreguntaAbierta pregunta = preguntasEncuesta.get(i);
-            System.out.println("Pregunta " + (i + 1) + ": " + pregunta.getEnunciado());
-            System.out.println("Respuesta: ");
-            respuesta = lecturaEncuesta.nextLine();
-            PreguntaAbiertaRealizable preguntaRealizada = new PreguntaAbiertaRealizable(respuesta, pregunta);
-            preguntasRealizadas.add(preguntaRealizada);
-        }
-        long tiempoFinal = System.currentTimeMillis();
-        tiempoTomado = (int) (tiempoFinal - tiempoInicial) / 1000;
-        enviarActividad();
-        System.out.println("Encuesta realizada.");
+        this.tiempoInicial = System.currentTimeMillis();
+        ArrayList preguntasEncuesta = actividadBase.getPreguntasEncuesta();
+        return preguntasEncuesta;
     }
 
-    @Override
-    public void guardarActividad() {
+
+
+    public void guardarActividad(ArrayList respuestas) {
+        this.tiempoFinal = System.currentTimeMillis();
+        setTiempoTomado((int) (tiempoFinal - tiempoInicial));
+        preguntasRealizadas = respuestas;
         LearningPath lP = actividadBase.getLearningPathAsignado();
         estudiante.getAvance(lP.getID()).addActividadRealizada(this);
     }
 
+    public ArrayList<PreguntaAbierta> obtenerPreguntas(){
+        ArrayList<PreguntaAbierta> preguntasEncuesta = actividadBase.getPreguntasEncuesta();
+        return preguntasEncuesta;
+    }
+
     @Override
-    public void enviarActividad() {
-        guardarActividad();
+    public void enviarActividad(ArrayList respuestas) { //ArrayList de PreguntasAbiertasRealizables
+        guardarActividad(respuestas);
         try {
             setEstado("Completado");
         } catch (EstadoException e) {

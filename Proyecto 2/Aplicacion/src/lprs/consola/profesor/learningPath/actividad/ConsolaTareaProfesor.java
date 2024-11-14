@@ -22,6 +22,7 @@ public class ConsolaTareaProfesor {
             anadirSeccionesATarea(tareaCreada, lectura);
         }
         System.out.println("Tarea creada con éxito.");
+        consolaProfesor.aniadirActividadesSeguimiento(lp, tareaCreada);
         consolaProfesor.mostrarConsolaActividad();
     }
 

@@ -35,6 +35,7 @@ public class ConsolaRecursoProfesor {
         RecursoEducativo recurso = lp.crearRecursoEducativo(titulo, descripcion, objetivo, duracion, obligatoria, fechaEntrega, tipo, link);
         consolaProfesor.aniadirPrerequisitos(lp,recurso);
         System.out.println("Recurso educativo creado con éxito.");
+        consolaProfesor.aniadirActividadesSeguimiento(lp, recurso);
         consolaProfesor.mostrarConsolaActividad();
     }
 

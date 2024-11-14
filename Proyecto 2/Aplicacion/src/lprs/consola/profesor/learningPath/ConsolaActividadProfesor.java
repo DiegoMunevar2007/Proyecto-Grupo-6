@@ -238,4 +238,33 @@ public class ConsolaActividadProfesor {
         }
         actividad.setActividadesPrevias(prerequisitos);
     }
+    public void aniadirActividadesSeguimiento(LearningPath lp, Actividad actividad) {
+        Scanner lectura = consolaProfesor.getLectura();
+        ArrayList<Actividad> actividadesSeguimiento = new ArrayList<Actividad>();
+        System.out.println("¿Desea añadir actividades de seguimiento a la actividad? (s/n)");
+        String respuesta = lectura.next();
+        if (respuesta.equalsIgnoreCase("s")) {
+            boolean termino = false;
+            while (!termino && lp.getActividades().size() > actividadesSeguimiento.size()) {
+                System.out.println("Seleccione una actividad de la lista de actividades disponibles: ");
+                for (int i = 0; i < lp.getActividades().size(); i++) {
+                    if (!actividadesSeguimiento.contains(lp.getActividades().get(i))) {
+                        System.out.println(i + 1 + ". " + lp.getActividades().get(i).getTitulo());
+                    }
+                }
+                int opcion = lectura.nextInt();
+                if (opcion < 1 || opcion > lp.getActividades().size()) {
+                    System.out.println("Opción no válida. Por favor, seleccione una actividad de la lista.");
+                    continue;
+                }
+                actividadesSeguimiento.add(lp.getActividades().get(opcion - 1));
+                System.out.println("¿Desea añadir otra actividad de seguimiento? (s/n)");
+                respuesta = lectura.next();
+                if (respuesta.equalsIgnoreCase("n")) {
+                    termino = true;
+                }
+            }
+        }
+        actividad.setActividadesSeguimiento(actividadesSeguimiento);
+    }
 }

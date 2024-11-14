@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import lprs.consola.ConsolaPrincipal;
 import lprs.consola.profesor.learningPath.ConsolaProfesor;
-import lprs.logica.contenido.Actividad;
+import lprs.logica.contenido.*;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
 import lprs.persistencia.PersistenciaGeneral;
@@ -15,30 +15,39 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
     private Estudiante estudiante;
     private Scanner lectura;
     private ConsolaSesionEstudiante consolaSesion;
+    private ConsolaActividadEstudiante consolaActividad;
 
-    public ConsolaEstudiante(LPRS lprsActual ) {
+    public ConsolaEstudiante(LPRS lprsActual) {
         super(lprsActual);
         this.estudiante = null;
-        this.consolaSesion = new ConsolaSesionEstudiante(lprsActual,this);
+        this.consolaSesion = new ConsolaSesionEstudiante(lprsActual, this);
         this.lectura = new Scanner(System.in);
+        this.consolaActividad = new ConsolaActividadEstudiante( this);
     }
+
     public ConsolaSesionEstudiante getConsolaSesion() {
         return consolaSesion;
     }
+
     public Scanner getLectura() {
-    	return lectura;
+        return lectura;
     }
+
+    public Estudiante getEstudiante() {
+        return estudiante;
+    }
+
     public void setEstudiante(Estudiante estudiante) {
-    	this.estudiante=estudiante;
+        this.estudiante = estudiante;
     }
 
     public void mostrarConsolaEstudiante() {
         System.out.println("Bienvenido " + estudiante.getUsuario());
-        String[] opciones = { "Ver mis Leaning Paths", "Inscribir un learning Path", "Ver mi avance",
-                "Realizar una actividad",
-                "Salir" };
+        String[] opciones = {"Ver mis Leaning Paths", "Inscribir un learning Path", "Ver mi avance",
+                "Realizar una actividad", "Reseñar una actividad",
+                "Salir"};
 
-        mostrarOpciones(5, opciones);
+        mostrarOpciones(opciones.length, opciones);
         int opcion = lectura.nextInt();
 
         if (opcion == 1) {
@@ -49,18 +58,40 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
             estudiante.inscribirLearningPath(id);
             mostrarConsolaEstudiante();
         } else if (opcion == 3) {
-
             mostrarConsolaEstudiante();
         } else if (opcion == 4) {
             Actividad actividad = escogerActividad();
-            RealizarActividad(actividad);
+            if (actividad == null) {
+                System.out.println("No hay actividades disponibles para realizar en este Learning Path.");
+                mostrarConsolaEstudiante();
+            }
+            if (actividad instanceof Quiz) {
+                consolaActividad.realizarQuiz((Quiz) actividad);
+            } else if (actividad instanceof Examen) {
+                consolaActividad.realizarExamen((Examen) actividad);
+            } else if (actividad instanceof Encuesta) {
+                consolaActividad.realizarEncuesta((Encuesta) actividad);
+            } else if (actividad instanceof RecursoEducativo) {
+                consolaActividad.realizarRecurso((RecursoEducativo) actividad);
+            } else if (actividad instanceof Tarea) {
+                consolaActividad.realizarTarea((Tarea) actividad);
+            }
             mostrarConsolaEstudiante();
         } else if (opcion == 5) {
+            System.out.println("Seleccione una actividad para reseñar: ");
+            Actividad actividad = escogerActividad();
+            if (actividad == null) {
+                System.out.println("No hay actividades disponibles para reseñar en este Learning Path.");
+                mostrarConsolaEstudiante();
+            }
+            else {
+            reseniarActividad(actividad, estudiante);
+            mostrarConsolaEstudiante();
+            }
+        } else if (opcion == 6) {
             System.out.println("Hasta luego!");
             return;
-        }
-
-        else {
+        } else {
             System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
             mostrarConsolaEstudiante();
         }
@@ -118,9 +149,6 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
         return actividades.get(opcion - 1);
     }
 
-    public void RealizarActividad(Actividad actividad) {
-        actividad.crearActividadRealizable(estudiante).realizarActividad();
-    }
 
     public void mostrarLearningPathsDisponibles() {
 
@@ -166,6 +194,7 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
             return null;
         }
     }
+
     public static void main(String[] args) {
         LPRS lprs = new LPRS();
         try {
@@ -176,13 +205,14 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
         }
         ConsolaEstudiante consola = new ConsolaEstudiante(lprs);
         consola.getConsolaSesion().mostrarConsolaSesion();
+        consola.getLectura().close();
         try {
             PersistenciaGeneral.guardarDatos(lprs);
         } catch (Exception e) {
             System.out.println("Error al guardar los datos");
             e.printStackTrace();
         }
-        consola.getLectura().close();
+
         return;
     }
 

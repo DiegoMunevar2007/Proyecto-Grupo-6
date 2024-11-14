@@ -15,106 +15,30 @@ import lprs.logica.learningPath.LearningPath;
 public class TareaRealizable extends ActividadRealizable {
 	private Tarea actividadBase;
 	private int seccionActual;
-	private Scanner lectura;
 
 	public TareaRealizable(Tarea actividadBase, Estudiante estudiante) {
 		super(estudiante);
 		this.actividadBase = actividadBase;
 		this.estado = "No Exitoso";
 		seccionActual = 0;
-		seccionActual = 0;
-		lectura = new Scanner(System.in);
-
 	}
 
 	@Override
-	public void realizarActividad() {
+	public ArrayList realizarActividad() throws ActividadPreviaException {
 
 		try {
 			verificarEligibilidad();
 		} catch (ActividadPreviaException e) {
-			System.out.println(e.getMessage());
-			System.out.println("¿Desea continuar con la actividad sin realizar las demás? (S/N)");
-			String respuesta = lectura.nextLine();
-			if (respuesta.equalsIgnoreCase("N")) {
-				return;
-			} else {
-				System.out.println("Continuando con la actividad...");
-			}
-		} catch (Exception e) {
-			System.out.println("Ocurrió un error: " + e.getMessage());
+			throw e;
 		}
-		long tiempoInicial = System.currentTimeMillis();
-		System.out.println("Realizando tarea...");
-		System.out.println("Titulo: " + actividadBase.getTitulo());
-		System.out.println("Descripcion: " + actividadBase.getDescripcion());
-		System.out.println("Duracion esperada: " + actividadBase.getDuracionEsperada());
-		if (!actividadBase.getSecciones().isEmpty()) {
-			System.out.println("Secciones:");
-			ArrayList<Seccion> secciones = actividadBase.getSecciones();
-			int i = 0;
-			i = seccionActual;
-			while (i < secciones.size()) {
-				Seccion seccion = secciones.get(i);
-				System.out.println("Seccion #" + seccion.getNumero());
-				System.out.println("Titulo: " + seccion.getTitulo());
-				System.out.println("Descripcion: " + seccion.getDescripcion());
-				System.out.println("Cotentido: " + seccion.getContenido());
-				if (seccion.getEjemplo() != null) {
-					System.out.println("Ejemplo: " + seccion.getEjemplo());
-				}
-				if (seccion.getExplicacion() != null) {
-					System.out.println("Explicacion: " + seccion.getExplicacion());
-				}
-
-				if (seccion.getPista() != null) {
-					System.out.println("Desea ver una pista? (S/N)");
-					String respuesta = lectura.nextLine();
-					if (respuesta.equalsIgnoreCase("S")) {
-						System.out.println("Pista: " + seccion.getPista());
-					}
-				}
-				if (seccion.getResultadoEsperado() != null) {
-					System.out.println("Ingrese el resultado esperado: ");
-					String resultado = lectura.nextLine();
-					if (resultado.equals(seccion.getResultadoEsperado())) {
-						System.out.println("Resultado correcto");
-					} else {
-						System.out.println("Resultado incorrecto");
-						System.out.println("El resultado esperado es: " + seccion.getResultadoEsperado());
-					}
-				}
-				System.out.println("Desea continuar con la siguiente seccion? (S/N)");
-				String respuesta = lectura.nextLine();
-				if (respuesta.equalsIgnoreCase("N")) {
-					guardarActividad();
-					return;
-				}
-				i++;
-				seccionActual = i;
-			}
-			System.out.println("¿Ha enviado la tarea? (S/N)");
-			String respuesta = lectura.nextLine();
-			if (respuesta.equalsIgnoreCase("S")) {
-				long tiempoFinal = System.currentTimeMillis();
-				tiempoTomado = (int) (tiempoFinal - tiempoInicial) / 1000;
-				enviarActividad();
-			}
-		} else {
-			System.out.println("¿Ha enviado la tarea? (S/N)");
-			String respuesta = lectura.nextLine();
-			if (respuesta.equalsIgnoreCase("S")) {
-				long tiempoFinal = System.currentTimeMillis();
-				tiempoTomado = (int) (tiempoFinal - tiempoInicial) / 1000;
-				enviarActividad();
-			}
-		}
+		tiempoTomado = (int) System.currentTimeMillis();
+		return new ArrayList();
 	}
 
 	@Override
-	public void enviarActividad() {
+	public void enviarActividad(ArrayList respuestas) {
 		// TODO Auto-generated method stub
-		guardarActividad();
+		guardarActividad(respuestas);
 		try {
 			setEstado("No Exitoso");
 		} catch (EstadoException e) {
@@ -144,7 +68,7 @@ public class TareaRealizable extends ActividadRealizable {
 	}
 
 	@Override
-	public void guardarActividad() {
+	public void guardarActividad(ArrayList respuestas) {
 		LearningPath lP = actividadBase.getLearningPathAsignado();
 		estudiante.getAvance(lP.getID()).addActividadRealizada(this);
 	}
@@ -158,18 +82,18 @@ public class TareaRealizable extends ActividadRealizable {
 		System.out.println("Estado de la tarea: " + estado);
 		System.out.println("1. No exitoso");
 		System.out.println("2. Exitoso");
-		int opcion = lectura.nextInt();
-		String estado = "";
-		if (opcion == 1) {
-			estado = "No Exitoso";
-		} else if (opcion == 2) {
-			estado = "Exitoso";
-		}
-		try {
-			setEstado(estado);
-		} catch (EstadoException e) {
-			System.out.println(e.getMessage());
-		}
+//		int opcion = lectura.nextInt();
+//		String estado = "";
+//		if (opcion == 1) {
+//			estado = "No Exitoso";
+//		} else if (opcion == 2) {
+//			estado = "Exitoso";
+//		}
+//		try {
+//			setEstado(estado);
+//		} catch (EstadoException e) {
+//			System.out.println(e.getMessage());
+//		}
 	}
 
 }

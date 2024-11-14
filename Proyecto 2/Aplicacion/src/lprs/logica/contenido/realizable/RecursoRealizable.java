@@ -1,5 +1,6 @@
 package lprs.logica.contenido.realizable;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import lprs.exceptions.ActividadPreviaException;
@@ -24,43 +25,25 @@ public class RecursoRealizable extends ActividadRealizable {
 	}
 
 	@Override
-	public void realizarActividad() {
+	public ArrayList realizarActividad() throws ActividadPreviaException{
 		// TODO Auto-generated method stub
 		try {
 			verificarEligibilidad();
 		} catch (ActividadPreviaException e) {
-			System.out.println(e.getMessage());
-			System.out.println("¿Desea continuar con la actividad sin realizar las demás? (S/N)");
-			String respuesta = lecturaRecurso.nextLine();
-			if (respuesta.equalsIgnoreCase("N")) {
-				lecturaRecurso.close();
-				return;
-			} else {
-				System.out.println("Continuando con la actividad...");
-			}
-		} catch (Exception e) {
-			System.out.println("Ocurrió un error: " + e.getMessage());
+			throw e;
 		}
-		long tiempoInicial = System.currentTimeMillis();
-		System.out.println("Realizando recurso...");
-		System.out.println("Titulo del recurso: " + actividadBase.getTitulo());
-		System.out.println("Descripcion del recurso: " + actividadBase.getDescripcion());
-		System.out.println("Duracion esperada: " + actividadBase.getDuracionEsperada());
-		System.out.println("Tipo de recurso a consultar: " + actividadBase.getTipoRecurso());
-		System.out.println("URL del recurso: " + actividadBase.getUrl());
-		long tiempoFinal = System.currentTimeMillis();
-		tiempoTomado = (int) (tiempoFinal - tiempoInicial) / 1000;
-		enviarActividad();
+		tiempoTomado = (int) System.currentTimeMillis();
+		return new ArrayList();
 	}
 
 	@Override
-	public void guardarActividad() {
+	public void guardarActividad(ArrayList respuestas) {
 		LearningPath lP = actividadBase.getLearningPathAsignado();
 		estudiante.getAvance(lP.getID()).addActividadRealizada(this);
 	}
 
 	@Override
-	public void enviarActividad() {
+	public void enviarActividad(ArrayList respuestas) {
 		System.out.println("¿Desea marcar la actividad como completada? (S/N)");
 		String respuesta = lecturaRecurso.nextLine();
 		if (respuesta.equalsIgnoreCase("S")) {
@@ -70,7 +53,7 @@ public class RecursoRealizable extends ActividadRealizable {
 				System.out.println(e.getMessage());
 			}
 		}
-		guardarActividad();
+		guardarActividad(respuestas);
 		Profesor profesor = actividadBase.getLearningPathAsignado().getProfesorCreador();
 		profesor.addActividadPendiente(this);
 		System.out.println("Actividad completada!");

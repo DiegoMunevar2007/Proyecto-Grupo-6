@@ -24,8 +24,13 @@ public class ConsolaQuizProfesor {
         boolean obligatoria = consolaProfesor.pedirObligatoria();
         String fechaEntrega = consolaProfesor.pedirFechaEntrega();
         double calificacionMinima = 0;
-        System.out.println("Ingrese la calificación mínima para aprobar el quiz: ");
+        System.out.println("Ingrese la calificación mínima en % para aprobar el quiz: ");
         calificacionMinima = lectura.nextDouble();
+        if (calificacionMinima < 0 || calificacionMinima > 100) {
+            System.out.println("La calificación mínima debe estar entre 0 y 100.");
+            crearQuiz(lp);
+            return;
+        }
         System.out.println("Es un quiz multiple o verdadero/falso? (m/vf)");
         String tipo = lectura.next();
         Quiz quiz = null;
@@ -46,6 +51,7 @@ public class ConsolaQuizProfesor {
             crearPreguntaCerrada(quiz);
         }
         System.out.println("Quiz creado con éxito.");
+        consolaProfesor.aniadirActividadesSeguimiento(lp, quiz);
         consolaProfesor.mostrarConsolaActividad();
     }
 

@@ -58,10 +58,6 @@ public class Estudiante extends Usuario {
 		avancesEstudiante.remove(ID);
 	}
 
-	public void realizarActividad(Actividad actividad) {
-		ActividadRealizable actividad2 = actividad.crearActividadRealizable(this);
-		actividad2.realizarActividad();
-	}
 
 	public List<LearningPath> getLearningPathsInscritos() {
 		return learningPathsInscritos;
