@@ -135,7 +135,7 @@
 
 // quiz.addPreguntaQuiz(new PreguntaCerrada("Enunciado de una pregunta del
 // quiz", opcion2, opcionesCreadas));
-
+//Ignora esto es pa que me deje hacer el push
 // Examen examen = lP.crearExamen("Examen 1", "Descripcion de examen 1",
 // "Objetivo de examen 1", 10, false,
 // lP.obtenerFecha());
