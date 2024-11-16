@@ -18,8 +18,8 @@ public class ConsolaPrincipal {
 		lectura = new Scanner(System.in);
 	}
 
-	public void cerrarLectura(){
-		lectura.close();
+	public Scanner getLectura() {
+		return lectura;
 	}
 
 	public void mostrarOpciones(int cantidad, String[] opciones) {
@@ -41,43 +41,53 @@ public class ConsolaPrincipal {
 		System.out.println("Resenia agregada exitosamente.");
 		}
 
-	public String pedirString(String mensaje){
+	public String pedirString(String mensaje) {
 		System.out.println(mensaje);
 		String respuesta = "";
-		try{
-			respuesta = lectura.nextLine();
+		boolean valido = false;
+		while (!valido) {
+			try {
+				respuesta = lectura.nextLine();
+				valido = true;
+			} catch (InputMismatchException e) {
+				System.out.println("Por favor ingrese un string.");
+				lectura.nextLine();
+			}
 		}
-		catch(InputMismatchException e){
-			System.out.println("Por favor ingrese un string.");
-			return pedirString(mensaje);
-		}
-		return respuesta;
+    	return respuesta;
 	}
-	public int pedirInt(String mensaje){
+	public int pedirInt(String mensaje) {
 		System.out.println(mensaje);
 		int respuesta = 0;
-		try{
-			respuesta = lectura.nextInt();
+		boolean valido = false;
+		while (!valido) {
+			try {
+				respuesta = lectura.nextInt();
+				lectura.nextLine();
+				valido = true;
+			} catch (InputMismatchException e) {
+				System.out.println("Por favor ingrese un número entero.");
+				lectura.nextLine();
+			}
 		}
-		catch(InputMismatchException e){
-			System.out.println("Por favor ingrese un numero entero.");
-			return pedirInt(mensaje);
-		}
-		lectura.nextLine();
 		return respuesta;
 	}
-	public double pedirDouble(String mensaje){
-		System.out.println(mensaje);
-		double respuesta = 0;
-		try{
-			respuesta = lectura.nextDouble();
-		}
-		catch(InputMismatchException e){
-			System.out.println("Por favor ingrese un numero.");
-			return pedirDouble(mensaje);
-		}
-		lectura.nextLine();
-		return respuesta;
-	}
+
+	public double pedirDouble(String mensaje) {
+    System.out.println(mensaje);
+    double respuesta = 0;
+    boolean valido = false;
+    while (!valido) {
+        try {
+            respuesta = lectura.nextDouble();
+            lectura.nextLine();
+            valido = true;
+        } catch (InputMismatchException e) {
+            System.out.println("Por favor ingrese un número.");
+            lectura.nextLine();
+        }
+    }
+    return respuesta;
+}
 
 }

@@ -16,7 +16,6 @@ public class ConsolaEncuestaProfesor {
     }
 
     public void crearEncuesta(LearningPath lp) {
-        Scanner lectura = consolaProfesor.getLectura();
         String titulo = consolaProfesor.pedirTitulo();
         String descripcion = consolaProfesor.pedirDescripcion();
         String objetivo = consolaProfesor.pedirObjetivo();
@@ -24,16 +23,13 @@ public class ConsolaEncuestaProfesor {
         boolean obligatoria = consolaProfesor.pedirObligatoria();
         String fechaEntrega = consolaProfesor.pedirFechaEntrega();
         Encuesta encuesta = lp.crearEncuesta(titulo, descripcion, objetivo, duracion, obligatoria, fechaEntrega);
-        consolaProfesor.aniadirPrerequisitos(lp, encuesta);
-        System.out.println("Ingrese el número de preguntas que desea añadir: ");
-        int numeroPreguntas = lectura.nextInt();
-        lectura.nextLine();
+        int numeroPreguntas = consolaProfesor.getConsolaProfesor().pedirInt("Ingrese el número de preguntas que desea añadir: ");
         for (int i = 0; i < numeroPreguntas; i++) {
             crearPreguntaAbiertaEncuesta(encuesta);
         }
-        System.out.println("Encuesta creada con éxito.");
+        consolaProfesor.aniadirPrerequisitos(lp, encuesta);
         consolaProfesor.aniadirActividadesSeguimiento(lp, encuesta);
-        consolaProfesor.mostrarConsolaActividad();
+        System.out.println("Encuesta creada con éxito.");
     }
 
     public void modificarEncuesta(Encuesta encuesta) {
@@ -70,41 +66,29 @@ public class ConsolaEncuestaProfesor {
             }
         }
         System.out.println("Encuesta modificada con éxito.");
-        consolaProfesor.mostrarConsolaActividad();
     }
 
     public void crearPreguntaAbiertaEncuesta(Encuesta actividad) {
-        Scanner lectura = consolaProfesor.getLectura();
-        System.out.println("Ingrese el enunciado de la pregunta: ");
-        String enunciado = lectura.nextLine();
+        String enunciado = consolaProfesor.getConsolaProfesor().pedirString("Ingrese el enunciado de la pregunta: ");
         PreguntaAbierta pregunta = new PreguntaAbierta(enunciado);
         actividad.addPreguntaEncuesta(pregunta);
     }
 
     public void editarPreguntaAbiertaEncuesta(Encuesta actividad) {
-        Scanner lectura = consolaProfesor.getLectura();
         for (int i = 0; i < actividad.getPreguntasEncuesta().size(); i++) {
             System.out.println(i + 1 + ". " + actividad.getPreguntasEncuesta().get(i).getEnunciado());
         }
-        System.out.println("Ingrese el número de la pregunta que desea editar: ");
-        int numeroPregunta = lectura.nextInt();
-        lectura.nextLine();
-        System.out.println("Ingrese el nuevo enunciado de la pregunta: ");
-        String enunciado = lectura.nextLine();
+        int numeroPregunta = consolaProfesor.getConsolaProfesor().pedirInt("Ingrese el número de la pregunta que desea editar: ");
+        String enunciado = consolaProfesor.getConsolaProfesor().pedirString("Ingrese el enunciado de la pregunta: ");
         actividad.getPreguntasEncuesta().get(numeroPregunta - 1).setEnunciado(enunciado);
-        consolaProfesor.mostrarConsolaActividad();
     }
 
     public void eliminarPreguntaAbiertaEncuesta(Encuesta actividad) {
-        Scanner lectura = consolaProfesor.getLectura();
         for (int i = 0; i < actividad.getPreguntasEncuesta().size(); i++) {
             System.out.println(i + 1 + ". " + actividad.getPreguntasEncuesta().get(i).getEnunciado());
         }
-        System.out.println("Ingrese el número de la pregunta que desea eliminar: ");
-        int numeroPregunta = lectura.nextInt();
-        lectura.nextLine();
+        int numeroPregunta = consolaProfesor.getConsolaProfesor().pedirInt("Ingrese el número de la pregunta que desea eliminar: ");
         actividad.removePreguntaEncuesta(actividad.getPreguntasEncuesta().get(numeroPregunta - 1));
-        consolaProfesor.mostrarConsolaActividad();
     }
     public void verEncuesta(Encuesta encuesta) {
         System.out.println("Título: " + encuesta.getTitulo());
@@ -118,6 +102,5 @@ public class ConsolaEncuestaProfesor {
             PreguntaAbierta pregunta = encuesta.getPreguntasEncuesta().get(i);
             System.out.println(i + 1 + ". " + pregunta.getEnunciado());
         }
-        consolaProfesor.mostrarConsolaActividad();
     }
 }

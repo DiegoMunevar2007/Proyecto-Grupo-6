@@ -1,10 +1,6 @@
 package lprs.consola.profesor.seguimiento;
 
 import lprs.consola.ConsolaPrincipal;
-import lprs.consola.profesor.learningPath.ConsolaActividadProfesor;
-import lprs.consola.profesor.learningPath.ConsolaLPProfesor;
-import lprs.consola.profesor.learningPath.ConsolaProfesor;
-import lprs.consola.profesor.learningPath.ConsolaSesionProfesor;
 import lprs.logica.cuentas.Profesor;
 import lprs.persistencia.PersistenciaGeneral;
 import lprs.principal.LPRS;

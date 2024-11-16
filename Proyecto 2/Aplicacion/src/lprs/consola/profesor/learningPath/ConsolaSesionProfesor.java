@@ -11,15 +11,15 @@ import lprs.principal.LPRS;
 public class ConsolaSesionProfesor {
 
     private LPRS lprsActual;
-    private ConsolaProfesor consolaProfesor;
+    private ConsolaProfesorLP consolaProfesorLP;
 
-    public ConsolaSesionProfesor(LPRS lprsActual, ConsolaProfesor consolaProfesor) {
+    public ConsolaSesionProfesor(LPRS lprsActual, ConsolaProfesorLP consolaProfesorLP) {
         this.lprsActual = lprsActual;
-        this.consolaProfesor = consolaProfesor;
+        this.consolaProfesorLP = consolaProfesorLP;
     }
 
     public void crearCuenta() {
-        Scanner lectura = consolaProfesor.getLectura();
+        Scanner lectura = consolaProfesorLP.getLectura();
         System.out.println("Ingrese su nombre de usuario: ");
         String usuario = lectura.nextLine();
         System.out.println("Ingrese su contraseña: ");
@@ -36,9 +36,8 @@ public class ConsolaSesionProfesor {
 
     public void iniciarSesion() {
 
-        String ID = consolaProfesor.pedirString("Ingrese su nombre de usuario: ");
-        System.out.println("Ingrese su contraseña: ");
-        String contrasenia = consolaProfesor.pedirString("Ingrese su contraseña: ");
+        String ID = consolaProfesorLP.pedirString("Ingrese su nombre de usuario: ");
+        String contrasenia = consolaProfesorLP.pedirString("Ingrese su contraseña: ");
         try {
             Usuario usuario = lprsActual.getManejadorSesion().iniciarSesion(ID, contrasenia);
             if (usuario == null) {
@@ -49,8 +48,8 @@ public class ConsolaSesionProfesor {
                 throw new TipoUsuarioIncorrectoException("ESTUDIANTE");
             } else {
                 Profesor profesor = (Profesor) usuario;
-                consolaProfesor.setProfesor(profesor);
-                consolaProfesor.mostrarConsolaProfesor();
+                consolaProfesorLP.setProfesor(profesor);
+                consolaProfesorLP.mostrarConsolaProfesor();
             }
         } catch (TipoUsuarioIncorrectoException | ContraseniaIncorrectaException e) {
             System.out.println(e.getMessage());
@@ -65,8 +64,8 @@ public class ConsolaSesionProfesor {
     public void mostrarConsolaSesion() {
         System.out.println("Bienvenido a Learning Path Recommendation System - Profesor Learning Path");
         String[] opciones = { "Iniciar sesión", "Crear una cuenta", "Salir" };
-        consolaProfesor.mostrarOpciones(opciones.length, opciones);
-        int opcion = consolaProfesor.pedirInt("Seleccione una opción: ");
+        consolaProfesorLP.mostrarOpciones(opciones.length, opciones);
+        int opcion = consolaProfesorLP.pedirInt("Seleccione una opción: ");
         if (opcion == 1) {
             iniciarSesion();
         } else if (opcion == 2) {

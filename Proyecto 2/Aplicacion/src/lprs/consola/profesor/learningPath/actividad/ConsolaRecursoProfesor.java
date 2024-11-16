@@ -12,7 +12,6 @@ public class ConsolaRecursoProfesor {
         this.consolaProfesor = consolaProfesor;
     }
     public void crearRecursoEducativo(LearningPath lp) {
-        Scanner lectura = consolaProfesor.getLectura();
         String titulo = consolaProfesor.pedirTitulo();
         String descripcion = consolaProfesor.pedirDescripcion();
         String objetivo = consolaProfesor.pedirObjetivo();
@@ -22,30 +21,25 @@ public class ConsolaRecursoProfesor {
         System.out.println("¿Que tipo de recurso educativo es?");
         String[] opciones = { "Video", "Libro", "Sitio web", "PDF" };
         consolaProfesor.getConsolaProfesor().mostrarOpciones(opciones.length, opciones);
-        int opcion = lectura.nextInt();
-        lectura.nextLine();
+        int opcion = consolaProfesor.getConsolaProfesor().pedirInt("Seleccione una opción: ");
         if (opcion < 1 || opcion > opciones.length) {
             System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
             crearRecursoEducativo(lp);
             return;
         }
         String tipo = opciones[opcion - 1];
-        System.out.println("Ingrese el link del recurso educativo: ");
-        String link = lectura.nextLine();
+        String link = consolaProfesor.getConsolaProfesor().pedirString("Ingrese el link del recurso educativo: ");
         RecursoEducativo recurso = lp.crearRecursoEducativo(titulo, descripcion, objetivo, duracion, obligatoria, fechaEntrega, tipo, link);
         consolaProfesor.aniadirPrerequisitos(lp,recurso);
-        System.out.println("Recurso educativo creado con éxito.");
         consolaProfesor.aniadirActividadesSeguimiento(lp, recurso);
-        consolaProfesor.mostrarConsolaActividad();
+        System.out.println("Recurso educativo creado con éxito.");
     }
 
     public void modificarRecursoEducativo(RecursoEducativo recurso) {
-        Scanner lectura = consolaProfesor.getLectura();
         System.out.println("¿Qué desea modificar?");
         String[] opciones = {"Título", "Descripción", "Objetivo", "Duración", "Obligatoria", "Fecha de entrega", "Tipo", "Link", "Salir"};
         consolaProfesor.getConsolaProfesor().mostrarOpciones(opciones.length, opciones);
-        int opcion = lectura.nextInt();
-        lectura.nextLine();
+        int opcion = consolaProfesor.getConsolaProfesor().pedirInt("Seleccione una opción: ");
         if (opcion == 1) {
             recurso.setTitulo(consolaProfesor.pedirTitulo());
         } else if (opcion == 2) {
@@ -59,11 +53,9 @@ public class ConsolaRecursoProfesor {
         } else if (opcion == 6) {
             recurso.setFechaLimite(consolaProfesor.pedirFechaEntrega());
         } else if (opcion == 7) {
-            System.out.println("¿Qué tipo de recurso educativo es?");
             String[] opcionesTipo = {"Video", "Libro", "Sitio web", "PDF"};
             consolaProfesor.getConsolaProfesor().mostrarOpciones(opcionesTipo.length, opcionesTipo);
-            int opcionTipo = lectura.nextInt();
-            lectura.nextLine();
+            int opcionTipo = consolaProfesor.getConsolaProfesor().pedirInt("¿Qué tipo de recurso educativo es?");
             if (opcionTipo < 1 || opcionTipo > opcionesTipo.length) {
                 System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
                 modificarRecursoEducativo(recurso);
@@ -72,8 +64,7 @@ public class ConsolaRecursoProfesor {
 
             recurso.setTipoRecurso(opcionesTipo[opcionTipo - 1]);
         } else if (opcion == 8) {
-            System.out.println("Ingrese el link del recurso educativo: ");
-            recurso.setUrl(lectura.nextLine());
+            recurso.setUrl(consolaProfesor.getConsolaProfesor().pedirString("Ingrese el link del recurso educativo: "));
         } else if (opcion == 9) {
             return;
         } else {
@@ -90,6 +81,5 @@ public class ConsolaRecursoProfesor {
         System.out.println("Fecha de entrega: " + recurso.getFechaLimite());
         System.out.println("Tipo: " + recurso.getTipoRecurso());
         System.out.println("Link: " + recurso.getUrl());
-        consolaProfesor.mostrarConsolaActividad();
     }
 }

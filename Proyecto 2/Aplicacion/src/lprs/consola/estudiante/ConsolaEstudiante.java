@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import lprs.consola.ConsolaPrincipal;
-import lprs.consola.profesor.learningPath.ConsolaProfesor;
 import lprs.exceptions.NoLearningPathsException;
 import lprs.logica.contenido.*;
 import lprs.logica.contenido.realizable.ActividadRealizable;
@@ -44,80 +43,103 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
                 "Realizar una actividad", "Reseñar una actividad",
                 "Salir"};
 
-        mostrarOpciones(opciones.length, opciones);
-        int opcion = pedirInt("Seleccione una opción: ");
-        if (opcion == 1) {
-            try {
-                mostrarLearningPaths();
-            } catch (NoLearningPathsException e) {
-                System.out.println(e.getMessage());
+        boolean salir = false;
+        while (!salir) {
+            mostrarOpciones(opciones.length, opciones);
+            int opcion = pedirInt("Seleccione una opción: ");
+            if (opcion == 1) {
+                try {
+                    mostrarLearningPaths();
+                } catch (NoLearningPathsException e) {
+                    System.out.println(e.getMessage());
+                }
+            } else if (opcion == 2) {
+                String id = "";
+                try {
+                    id = escogerLearningPath();
+                    estudiante.inscribirLearningPath(id);
+                } catch (NoLearningPathsException e) {
+                    System.out.println(e.getMessage());
+                } finally {
+
+                }
+            } else if (opcion == 3) {
+
+            } else if (opcion == 4) {
+                Actividad actividad = null;
+                try {
+                    actividad = escogerActividad();
+                } catch (NoLearningPathsException e) {
+                    System.out.println(e.getMessage());
+
+                }
+                if (actividad == null) {
+
+                }
+                if (actividad instanceof Quiz) {
+                    consolaActividad.realizarQuiz((Quiz) actividad);
+                } else if (actividad instanceof Examen) {
+                    consolaActividad.realizarExamen((Examen) actividad);
+                } else if (actividad instanceof Encuesta) {
+                    consolaActividad.realizarEncuesta((Encuesta) actividad);
+                } else if (actividad instanceof RecursoEducativo) {
+                    consolaActividad.realizarRecurso((RecursoEducativo) actividad);
+                } else if (actividad instanceof Tarea) {
+                    consolaActividad.realizarTarea((Tarea) actividad);
+                }
+
+            } else if (opcion == 5) {
+                System.out.println("Seleccione una actividad para reseñar: ");
+                Actividad actividad = null;
+                try {
+                    actividad = obtenerActividadRealizada();
+                    reseniarActividad(actividad, estudiante);
+                } catch (NoLearningPathsException e) {
+                    System.out.println(e.getMessage());
+
+                }
+
+            } else if (opcion == 6) {
+                System.out.println("Hasta luego!");
+                salir = true;
+            } else {
+                System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
             }
-            mostrarConsolaEstudiante();
-        } else if (opcion == 2) {
-            String id = "";
-            try {
-                id = escogerLearningPath();
-                estudiante.inscribirLearningPath(id);
-            } catch (NoLearningPathsException e) {
-                System.out.println(e.getMessage());
-            } finally {
-                mostrarConsolaEstudiante();
-            }
-        } else if (opcion == 3) {
-            mostrarConsolaEstudiante();
-        } else if (opcion == 4) {
-            Actividad actividad = null;
-            try {
-                actividad = escogerActividad();
-            } catch (NoLearningPathsException e) {
-                System.out.println(e.getMessage());
-                mostrarConsolaEstudiante();
-            }
-            if (actividad == null) {
-                mostrarConsolaEstudiante();
-            }
-            if (actividad instanceof Quiz) {
-                consolaActividad.realizarQuiz((Quiz) actividad);
-            } else if (actividad instanceof Examen) {
-                consolaActividad.realizarExamen((Examen) actividad);
-            } else if (actividad instanceof Encuesta) {
-                consolaActividad.realizarEncuesta((Encuesta) actividad);
-            } else if (actividad instanceof RecursoEducativo) {
-                consolaActividad.realizarRecurso((RecursoEducativo) actividad);
-            } else if (actividad instanceof Tarea) {
-                consolaActividad.realizarTarea((Tarea) actividad);
-            }
-            mostrarConsolaEstudiante();
-        } else if (opcion == 5) {
-            System.out.println("Seleccione una actividad para reseñar: ");
-            Actividad actividad = null;
-            try {
-                actividad = escogerActividad();
-            } catch (NoLearningPathsException e) {
-                System.out.println(e.getMessage());
-                mostrarConsolaEstudiante();
-            }
-            if (actividad == null) {
-                System.out.println("No hay actividades disponibles para reseñar en este Learning Path.");
-                mostrarConsolaEstudiante();
-            }
-            else {
-            reseniarActividad(actividad, estudiante);
-            mostrarConsolaEstudiante();
-            }
-        } else if (opcion == 6) {
-            System.out.println("Hasta luego!");
-            return;
-        } else {
-            System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
-            mostrarConsolaEstudiante();
         }
     }
 
+    public Actividad obtenerActividadRealizada() throws NoLearningPathsException {
+        String ID = "";
+        try {
+            ID = mostrarLearningPaths();
+        } catch (NoLearningPathsException e) {
+            throw e;
+        }
+        List<Actividad> actividades = estudiante.getAvance(ID).getActividadesCompletadasLista();
+        if (actividades.isEmpty()) {
+            System.out.println("No hay actividades disponibles en este Learning Path.");
+            return null;
+        }
+        System.out.println("Seleccione una actividad: ");
+        for (int i = 0; i < actividades.size(); i++) {
+            System.out.println(i + 1 + ". " + actividades.get(i).getTitulo());
+        }
+        int opcion = pedirInt("Seleccione una actividad: ");
+        if (opcion < 1 || opcion > actividades.size()) {
+            System.out.println("Opción no válida. Por favor, seleccione una actividad de la lista.");
+            return obtenerActividadRealizada();
+        }
+        return actividades.get(opcion - 1);
+
+
+    }
     public String mostrarLearningPaths() throws NoLearningPathsException {
         List<LearningPath> learningPathsDisponibles = estudiante.getLearningPathsInscritos();
         if (learningPathsDisponibles.isEmpty()) {
             throw new NoLearningPathsException("No hay Learning Paths disponibles.");
+        }
+        for (int i = 0; i < learningPathsDisponibles.size(); i++) {
+            System.out.println(i + 1 + ". " + learningPathsDisponibles.get(i).getTitulo());
         }
         int opcion = pedirInt("Seleccione un Learning Path: ");
         if (opcion < 1 || opcion > learningPathsDisponibles.size()) {
@@ -219,7 +241,7 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
         }
         ConsolaEstudiante consola = new ConsolaEstudiante(lprs);
         consola.getConsolaSesion().mostrarConsolaSesion();
-        consola.cerrarLectura();
+        consola.getLectura().close();
         try {
             PersistenciaGeneral.guardarDatos(lprs);
         } catch (Exception e) {

@@ -7,7 +7,7 @@ import lprs.logica.cuentas.Profesor;
 import lprs.persistencia.PersistenciaGeneral;
 import lprs.principal.LPRS;
 
-public class ConsolaProfesor extends ConsolaPrincipal {
+public class ConsolaProfesorLP extends ConsolaPrincipal {
 
     private Profesor profesor;
     private Scanner lectura;
@@ -15,7 +15,7 @@ public class ConsolaProfesor extends ConsolaPrincipal {
     private ConsolaLPProfesor consolaLP;
     private ConsolaSesionProfesor consolaSesion;
 
-    public ConsolaProfesor(LPRS lprsActual) {
+    public ConsolaProfesorLP(LPRS lprsActual) {
         super(lprsActual);
         profesor = null;
         lectura = new Scanner(System.in);
@@ -53,17 +53,20 @@ public class ConsolaProfesor extends ConsolaPrincipal {
         System.out.println("Bienvenido " + profesor.getUsuario());
         String[] opciones = { "Manejar Learning Paths",
                 "Manejar actividades", "Salir" };
-        mostrarOpciones(opciones.length, opciones);
-        int opcion = pedirInt("Seleccione una opción: ");
-        if (opcion == 1) {
-            consolaLP.mostrarConsolaLP();
-        } else if (opcion == 2) {
-            consolaActividad.mostrarConsolaActividad();
-        } else if (opcion == 3) {
-            System.out.println("Hasta luego!");
-        } else {
-            System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
-            mostrarConsolaProfesor();
+        boolean salir = false;
+        while (!salir) {
+            mostrarOpciones(opciones.length, opciones);
+            int opcion = pedirInt("Seleccione una opción: ");
+            if (opcion == 1) {
+                consolaLP.mostrarConsolaLP();
+            } else if (opcion == 2) {
+                consolaActividad.mostrarConsolaActividad();
+            } else if (opcion == 3) {
+                System.out.println("Hasta luego!");
+                salir = true;
+            } else {
+                System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
+            }
         }
     }
 
@@ -75,7 +78,7 @@ public class ConsolaProfesor extends ConsolaPrincipal {
             System.out.println("Error al cargar los datos");
             e.printStackTrace();
         }
-        ConsolaProfesor consola = new ConsolaProfesor(lprs);
+        ConsolaProfesorLP consola = new ConsolaProfesorLP(lprs);
         consola.getConsolaSesion().mostrarConsolaSesion();
         try {
             PersistenciaGeneral.guardarDatos(lprs);

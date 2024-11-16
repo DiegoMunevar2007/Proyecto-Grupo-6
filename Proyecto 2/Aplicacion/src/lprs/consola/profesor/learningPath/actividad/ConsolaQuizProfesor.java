@@ -16,7 +16,6 @@ public class ConsolaQuizProfesor {
         this.consolaProfesor = consolaP;
     }
     public void crearQuiz(LearningPath lp) {
-        Scanner lectura = consolaProfesor.getLectura();
         String titulo = consolaProfesor.pedirTitulo();
         String descripcion = consolaProfesor.pedirDescripcion();
         String objetivo = consolaProfesor.pedirObjetivo();
@@ -24,15 +23,13 @@ public class ConsolaQuizProfesor {
         boolean obligatoria = consolaProfesor.pedirObligatoria();
         String fechaEntrega = consolaProfesor.pedirFechaEntrega();
         double calificacionMinima = 0;
-        System.out.println("Ingrese la calificación mínima en % para aprobar el quiz: ");
-        calificacionMinima = lectura.nextDouble();
+        calificacionMinima = consolaProfesor.getConsolaProfesor().pedirDouble("Ingrese la calificación mínima en % para aprobar el quiz: ");
         if (calificacionMinima < 0 || calificacionMinima > 100) {
             System.out.println("La calificación mínima debe estar entre 0 y 100.");
             crearQuiz(lp);
             return;
         }
-        System.out.println("Es un quiz multiple o verdadero/falso? (m/vf)");
-        String tipo = lectura.next();
+        String tipo = consolaProfesor.getConsolaProfesor().pedirString("¿Qué tipo de quiz desea crear? (m/vf)");
         Quiz quiz = null;
         if (tipo.equalsIgnoreCase("m")) {
             quiz = lp.crearQuizMultiple(titulo, descripcion, objetivo, duracion, obligatoria, fechaEntrega, calificacionMinima);
@@ -44,28 +41,21 @@ public class ConsolaQuizProfesor {
             return;
         }
         consolaProfesor.aniadirPrerequisitos(lp, quiz);
-        System.out.println("Ingrese el número de preguntas que desea añadir: ");
-        int numeroPreguntas = lectura.nextInt();
-        lectura.nextLine();
+        int numeroPreguntas = consolaProfesor.getConsolaProfesor().pedirInt("Ingrese el número de preguntas que desea añadir: ");
         for (int i = 0; i < numeroPreguntas; i++) {
             crearPreguntaCerrada(quiz);
         }
-        System.out.println("Quiz creado con éxito.");
         consolaProfesor.aniadirActividadesSeguimiento(lp, quiz);
-        consolaProfesor.mostrarConsolaActividad();
+        System.out.println("Quiz creado con éxito.");
     }
 
     public void crearPreguntaCerrada(Quiz quiz) {
-        Scanner lectura = consolaProfesor.getLectura();
-        System.out.println("Ingrese el enunciado de la pregunta: ");
-        String enunciado = lectura.nextLine();
+        String enunciado = consolaProfesor.getConsolaProfesor().pedirString("Ingrese el enunciado de la pregunta: ");
         if (quiz instanceof QuizVerdaderoFalso) {
-            System.out.println("¿Es verdadera o falsa? (v/f)");
-            String respuesta = lectura.next();
-            lectura.nextLine();
+            String respuesta = consolaProfesor.getConsolaProfesor().pedirString("¿Cuál es la respuesta correcta? (v/f)");
             if (respuesta.equalsIgnoreCase("v")) {
                 System.out.println("Justificación: ");
-                String justificacion = lectura.nextLine();
+                String justificacion = consolaProfesor.getConsolaProfesor().pedirString("Ingrese la justificación: ");
                 Opcion opcion = new Opcion("Verdadero", justificacion);
                 Opcion opcion2 = new Opcion("Falso", justificacion);
                 Opcion[] opciones = { opcion, opcion2 };
@@ -77,7 +67,7 @@ public class ConsolaQuizProfesor {
                 }
             } else {
                 System.out.println("Justificación: ");
-                String justificacion = lectura.nextLine();
+                String justificacion = consolaProfesor.getConsolaProfesor().pedirString("Ingrese la justificación: ");
                 Opcion opcion = new Opcion("Verdadero", justificacion);
                 Opcion opcion2 = new Opcion("Falso", justificacion);
                 Opcion[] opciones = { opcion, opcion2 };
@@ -93,13 +83,12 @@ public class ConsolaQuizProfesor {
             for (int i = 0; i < 4; i++) {
                 System.out.println("Opción " + (i + 1) + ": ");
                 System.out.println("Ingrese la opción: ");
-                String opcion = lectura.nextLine();
+                String opcion = consolaProfesor.getConsolaProfesor().pedirString("Ingrese la opción: ");
                 System.out.println("Ingrese la justificación: ");
-                String justificacion = lectura.nextLine();
+                String justificacion = consolaProfesor.getConsolaProfesor().pedirString("Ingrese la justificación: ");
                 opciones[i] = new Opcion(opcion, justificacion);
             }
-            System.out.println("¿Cuál es la respuesta correcta? (1, 2, 3, 4)");
-            int respuesta = lectura.nextInt();
+            int respuesta = consolaProfesor.getConsolaProfesor().pedirInt("Ingrese el número de la respuesta correcta: (1, 2, 3, 4) ");
             try {
                 quiz.crearPreguntaCerrada(enunciado, opciones[respuesta - 1], opciones);
             } catch (Exception e) {
@@ -111,11 +100,9 @@ public class ConsolaQuizProfesor {
     }
 
     public void modificarQuiz(Quiz quiz){
-        Scanner lectura = consolaProfesor.getLectura();
         String[] opciones = {"Título", "Descripción", "Objetivo", "Duración", "Obligatoria", "Fecha de entrega", "Calificación mínima", "Preguntas", "Salir"};
         consolaProfesor.getConsolaProfesor().mostrarOpciones(opciones.length, opciones);
-        int opcion = lectura.nextInt();
-        lectura.nextLine();
+        int opcion = consolaProfesor.getConsolaProfesor().pedirInt("Seleccione una opción: ");
         if (opcion == 1) {
             quiz.setTitulo(consolaProfesor.pedirTitulo());
         } else if (opcion == 2) {
@@ -129,15 +116,12 @@ public class ConsolaQuizProfesor {
         } else if (opcion == 6) {
             quiz.setFechaLimite(consolaProfesor.pedirFechaEntrega());
         } else if (opcion == 7) {
-            System.out.println("Ingrese la nueva calificación mínima para aprobar el quiz: ");
-            double calificacionMinima = lectura.nextDouble();
+            double calificacionMinima = consolaProfesor.getConsolaProfesor().pedirDouble("Ingrese la calificación mínima en % para aprobar el quiz: ");
             quiz.setCalificacionMinima(calificacionMinima);
         } else if (opcion == 8) {
-            System.out.println("¿Qué desea hacer?");
             String[] opcionesPreguntas = {"Añadir pregunta", "Editar pregunta", "Eliminar pregunta", "Salir"};
             consolaProfesor.getConsolaProfesor().mostrarOpciones(opcionesPreguntas.length, opcionesPreguntas);
-            int opcionPreguntas = lectura.nextInt();
-            lectura.nextLine();
+            int opcionPreguntas = consolaProfesor.getConsolaProfesor().pedirInt("Seleccione una opción: ");
             if (opcionPreguntas == 1) {
                 crearPreguntaCerrada(quiz);
             } else if (opcionPreguntas == 2) {
@@ -148,50 +132,37 @@ public class ConsolaQuizProfesor {
         }
     }
     public void editarPreguntaCerrada(Quiz quiz) {
-        Scanner lectura = consolaProfesor.getLectura();
         for (int i = 0; i < quiz.getPreguntasQuiz().size(); i++) {
             System.out.println(i + 1 + ". " + quiz.getPreguntasQuiz().get(i).getEnunciado());
         }
-        System.out.println("Ingrese el número de la pregunta que desea editar: ");
-        int numeroPregunta = lectura.nextInt();
-        lectura.nextLine();
+        int numeroPregunta = consolaProfesor.getConsolaProfesor().pedirInt("Ingrese el número de la pregunta que desea editar: ");
         PreguntaCerrada pregunta = quiz.getPreguntasQuiz().get(numeroPregunta - 1);
         System.out.println("¿Qué desea editar?");
         System.out.println("1. Enunciado");
         System.out.println("2. Respuesta correcta");
         System.out.println("3. Opciones");
-        int opcion = lectura.nextInt();
-        lectura.nextLine();
+        int opcion = consolaProfesor.getConsolaProfesor().pedirInt("Seleccione una opción: ");
         if (opcion == 1) {
-            System.out.println("Ingrese el nuevo enunciado de la pregunta: ");
-            String enunciado = lectura.nextLine();
+            String enunciado = consolaProfesor.getConsolaProfesor().pedirString("Ingrese el nuevo enunciado: ");
             quiz.getPreguntasQuiz().get(numeroPregunta - 1).setEnunciado(enunciado);
         } else if (opcion == 2) {
             mostrarOpcionesPregunta(pregunta);
-            System.out.println("Ingrese el número de la opción correcta: ");
-            int opcionCorrecta = lectura.nextInt();
+            int opcionCorrecta = consolaProfesor.getConsolaProfesor().pedirInt("Ingrese el número de la respuesta correcta: ");
             pregunta.setCorrecta(pregunta.getOpciones()[opcionCorrecta - 1]);
         } else if (opcion == 3) {
-            System.out.println("Ingrese el número de la opción que desea editar: ");
             mostrarOpcionesPregunta(pregunta);
-            int numeroOpcion = lectura.nextInt();
-            lectura.nextLine();
-            System.out.println("Ingrese la nueva opción: ");
-            String opcionNueva = lectura.nextLine();
-            System.out.println("Ingrese la justificación: ");
-            String justificacion = lectura.nextLine();
+            int numeroOpcion = consolaProfesor.getConsolaProfesor().pedirInt("Ingrese el número de la opción que desea editar: ");
+            String opcionNueva = consolaProfesor.getConsolaProfesor().pedirString("Ingrese la nueva opción: ");
+            String justificacion = consolaProfesor.getConsolaProfesor().pedirString("Ingrese la justificación: ");
             Opcion opcionN = new Opcion(opcionNueva, justificacion);
             pregunta.getOpciones()[numeroOpcion - 1] = opcionN;
         }
     }
     public void eliminarPreguntaCerrada(Quiz quiz) {
-        Scanner lectura = consolaProfesor.getLectura();
         for (int i = 0; i < quiz.getPreguntasQuiz().size(); i++) {
             System.out.println(i + 1 + ". " + quiz.getPreguntasQuiz().get(i).getEnunciado());
         }
-        System.out.println("Ingrese el número de la pregunta que desea eliminar: ");
-        int numeroPregunta = lectura.nextInt();
-        lectura.nextLine();
+        int numeroPregunta = consolaProfesor.getConsolaProfesor().pedirInt("Ingrese el número de la pregunta que desea eliminar: ");
         quiz.removePreguntaQuiz(quiz.getPreguntasQuiz().get(numeroPregunta - 1));
     }
 
@@ -218,7 +189,6 @@ public class ConsolaQuizProfesor {
             }
             System.out.println("Respuesta correcta: " + pregunta.getCorrecta().getOpcion());
         }
-        consolaProfesor.mostrarConsolaActividad();
     }
 
 }
