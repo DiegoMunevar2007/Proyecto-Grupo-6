@@ -1,8 +1,6 @@
 package lprs.logica.contenido.realizable;
 
-import java.io.BufferedReader;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import lprs.exceptions.ActividadPreviaException;
 import lprs.exceptions.EstadoException;
@@ -81,7 +79,12 @@ public class EncuestaRealizable extends ActividadRealizable {
         Profesor profesor = actividadBase.getLearningPathAsignado().getProfesorCreador();
         profesor.addActividadPendiente(this);
     }
-
+    
+    public ArrayList<PreguntaAbiertaRealizable> getPreguntasRealizadas(){
+    	return this.preguntasRealizadas;
+    	
+    }
+    
     @Override
     public void setEstado(String estado) throws EstadoException {
         if (estado.equals("Completado")) {
@@ -93,7 +96,6 @@ public class EncuestaRealizable extends ActividadRealizable {
 
     @Override
     public Actividad getActividadBase() {
-        // TODO Auto-generated method stub
         return actividadBase;
     }
 

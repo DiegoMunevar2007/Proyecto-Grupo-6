@@ -66,6 +66,10 @@ public class Estudiante extends Usuario {
 	public HashMap<String, Avance> getAvancesEstudiante() {
 		return avancesEstudiante;
 	}
+	public void addAvance(Avance avance) {
+		avancesEstudiante.put("",avance);
+		
+	}
 
 	public Avance getAvance(String ID) {
 		return avancesEstudiante.get(ID);
