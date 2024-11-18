@@ -28,6 +28,7 @@ public class Seccion implements Serializable{
 		this.explicacion = explicacion;
 		this.pista = pista;
 		this.resultadoEsperado = resultadoEsperado;
+		this.tareaSeccion = new ArrayList<Tarea>();
 	}
 	
 	public int getNumero() {

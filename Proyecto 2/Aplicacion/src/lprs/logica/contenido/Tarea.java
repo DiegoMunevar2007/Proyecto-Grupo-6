@@ -15,7 +15,11 @@ public class Tarea extends Actividad {
 		super(titulo, descripcion, objetivo, duracionEsperada, obligatoria, fechaLimite, lP, dificultad);
 		this.secciones = new ArrayList<Seccion>();
 	}
-
+	public Tarea(Actividad actividad) {
+		super(actividad);
+		this.secciones = new ArrayList<Seccion>();
+	}
+	
 	public TareaRealizable RealizarActividad(TareaRealizable tarea) {
 		return tarea;
 	}
@@ -38,22 +42,19 @@ public class Tarea extends Actividad {
 	public void addSeccion(Seccion nuevaSeccion) {
 		secciones.add(nuevaSeccion);
 	}
-
+    public void borrar_secciones() {
+    	secciones.clear();
+    	
+    }
 	public void removeSeccion(Seccion seccion) {
 		secciones.remove(seccion);
 	}
 
-	public Tarea(Actividad actividad) {
-		super(actividad);
-	}
-
-	public ActividadRealizable crearActividadRealizable(Estudiante estudiante) {
+	public TareaRealizable crearActividadRealizable(Estudiante estudiante) {
 		TareaRealizable tR= new TareaRealizable(this, estudiante);
 		actividadesRealizablesCreadas.add(tR);
 		return tR;
 	}
 
-	public void eliminarSeccion(Seccion seccion) {
-		secciones.remove(seccion);
-	}
+
 }

@@ -178,7 +178,7 @@ public class ConsolaTareaProfesor {
         }
         int numeroSeccion = consolaProfesor.getConsolaProfesor().pedirInt("Ingrese el número de la sección que desea eliminar: ");
         Seccion seccion = tarea.getSecciones().get(numeroSeccion - 1);
-        tarea.eliminarSeccion(seccion);
+        tarea.removeSeccion(seccion);
         System.out.println("Sección eliminada con éxito.");
     }
     public void verTarea(Tarea tarea) {
