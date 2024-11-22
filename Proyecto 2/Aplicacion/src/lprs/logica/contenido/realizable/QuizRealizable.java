@@ -104,5 +104,11 @@ public class QuizRealizable extends ActividadRealizable {
 			}
 	
 		}
+		public ArrayList<PreguntaCerradaRealizable> getPreguntas() {
+			return preguntas;
+		}
+		public double getCalificacion() {
+			return calificacion;
+		}
 
 }

@@ -8,12 +8,14 @@ import java.util.List;
 import lprs.logica.learningPath.LearningPath;
 
 public class ManejadorLP implements Serializable {
-	private HashMap<String, LearningPath> learningPathsHash;
+	private HashMap<String, LearningPath> learningPathsHash; //Learning path por ID-LP
 	private ArrayList<LearningPath> learningPathsDisponibles;
+	private HashMap<String,ArrayList<LearningPath>> learningPathKeyWord; //Learning path por palabra clave
 
 	public ManejadorLP() {
 		learningPathsHash = new HashMap<String, LearningPath>();
 		learningPathsDisponibles = new ArrayList<LearningPath>();
+		learningPathKeyWord = new HashMap<String,ArrayList<LearningPath>>();
 	}
 
 	/**
@@ -37,6 +39,16 @@ public class ManejadorLP implements Serializable {
 		learningPathsDisponibles.add(learningPath);
 		System.out.println(learningPathsDisponibles.size());
 		learningPathsHash.put(learningPath.getID(), learningPath);
+		for (String keyword : learningPath.getKeyWords()){
+			if (learningPathKeyWord.containsKey(keyword)){
+				learningPathKeyWord.get(keyword).add(learningPath);
+			}
+			else{
+				ArrayList<LearningPath> learningPaths = new ArrayList<LearningPath>();
+				learningPaths.add(learningPath);
+				learningPathKeyWord.put(keyword, learningPaths);
+			}
+		}
 	}
 
 	/**
@@ -44,6 +56,24 @@ public class ManejadorLP implements Serializable {
 	 * 
 	 * @return una lista con todos los learning paths
 	 */
+	public void addLearningPathKeyWord(String keyword, LearningPath learningPath) {
+		if (learningPathKeyWord.containsKey(keyword)){
+			learningPathKeyWord.get(keyword).add(learningPath);
+		}
+		else{
+			ArrayList<LearningPath> learningPaths = new ArrayList<LearningPath>();
+			learningPaths.add(learningPath);
+			learningPathKeyWord.put(keyword, learningPaths);
+		}
+	}
+	public ArrayList<String> getKeyWords() {
+        return new ArrayList<String>(learningPathKeyWord.keySet());
+	}
+
+	public ArrayList<LearningPath> getLearningPathsKeywords(String keyword) {
+		return learningPathKeyWord.get(keyword);
+	}
+
 	public ArrayList<LearningPath> getLearningPaths() {
 		return learningPathsDisponibles;
 	}

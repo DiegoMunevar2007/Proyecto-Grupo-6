@@ -142,7 +142,7 @@ public class PersistenciaLP implements Persistencia {
 				String profesor = jLearningPath.getString("profesor");
 				Profesor profesorCreador = (Profesor) manejadorS.obtenerUsuario(profesor);
 				String idLearningPath = profesorCreador.crearLearningPath(titulo, descripcion, nivelDificultad,
-						objetivos);
+						objetivos,null);
 				LearningPath lP = manejadorLP.getLearningPath(idLearningPath);
 				lP.setID(ID);
 				JSONArray jEstudiantesInscritos = jLearningPath.getJSONArray("estudiantesInscritos");

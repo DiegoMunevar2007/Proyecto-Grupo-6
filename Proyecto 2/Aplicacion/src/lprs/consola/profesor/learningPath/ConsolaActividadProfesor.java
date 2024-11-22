@@ -18,9 +18,9 @@ public class ConsolaActividadProfesor {
     private final ConsolaProfesorLP consolaProfesorLP;
     private final ConsolaExamenProfesor consolaExamen;
     private final ConsolaEncuestaProfesor consolaEncuesta;
-    private ConsolaTareaProfesor consolaTarea;
+    private final ConsolaTareaProfesor consolaTarea;
     private final ConsolaQuizProfesor consolaQuiz;
-    private ConsolaRecursoProfesor consolaRecursoEducativo;
+    private final ConsolaRecursoProfesor consolaRecursoEducativo;
 
     public ConsolaActividadProfesor(LPRS lprsActual, ConsolaProfesorLP consolaProfesorLP) {
         this.lprsActual = lprsActual;
@@ -47,7 +47,6 @@ public class ConsolaActividadProfesor {
             System.out.println("No hay Learning Paths creados.");
             return;
         }
-
         boolean salir = false;
         while (!salir) {
             for (int i = 0; i < learningPaths.size(); i++) {
@@ -57,11 +56,9 @@ public class ConsolaActividadProfesor {
             int opcion = consolaProfesorLP.pedirInt("Seleccione un Learning Path: ");
             if (opcion < 1 || opcion > learningPaths.size()) {
                 System.out.println("Opción no válida. Por favor, seleccione un Learning Path de la lista.");
-                continue; // Volver a mostrar la lista
+                continue;
             }
-
             LearningPath lp = learningPaths.get(opcion - 1);
-
             String[] opciones = {
                     "Crear una actividad",
                     "Modificar una actividad",

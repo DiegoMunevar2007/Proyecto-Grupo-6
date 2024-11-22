@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import lprs.exceptions.ContraseniaIncorrectaException;
 import lprs.exceptions.TipoUsuarioIncorrectoException;
+import lprs.exceptions.UsuarioRepetidoException;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.cuentas.Usuario;
 import lprs.consola.estudiante.ConsolaEstudiante;
@@ -16,12 +17,15 @@ public class ConsolaSesionEstudiante {
         this.consolaEstudiante=consolaEstudiante;
         this.lprsActual=lprsActual;
     }
-    public void crearCuenta() {
+    public void crearCuenta() throws UsuarioRepetidoException {
         String usuario = consolaEstudiante.pedirString("Ingrese su nombre de usuario: ");
         String contrasenia = consolaEstudiante.pedirString("Ingrese su contraseña: ");
         try {
             lprsActual.getManejadorSesion().crearUsuario(usuario, contrasenia, 1);
-        } catch (Exception e) {
+        } catch (UsuarioRepetidoException e){
+            throw e;
+        }
+        catch (Exception e) {
             System.out.println("Error al crear la cuenta");
             e.printStackTrace();
         }
@@ -38,8 +42,8 @@ public class ConsolaSesionEstudiante {
                 mostrarConsolaSesion();
                 return;
             }
-            if (usuario.getTipo().equals("PROFESOR")) {
-                throw new TipoUsuarioIncorrectoException("PROFESOR");
+            if (usuario.getTipo().equals("Profesor")) {
+                throw new TipoUsuarioIncorrectoException("Profesor");
             } else {
                 Estudiante estudiante = (Estudiante) usuario;
                 consolaEstudiante.setEstudiante(estudiante);
@@ -63,7 +67,13 @@ public class ConsolaSesionEstudiante {
         if (opcion == 1) {
             iniciarSesion();
         } else if (opcion == 2) {
-            crearCuenta();
+            try {
+                crearCuenta();
+            }
+            catch (UsuarioRepetidoException e){
+                System.out.println(e.getMessage());
+                mostrarConsolaSesion();
+            }
         } else if (opcion == 3) {
             System.out.println("Hasta luego!");
             return;

@@ -32,6 +32,7 @@ public class LearningPath implements Serializable {
 	private Metadato metadatos;
 	private LPRS lprsActual;
 	private int cantidadObligatorias;
+	private ArrayList<String> keyWords;
 
 	/**
 	 * Constructor para crear un objeto LearningPath.
@@ -44,7 +45,7 @@ public class LearningPath implements Serializable {
 	 */
 	public LearningPath(String ID, String titulo, String descripcion, String nivelDificultad,
 			ArrayList<String> objetivos,
-			Profesor profesorCreador, LPRS lprsActual) {
+			Profesor profesorCreador, LPRS lprsActual, ArrayList<String> keyWords) {
 		this.ID = ID;
 		this.titulo = titulo;
 		this.descripcion = descripcion;
@@ -59,8 +60,13 @@ public class LearningPath implements Serializable {
 		this.metadatos = new Metadato(obtenerFecha(), "1");
 		this.lprsActual = lprsActual;
 		this.cantidadObligatorias = 0;
+		this.keyWords = keyWords;
 	}
 
+	public void addKeyWord(String palabraClave) {
+		keyWords.add(palabraClave);
+		lprsActual.getManejadorLP().addLearningPathKeyWord(palabraClave, this);
+	}
 	public String obtenerFecha() {
 		LocalDateTime myDateObj = LocalDateTime.now();
 		DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -459,6 +465,10 @@ public class LearningPath implements Serializable {
 
 	public void setMetadatos(Metadato metadatos) {
 		this.metadatos = metadatos;
+	}
+
+	public ArrayList<String> getKeyWords() {
+		return keyWords;
 	}
 
 }

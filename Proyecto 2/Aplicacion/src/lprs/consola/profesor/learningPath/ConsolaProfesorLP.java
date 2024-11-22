@@ -10,7 +10,6 @@ import lprs.principal.LPRS;
 public class ConsolaProfesorLP extends ConsolaPrincipal {
 
     private Profesor profesor;
-    private Scanner lectura;
     private ConsolaActividadProfesor consolaActividad;
     private ConsolaLPProfesor consolaLP;
     private ConsolaSesionProfesor consolaSesion;
@@ -18,7 +17,6 @@ public class ConsolaProfesorLP extends ConsolaPrincipal {
     public ConsolaProfesorLP(LPRS lprsActual) {
         super(lprsActual);
         profesor = null;
-        lectura = new Scanner(System.in);
         consolaActividad = new ConsolaActividadProfesor(lprsActual, this);
         consolaLP = new ConsolaLPProfesor(lprsActual, this);
         consolaSesion = new ConsolaSesionProfesor(lprsActual, this);

@@ -1,5 +1,7 @@
 package lprs.consola.estudiante;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,12 +18,14 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
     private Estudiante estudiante;
     private ConsolaSesionEstudiante consolaSesion;
     private ConsolaActividadEstudiante consolaActividad;
+    private ConsolaAvanceEstudiante consolaAvance;
 
     public ConsolaEstudiante(LPRS lprsActual) {
         super(lprsActual);
         this.estudiante = null;
         this.consolaSesion = new ConsolaSesionEstudiante(lprsActual, this);
         this.consolaActividad = new ConsolaActividadEstudiante( this);
+        this.consolaAvance = new ConsolaAvanceEstudiante(this);
     }
 
     public ConsolaSesionEstudiante getConsolaSesion() {
@@ -57,14 +61,15 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
                 String id = "";
                 try {
                     id = escogerLearningPath();
+                    if (id == null) {
+                        continue;
+                    }
                     estudiante.inscribirLearningPath(id);
                 } catch (NoLearningPathsException e) {
                     System.out.println(e.getMessage());
-                } finally {
-
                 }
             } else if (opcion == 3) {
-
+                consolaAvance.mostrarAvance();
             } else if (opcion == 4) {
                 Actividad actividad = null;
                 try {
@@ -203,16 +208,46 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
     }
 
     public String escogerLearningPath() throws NoLearningPathsException {
-        List<LearningPath> learningPathsDisponibles = lprsActual.getManejadorLP().learningPathsDisponibles();
-        mostrarLearningPathsDisponibles();
+        ArrayList<String> palabrasDisponibles = lprsActual.getManejadorLP().getKeyWords();
+        if (palabrasDisponibles.isEmpty()){
+            throw new NoLearningPathsException("No hay Learning Paths disponibles.");
+        }
+        boolean salir = false;
+        for (int i = 0; i < palabrasDisponibles.size(); i++) {
+            System.out.println(i + 1 + ". " + palabrasDisponibles.get(i));
+        }
+        int opcion = 0;
+        while (!salir){
+            opcion = pedirInt("Seleccione una palabra clave: ");
+            if (opcion < 1 || opcion > palabrasDisponibles.size()) {
+                System.out.println("Opción no válida. Por favor, seleccione una palabra clave de la lista.");
+            }
+            else {
+                salir = true;
+            }
+        }
+
+        String palabra = palabrasDisponibles.get(opcion - 1);
+        ArrayList<LearningPath> learningPathsDisponibles = lprsActual.getManejadorLP().getLearningPathsKeywords(palabra);
         if (learningPathsDisponibles.isEmpty()) {
-           throw new NoLearningPathsException("No hay Learning Paths disponibles.");
+            System.out.println("No hay Learning Paths disponibles con esta palabra clave.");
+            return null;
         }
-        int opcion = pedirInt("Seleccione un Learning Path: ");
-        if (opcion < 1 || opcion > learningPathsDisponibles.size()) {
-            System.out.println("Opción no válida. Por favor, seleccione un Learning Path de la lista.");
-            return escogerLearningPath();
+        for (int i = 0; i < learningPathsDisponibles.size(); i++) {
+            System.out.println(i + 1 + ". " + learningPathsDisponibles.get(i).getTitulo());
         }
+        salir = false;
+        opcion=0;
+        while (!salir) {
+            opcion = pedirInt("Seleccione un Learning Path: ");
+            if (opcion < 1 || opcion > learningPathsDisponibles.size()) {
+                System.out.println("Opción no válida. Por favor, seleccione un Learning Path de la lista.");
+            }
+            else {
+                salir = true;
+            }
+        }
+
         System.out.println("Esta es la informacion del Learning Path seleccionado: ");
         System.out.println("Titulo: " + learningPathsDisponibles.get(opcion - 1).getTitulo());
         System.out.println("Descripcion: " + learningPathsDisponibles.get(opcion - 1).getDescripcion());

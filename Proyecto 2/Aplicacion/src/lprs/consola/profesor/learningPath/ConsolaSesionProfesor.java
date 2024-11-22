@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import lprs.exceptions.ContraseniaIncorrectaException;
 import lprs.exceptions.TipoUsuarioIncorrectoException;
+import lprs.exceptions.UsuarioRepetidoException;
 import lprs.logica.cuentas.Profesor;
 import lprs.logica.cuentas.Usuario;
 import lprs.principal.LPRS;
@@ -26,12 +27,14 @@ public class ConsolaSesionProfesor {
         String contrasenia = lectura.nextLine();
         try {
             lprsActual.getManejadorSesion().crearUsuario(usuario, contrasenia, 2);
+            System.out.println("Cuenta creada con éxito.");
+        }
+        catch (UsuarioRepetidoException e) {
+            System.out.println(e.getMessage());
         } catch (Exception e) {
             System.out.println("Error al crear la cuenta");
             e.printStackTrace();
         }
-        System.out.println("Cuenta creada con éxito.");
-        mostrarConsolaSesion();
     }
 
     public void iniciarSesion() {
@@ -41,19 +44,19 @@ public class ConsolaSesionProfesor {
         try {
             Usuario usuario = lprsActual.getManejadorSesion().iniciarSesion(ID, contrasenia);
             if (usuario == null) {
-                mostrarConsolaSesion();
                 return;
             }
-            if (usuario.getTipo().equals("ESTUDIANTE")) {
-                throw new TipoUsuarioIncorrectoException("ESTUDIANTE");
+            System.out.println(usuario.getTipo());
+            if (usuario.getTipo().equals("Estudiante")) {
+                throw new TipoUsuarioIncorrectoException("Estudiante");
             } else {
                 Profesor profesor = (Profesor) usuario;
                 consolaProfesorLP.setProfesor(profesor);
                 consolaProfesorLP.mostrarConsolaProfesor();
+                return;
             }
         } catch (TipoUsuarioIncorrectoException | ContraseniaIncorrectaException e) {
             System.out.println(e.getMessage());
-            mostrarConsolaSesion();
         } catch (Exception e) {
             System.out.println("Error al iniciar sesión");
             e.printStackTrace();
@@ -66,16 +69,19 @@ public class ConsolaSesionProfesor {
         String[] opciones = { "Iniciar sesión", "Crear una cuenta", "Salir" };
         consolaProfesorLP.mostrarOpciones(opciones.length, opciones);
         int opcion = consolaProfesorLP.pedirInt("Seleccione una opción: ");
-        if (opcion == 1) {
-            iniciarSesion();
-        } else if (opcion == 2) {
-            crearCuenta();
-        } else if (opcion == 3) {
-            System.out.println("Hasta luego!");
-            return;
-        } else {
-            System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
-            mostrarConsolaSesion();
+        boolean salir = false;
+        while (!salir) {
+            if (opcion == 1) {
+                iniciarSesion();
+                salir=true;
+            } else if (opcion == 2) {
+                crearCuenta();
+            } else if (opcion == 3) {
+                System.out.println("Hasta luego!");
+                salir = true;
+            } else {
+                System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
+            }
         }
     }
 }

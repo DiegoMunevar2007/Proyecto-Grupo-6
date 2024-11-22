@@ -106,5 +106,7 @@ public class ExamenRealizable extends ActividadRealizable {
     public Actividad getActividadBase() {
         return actividadBase;
     }
-
+    public ArrayList<PreguntaAbiertaRealizable> getPreguntas() {
+        return preguntasRealizadas;
+    }
 }

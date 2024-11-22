@@ -37,13 +37,11 @@ public class Profesor extends Usuario {
      * @param descripcion     la descripción de la ruta de aprendizaje
      * @param nivelDificultad el nivel de dificultad de la ruta de aprendizaje
      * @param objetivos       una lista de los objetivos de la ruta de aprendizaje
-     * @param duracion        la duración de la ruta de aprendizaje
-     * @param rating          la calificación de la ruta de aprendizaje
      */
     public String crearLearningPath(String titulo, String descripcion, String nivelDificultad,
-            ArrayList<String> objetivos) {
+            ArrayList<String> objetivos, ArrayList<String> keyWords) {
         String ID = lprsActual.getManejadorLP().generarID();
-        LearningPath lP = new LearningPath(ID, titulo, descripcion, nivelDificultad, objetivos, this, lprsActual);
+        LearningPath lP = new LearningPath(ID, titulo, descripcion, nivelDificultad, objetivos, this, lprsActual, keyWords);
         lprsActual.getManejadorLP().addLearningPath(lP);
         learningPathsCreados.put(lP.getID(), lP);
         learningPathsCreadosLista.add(lP);
@@ -58,8 +56,7 @@ public class Profesor extends Usuario {
      * @param descripcion     la nueva descripción de la ruta de aprendizaje
      * @param nivelDificultad el nuevo nivel de dificultad de la ruta de aprendizaje
      * @param objetivos       la nueva lista de objetivos de la ruta de aprendizaje
-     * @param duracion        la nueva duración de la ruta de aprendizaje
-     * @param rating          la nueva calificación de la ruta de aprendizaje
+
      */
     public void modificarLearningPath(String ID, String titulo, String descripcion, String nivelDificultad,
             ArrayList<String> objetivos) {
