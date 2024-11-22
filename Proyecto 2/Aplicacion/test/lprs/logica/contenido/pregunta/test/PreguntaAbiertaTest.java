@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import lprs.logica.contenido.pregunta.PreguntaAbierta;
 
-class PreguntaAbiertaTest {
+public class PreguntaAbiertaTest {
 
     private PreguntaAbierta preguntaAbierta;
 

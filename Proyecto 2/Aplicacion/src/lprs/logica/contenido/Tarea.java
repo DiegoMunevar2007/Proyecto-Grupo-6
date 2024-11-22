@@ -42,7 +42,7 @@ public class Tarea extends Actividad {
 	public void addSeccion(Seccion nuevaSeccion) {
 		secciones.add(nuevaSeccion);
 	}
-    public void borrar_secciones() {
+    public void borrarSecciones() {
     	secciones.clear();
     	
     }

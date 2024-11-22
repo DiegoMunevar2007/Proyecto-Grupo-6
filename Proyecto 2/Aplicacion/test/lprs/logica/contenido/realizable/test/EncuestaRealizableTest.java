@@ -19,8 +19,8 @@ import lprs.logica.contenido.realizable.EncuestaRealizable;
 import lprs.logica.contenido.realizable.PreguntaAbiertaRealizable;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.cuentas.Profesor;
-import lprs.logica.learningPath.Avance;
 import lprs.logica.learningPath.LearningPath;
+import lprs.principal.LPRS;
 
 class EncuestaRealizableTest {
 
@@ -28,34 +28,32 @@ class EncuestaRealizableTest {
     private Encuesta encuestaBase;
     private Estudiante estudiante;
     private LearningPath learningPath;
+    private Profesor profesor;
+    private LPRS lprsActual;
 
     @BeforeEach
     void setUp() {
-        // Crear una lista de objetivos para el LearningPath
-        ArrayList<String> objetivos = new ArrayList<>();
-        objetivos.add("Entender conceptos básicos");
-        objetivos.add("Resolver problemas avanzados");
-        Profesor profesor = new Profesor("Profesor Test", "5678", null);
-
-        // Crear el objeto LearningPath
-        learningPath = new LearningPath(
-            "LP123",                        // ID
-            "LP Test",                      // Título
-            "Descripción del LearningPath", // Descripción
-            "Media",                        // Nivel de dificultad
-            objetivos,                      // Lista de objetivos
-            profesor,                       // Profesor creador
-            null                            // Referencia a LPRS (puede ser null si no se usa)
-        );
-
+        lprsActual = new LPRS();
+        
+        try {
+			lprsActual.getManejadorSesion().crearUsuario("Profesor Test", "5678", 2);
+			lprsActual.getManejadorSesion().crearUsuario("Estudiante Test", "1234", 1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        this.profesor = (Profesor) lprsActual.getManejadorSesion().getUsuarios().get("Profesor Test");
+        this.estudiante = (Estudiante) lprsActual.getManejadorSesion().getUsuarios().get("Estudiante Test");
+        ArrayList<String> keywords = new ArrayList<String>();
+        keywords.add("test");
+        profesor.crearLearningPath("LP Test", "Descripcion del Learning Path", "Principiante", null, keywords);
         // Crear el estudiante y asociar un avance
-        estudiante = new Estudiante("Estudiante Test", "1234", null);
-        Avance avance = new Avance("",learningPath);
-        estudiante.addAvance(avance); // Método para agregar el avance al estudiante
-
-        // Crear la encuesta base y la encuesta realizable
-        encuestaBase = new Encuesta("Encuesta Test", "Descripción Encuesta", "Objetivo", 30, true, "2024-12-31", learningPath, "Media");
-        encuestaRealizable = new EncuestaRealizable(encuestaBase, estudiante);
+        
+        estudiante.inscribirLearningPath("0");
+        profesor.getLearningPathCreado("0").crearEncuesta("Encuesta Test", "Descripción Encuesta", "Objetivo", 30, true, "2024-12-31");
+        encuestaBase = (Encuesta) profesor.getLearningPathCreado("0").getActividades().get(0);
+        encuestaRealizable = (EncuestaRealizable) encuestaBase.crearActividadRealizable(estudiante);
+        
     }
 
 
@@ -65,6 +63,7 @@ class EncuestaRealizableTest {
         encuestaBase = null;
         estudiante = null;
         learningPath = null;
+        lprsActual = null;
     }
 
     @Test
@@ -96,9 +95,6 @@ class EncuestaRealizableTest {
         respuestas.add(new PreguntaAbiertaRealizable("Muy bueno",new PreguntaAbierta("¿Qué opinas del curso?")));
         respuestas.add(new PreguntaAbiertaRealizable("Más ejemplos prácticos",new PreguntaAbierta("¿Cómo mejorarías el contenido?") ));
 
-        Profesor profesor = new Profesor("Profesor Test", "5678", null);
-        learningPath.setProfesorCreador(profesor);
-
         encuestaRealizable.enviarActividad(respuestas);
 
         assertEquals("Completado", encuestaRealizable.getEstado(), "El estado de la encuesta debe ser 'Completado' después de enviar.");
@@ -114,7 +110,7 @@ class EncuestaRealizableTest {
     @Test
     void testSetEstadoInvalido() {
         Exception exception = assertThrows(EstadoException.class, () -> encuestaRealizable.setEstado("En progreso"));
-        assertTrue(exception.getMessage().contains("Estado inválido"), "Debe lanzar una excepción con mensaje apropiado para estados inválidos.");
+        assertTrue(exception.getMessage().contains("El estado "+ "En progreso" + "no es valido para la actividad" + "Encuesta Test"), "Debe lanzar una excepción con mensaje apropiado para estados inválidos.");
     }
 
     @Test

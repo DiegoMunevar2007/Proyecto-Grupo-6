@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import lprs.logica.contenido.pregunta.Opcion;
 import lprs.logica.contenido.pregunta.PreguntaCerrada;
 
-class PreguntaCerradaTest {
+public class PreguntaCerradaTest {
 
     private PreguntaCerrada preguntaCerrada;
     private Opcion correcta;

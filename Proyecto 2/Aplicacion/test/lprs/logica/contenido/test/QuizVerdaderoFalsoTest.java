@@ -35,6 +35,7 @@ class QuizVerdaderoFalsoTest {
             objetivos, 
             null, // Profesor asociado (puede ser null si no se requiere en este test)
             null  // LPRS (puede ser null si no se usa)
+            ,null
         );
 
         // Crear el quiz

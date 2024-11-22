@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import lprs.logica.contenido.Seccion;
 
-class SeccionTest {
+public class SeccionTest {
 
     private Seccion seccion;
 

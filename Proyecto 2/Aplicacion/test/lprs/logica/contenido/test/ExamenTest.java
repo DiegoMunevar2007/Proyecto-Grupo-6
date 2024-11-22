@@ -20,7 +20,7 @@ import lprs.logica.contenido.realizable.ExamenRealizable;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
 
-class ExamenTest {
+public class ExamenTest {
 
     private Examen examen;
     private LearningPath learningPath;

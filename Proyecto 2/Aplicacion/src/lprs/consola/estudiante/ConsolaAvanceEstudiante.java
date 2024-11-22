@@ -139,7 +139,7 @@ public class ConsolaAvanceEstudiante {
     }
     public void mostrarAvanceEncuesta(EncuestaRealizable encuestaRealizable) {
         System.out.println("Preguntas realizadas: ");
-        ArrayList<PreguntaAbiertaRealizable> preguntas = encuestaRealizable.getPreguntas();
+        ArrayList<PreguntaAbiertaRealizable> preguntas = encuestaRealizable.getPreguntasRealizadas();
         for (int i = 0; i < preguntas.size(); i++) {
             System.out.println("Pregunta " + i + 1);
             System.out.println(i + 1 + ". " + preguntas.get(i).getPreguntaBase().getEnunciado());

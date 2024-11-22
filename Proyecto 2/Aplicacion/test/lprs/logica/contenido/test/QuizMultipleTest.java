@@ -36,6 +36,7 @@ class QuizMultipleTest {
             objetivos,
             null, // Profesor no relevante para esta prueba
             null  // LPRS no relevante para esta prueba
+            ,null
         );
 
         // Crear el QuizMultiple

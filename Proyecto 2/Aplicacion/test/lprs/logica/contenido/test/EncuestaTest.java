@@ -19,7 +19,7 @@ import lprs.logica.contenido.realizable.EncuestaRealizable;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
 
-class EncuestaTest {
+public class EncuestaTest {
 
     private Encuesta encuesta;
     private LearningPath learningPath;

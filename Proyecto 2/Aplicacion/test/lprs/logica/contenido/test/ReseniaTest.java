@@ -13,7 +13,7 @@ import lprs.logica.contenido.Resenia;
 import lprs.logica.cuentas.Profesor;
 import lprs.logica.cuentas.Usuario;
 
-class ReseniaTest {
+public class ReseniaTest {
 
     private Resenia resenia;
     private Profesor autor;

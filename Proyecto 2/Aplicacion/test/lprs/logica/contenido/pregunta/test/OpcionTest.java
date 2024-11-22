@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import lprs.logica.contenido.pregunta.Opcion;
 
-class OpcionTest {
+public class OpcionTest {
 
     private Opcion opcion;
 

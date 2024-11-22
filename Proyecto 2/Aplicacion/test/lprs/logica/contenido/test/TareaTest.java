@@ -18,7 +18,6 @@ import lprs.logica.learningPath.LearningPath;
 
 public class TareaTest {
 
-	
 	private Tarea tarea; 
 	private TareaRealizable trealizable;
 	private Seccion seccion;
@@ -27,24 +26,20 @@ public class TareaTest {
 		Profesor profesor2 = new Profesor("Profe", "Profe", null);
     	ArrayList<String> objetivos2 = new ArrayList<String>();
     	objetivos2.add("Objetivo 2");
-        LearningPath learningPath = new LearningPath("b", "Titulo learning path2", "Descripcion", "Principiante", objetivos2,profesor2, null);
+        LearningPath learningPath = new LearningPath("b", "Titulo learning path2", "Descripcion", "Principiante", objetivos2,profesor2, null,null);
         tarea = new Tarea(learningPath.crearTarea("tarea", "descripcion", "objetivos", 10 , true,
     			"10/12/2024"));
 		Estudiante estudiante = new Estudiante("pepe", "123", null); 
 		seccion = new Seccion(1, "10°a", "datos", "objetivo", "contenido", "ejemplo",
 				"explicacion", "pista", "resultadoEsperado");
         trealizable =  tarea.crearActividadRealizable(estudiante);
-        
-		
+ 
 		
 	}
 	
-	
-	
-	
 	@AfterEach
 	void tearDown() throws Exception{
-		tarea.borrar_secciones();
+		tarea.borrarSecciones();
 		tarea = null;
 		trealizable = null; 
 		seccion=null;

@@ -11,7 +11,7 @@ import lprs.logica.contenido.realizable.RecursoRealizable;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
 
-class RecursoEducativoTest {
+public class RecursoEducativoTest {
 
     private RecursoEducativo recursoEducativo;
     private LearningPath learningPath;
