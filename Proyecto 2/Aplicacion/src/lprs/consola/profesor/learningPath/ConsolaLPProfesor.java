@@ -77,12 +77,11 @@ public class ConsolaLPProfesor {
         for (LearningPath lp : lprsActual.getManejadorLP().getLearningPathsDisponibles()) {
             System.out.println(lp.getTitulo());
         }
-        mostrarConsolaLP();
+        return;
     }
 
     public void mostrarLearningPathsDisponibles() throws  NoLearningPathsException {
 
-        Scanner lectura = consolaProfesorLP.getLectura();
         Profesor profesor = consolaProfesorLP.getProfesor();
         List<LearningPath> learningPathsDisponibles = lprsActual.getManejadorLP().getLearningPathsDisponibles();
         if (learningPathsDisponibles.isEmpty()) {
@@ -91,15 +90,12 @@ public class ConsolaLPProfesor {
         for (int i = 0; i < learningPathsDisponibles.size(); i++) {
             System.out.println(i + 1 + ". " + learningPathsDisponibles.get(i).getTitulo());
         }
-        System.out.println("Seleccione un Learning Path o ingrese 0 para volver: ");
-        int opcion = lectura.nextInt();
+        int opcion = consolaProfesorLP.pedirInt("Seleccione un Learning Path o ingrese 0 para volver: ");
         if (opcion < 0 || opcion > learningPathsDisponibles.size()) {
             System.out.println("Opción no válida. Por favor, seleccione un Learning Path de la lista.");
-            mostrarLearningPathsDisponibles();
             return;
 
         } else if (opcion == 0) {
-            mostrarConsolaLP();
             return;
         }
         System.out.println("Esta es la informacion del Learning Path seleccionado: ");
@@ -118,7 +114,7 @@ public class ConsolaLPProfesor {
         System.out.println("¿Que desea hacer? ");
         String[] opciones = { "Clonar el Learning Path", "Volver" };
         consolaProfesorLP.mostrarOpciones(opciones.length, opciones);
-        int opcion2 = lectura.nextInt();
+        int opcion2 = consolaProfesorLP.pedirInt("Seleccione una opción: ");
         if (opcion2 == 1) {
             LearningPath lp = learningPathsDisponibles.get(opcion - 1);
             String ID = lp.getID();
@@ -144,7 +140,6 @@ public class ConsolaLPProfesor {
         Collection<LearningPath> learningPathsHechos = profesor.getLearningPathsCreados();
         if (learningPathsHechos.isEmpty()) {
             System.out.println("No tienes Learning Paths creados.");
-            mostrarConsolaLP();
             return;
         }
         int indice = 1;
@@ -153,37 +148,45 @@ public class ConsolaLPProfesor {
             indice++;
         }
         System.out.println("Ingrese el número del Learning Path que desea o ingrese 0 para salir ");
-        int numero = lectura.nextInt();
-        if (numero < 0 || numero > learningPathsHechos.size()) {
-            System.out.println("Opción no válida. Por favor, seleccione un Learning Path de la lista.");
-            mostrarLearningPathsHechos();
-            return;
-        }
-        if (numero == 0) {
-            mostrarConsolaLP();
-            return;
+        boolean opcionValida = false;
+        int numero =0;
+        while (!opcionValida) {
+            numero = lectura.nextInt();
+            if (numero < 0 || numero > learningPathsHechos.size()) {
+                System.out.println("Opción no válida. Por favor, seleccione un Learning Path de la lista.");
+                mostrarLearningPathsHechos();
+            } else if (numero == 0) {
+                mostrarConsolaLP();
+                opcionValida = true;
+            } else {
+                opcionValida = true;
+            }
         }
         LearningPath lp = (LearningPath) learningPathsHechos.toArray()[numero - 1];
 
         System.out.println("¿Que desea hacer?");
         String[] opciones = { "Ver informacion detallada del Learning Path", "Modificar un Learning Path",
                 "Eliminar un Learning Path", "Volver" };
-        consolaProfesorLP.mostrarOpciones(opciones.length, opciones);
-        int opcion = lectura.nextInt();
-        if (opcion == 1) {
-            mostrarLearningPathCompleto(lp);
-            mostrarLearningPathsHechos();
-        } else if (opcion == 2) {
-            modificarLearningPath(lp);
-        } else if (opcion == 3) {
-            profesor.eliminarLearningPath(lp.getID());
-            mostrarLearningPathsHechos();
-        } else if (opcion == 4) {
-            mostrarConsolaLP();
-        } else {
-            System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
-            mostrarLearningPathsHechos();
+        opcionValida = false;
+        while (!opcionValida) {
+            consolaProfesorLP.mostrarOpciones(opciones.length, opciones);
+            int opcion = lectura.nextInt();
+            if (opcion == 1) {
+                mostrarLearningPathCompleto(lp);
+                opcionValida = true;
+            } else if (opcion == 2) {
+                modificarLearningPath(lp);
+                opcionValida = true;
+            } else if (opcion == 3) {
+                profesor.eliminarLearningPath(lp.getID());
+                opcionValida = true;
+            } else if (opcion == 4) {
+                opcionValida = true;
+            } else {
+                System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
+            }
         }
+
     }
 
     public void modificarLearningPath(LearningPath lp) {
@@ -191,57 +194,57 @@ public class ConsolaLPProfesor {
         Profesor profesor = consolaProfesorLP.getProfesor();
         System.out.println("¿Qué desea modificar?");
         String[] opciones = { "Título", "Descripción", "Nivel de dificultad", "Objetivos", "Volver" };
-        consolaProfesorLP.mostrarOpciones(opciones.length, opciones);
-        int opcion = lectura.nextInt();
-        lectura.nextLine();
-        if (opcion == 1) {
-            System.out.println("Ingrese el nuevo título: ");
-            String titulo = lectura.nextLine();
-            String descripcion = lp.getDescripcion();
-            String nivelDificultad = lp.getNivelDificultad();
-            ArrayList<String> objetivos = lp.getObjetivos();
-            profesor.modificarLearningPath(lp.getID(), titulo, descripcion, nivelDificultad, objetivos);
-            mostrarLearningPathsHechos();
-        } else if (opcion == 2) {
-            System.out.println("Ingrese la nueva descripción: ");
-            String descripcion = lectura.nextLine();
-            String titulo = lp.getTitulo();
-            String nivelDificultad = lp.getNivelDificultad();
-            ArrayList<String> objetivos = lp.getObjetivos();
-            profesor.modificarLearningPath(lp.getID(), titulo, descripcion, nivelDificultad, objetivos);
-            mostrarLearningPathsHechos();
-        } else if (opcion == 3) {
-            System.out.println("Ingrese el nuevo nivel de dificultad: ");
-            String nivelDificultad = lectura.nextLine();
-            String titulo = lp.getTitulo();
-            String descripcion = lp.getDescripcion();
-            ArrayList<String> objetivos = lp.getObjetivos();
-            profesor.modificarLearningPath(lp.getID(), titulo, descripcion, nivelDificultad, objetivos);
-            mostrarLearningPathsHechos();
-        } else if (opcion == 4) {
-            ArrayList<String> objetivos = new ArrayList<>();
-            boolean terminado = false;
-            while (!terminado) {
-                System.out.println("Ingrese un objetivo: ");
-                String objetivo = lectura.nextLine();
-                objetivos.add(objetivo);
 
-                System.out.println("¿Desea agregar otro objetivo? (s/n): ");
-                String respuesta = lectura.nextLine();
-                if (respuesta.equalsIgnoreCase("n")) {
-                    terminado = true;
+        boolean opcionValida = false;
+        int opcion = 0;
+        while (!opcionValida) {
+            consolaProfesorLP.mostrarOpciones(opciones.length, opciones);
+            opcion = consolaProfesorLP.pedirInt("Seleccione una opción: ");
+            if (opcion == 1) {
+                String titulo = consolaProfesorLP.pedirString("Ingrese el nuevo título: ");
+                String descripcion = lp.getDescripcion();
+                String nivelDificultad = lp.getNivelDificultad();
+                ArrayList<String> objetivos = lp.getObjetivos();
+                profesor.modificarLearningPath(lp.getID(), titulo, descripcion, nivelDificultad, objetivos);
+                mostrarLearningPathsHechos();
+            } else if (opcion == 2) {
+                String descripcion = consolaProfesorLP.pedirString("Ingrese la nueva descripción: ");
+                String titulo = lp.getTitulo();
+                String nivelDificultad = lp.getNivelDificultad();
+                ArrayList<String> objetivos = lp.getObjetivos();
+                profesor.modificarLearningPath(lp.getID(), titulo, descripcion, nivelDificultad, objetivos);
+                mostrarLearningPathsHechos();
+            } else if (opcion == 3) {
+                String nivelDificultad = consolaProfesorLP.pedirString("Ingrese el nuevo nivel de dificultad: ");
+                String titulo = lp.getTitulo();
+                String descripcion = lp.getDescripcion();
+                ArrayList<String> objetivos = lp.getObjetivos();
+                profesor.modificarLearningPath(lp.getID(), titulo, descripcion, nivelDificultad, objetivos);
+                mostrarLearningPathsHechos();
+            } else if (opcion == 4) {
+                ArrayList<String> objetivos = new ArrayList<>();
+                boolean terminado = false;
+                while (!terminado) {
+                    System.out.println("Ingrese un objetivo: ");
+                    String objetivo = consolaProfesorLP.pedirString("Ingrese un objetivo: ");
+                    objetivos.add(objetivo);
+
+                    System.out.println("¿Desea agregar otro objetivo? (s/n): ");
+                    String respuesta = consolaProfesorLP.pedirString("¿Desea agregar otro objetivo? (s/n): ");
+                    if (respuesta.equalsIgnoreCase("n")) {
+                        terminado = true;
+                    }
                 }
+                String titulo = lp.getTitulo();
+                String descripcion = lp.getDescripcion();
+                String nivelDificultad = lp.getNivelDificultad();
+                profesor.modificarLearningPath(lp.getID(), titulo, descripcion, nivelDificultad, objetivos);
+                return;
+            } else if (opcion == 5) {
+                opcionValida = true;
+            } else {
+                System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
             }
-            String titulo = lp.getTitulo();
-            String descripcion = lp.getDescripcion();
-            String nivelDificultad = lp.getNivelDificultad();
-            profesor.modificarLearningPath(lp.getID(), titulo, descripcion, nivelDificultad, objetivos);
-            mostrarLearningPathsHechos();
-        } else if (opcion == 5) {
-            mostrarLearningPathsHechos();
-        } else {
-            System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
-            modificarLearningPath(lp);
         }
     }
 

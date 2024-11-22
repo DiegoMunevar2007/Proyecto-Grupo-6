@@ -24,9 +24,6 @@ public class ConsolaProfesorLP extends ConsolaPrincipal {
         consolaSesion = new ConsolaSesionProfesor(lprsActual, this);
     }
 
-    public Scanner getLectura() {
-        return lectura;
-    }
 
     public void setProfesor(Profesor profesor) {
         this.profesor = profesor;
