@@ -15,6 +15,7 @@ public class ConsolaQuizProfesor {
     public ConsolaQuizProfesor( ConsolaActividadProfesor consolaP) {
         this.consolaProfesor = consolaP;
     }
+
     public void crearQuiz(LearningPath lp) {
         String titulo = consolaProfesor.pedirTitulo();
         String descripcion = consolaProfesor.pedirDescripcion();
@@ -54,7 +55,6 @@ public class ConsolaQuizProfesor {
         if (quiz instanceof QuizVerdaderoFalso) {
             String respuesta = consolaProfesor.getConsolaProfesor().pedirString("¿Cuál es la respuesta correcta? (v/f)");
             if (respuesta.equalsIgnoreCase("v")) {
-                System.out.println("Justificación: ");
                 String justificacion = consolaProfesor.getConsolaProfesor().pedirString("Ingrese la justificación: ");
                 Opcion opcion = new Opcion("Verdadero", justificacion);
                 Opcion opcion2 = new Opcion("Falso", justificacion);
@@ -66,7 +66,6 @@ public class ConsolaQuizProfesor {
                     crearPreguntaCerrada(quiz);
                 }
             } else {
-                System.out.println("Justificación: ");
                 String justificacion = consolaProfesor.getConsolaProfesor().pedirString("Ingrese la justificación: ");
                 Opcion opcion = new Opcion("Verdadero", justificacion);
                 Opcion opcion2 = new Opcion("Falso", justificacion);
@@ -81,10 +80,8 @@ public class ConsolaQuizProfesor {
         } else if (quiz instanceof QuizMultiple) {
             Opcion[] opciones = new Opcion[4];
             for (int i = 0; i < 4; i++) {
-                System.out.println("Opción " + (i + 1) + ": ");
-                System.out.println("Ingrese la opción: ");
+                System.out.println("Opción " + (i + 1) + ": ");;
                 String opcion = consolaProfesor.getConsolaProfesor().pedirString("Ingrese la opción: ");
-                System.out.println("Ingrese la justificación: ");
                 String justificacion = consolaProfesor.getConsolaProfesor().pedirString("Ingrese la justificación: ");
                 opciones[i] = new Opcion(opcion, justificacion);
             }

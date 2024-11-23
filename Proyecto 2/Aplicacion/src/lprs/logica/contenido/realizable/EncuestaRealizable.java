@@ -24,20 +24,20 @@ public class EncuestaRealizable extends ActividadRealizable {
         preguntasRealizadas = new ArrayList<PreguntaAbiertaRealizable>();
     }
 
+    public void setEncuestaBase(Encuesta encuestaBase) {
+        this.actividadBase = encuestaBase;
+    }
+    public ArrayList<PreguntaAbierta> obtenerPreguntas(){
+        ArrayList<PreguntaAbierta> preguntasEncuesta = actividadBase.getPreguntasEncuesta();
+        return preguntasEncuesta;
+    }
+    public ArrayList<PreguntaAbiertaRealizable> getPreguntasRealizadas(){
+        return this.preguntasRealizadas;
+
+    }
     @Override
     public void calificarActividad() {
-        System.out.println("Información de la encuesta:");
-        System.out.println("Preguntas: " + preguntasRealizadas.size());
-        System.out.println("Titulo: " + actividadBase.getTitulo());
-        System.out.println("Estudiante: " + estudiante.getUsuario());
-        System.out.println("Estado: " + estado);
-        System.out.println("Contenido de la encuesta:");
-        for (int i = 0; i < preguntasRealizadas.size(); i++) {
-            PreguntaAbiertaRealizable preguntaRealizada = preguntasRealizadas.get(i);
-            PreguntaAbierta preguntaBase = preguntaRealizada.getPreguntaBase();
-            System.out.println("Pregunta " + i + ": " + preguntaBase.getEnunciado());
-            System.out.println("Respuesta: " + preguntaRealizada.getRespuesta());
-        }
+
 
     }
 
@@ -63,10 +63,7 @@ public class EncuestaRealizable extends ActividadRealizable {
         estudiante.getAvance(lP.getID()).addActividadRealizada(this);
     }
 
-    public ArrayList<PreguntaAbierta> obtenerPreguntas(){
-        ArrayList<PreguntaAbierta> preguntasEncuesta = actividadBase.getPreguntasEncuesta();
-        return preguntasEncuesta;
-    }
+
 
     @Override
     public void enviarActividad(ArrayList respuestas) { //ArrayList de PreguntasAbiertasRealizables
@@ -80,10 +77,7 @@ public class EncuestaRealizable extends ActividadRealizable {
         profesor.addActividadPendiente(this);
     }
     
-    public ArrayList<PreguntaAbiertaRealizable> getPreguntasRealizadas(){
-    	return this.preguntasRealizadas;
-    	
-    }
+
     
     @Override
     public void setEstado(String estado) throws EstadoException {

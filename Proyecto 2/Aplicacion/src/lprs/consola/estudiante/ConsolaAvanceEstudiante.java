@@ -49,7 +49,7 @@ public class ConsolaAvanceEstudiante {
         System.out.println("Learning Path: " + lp.getTitulo());
         Estudiante estudiante = consolaEstudiante.getEstudiante();
         Avance avance = estudiante.getAvance(lp.getID());
-        System.out.println("Porcentaje de avance: " + avance.getFechaInicio() + "%");
+        System.out.println("Porcentaje de avance: " + avance.getActividadesCompletadasPorcentaje()   + "%");
         System.out.println("Fecha de inicio: " + avance.getFechaInicio());
         if (avance.getFechaFin() != null) {
             System.out.println("Fecha de fin: " + avance.getFechaFin());

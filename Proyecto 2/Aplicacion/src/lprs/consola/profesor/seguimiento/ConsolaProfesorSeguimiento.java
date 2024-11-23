@@ -29,11 +29,11 @@ public class ConsolaProfesorSeguimiento extends ConsolaPrincipal {
         String[] opciones = { "Ver mis learning paths",
                 "Ver mis actividades pendientes", "Salir" };
         mostrarOpciones(opciones.length, opciones);
-        int opcion = lectura.nextInt();
+        int opcion = pedirInt("Seleccione una opcion: ");
         if (opcion == 1) {
             consolaLP.mostrarConsolaLP();
         } else if (opcion == 2) {
-            consolaActividad.mostrarConsolaActividad();
+            consolaActividad.calificarActividadesPendientes();
         } else if (opcion == 3) {
             System.out.println("Hasta luego!");
         } else {

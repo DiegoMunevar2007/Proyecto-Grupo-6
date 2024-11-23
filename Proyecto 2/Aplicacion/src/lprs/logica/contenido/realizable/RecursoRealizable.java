@@ -14,13 +14,11 @@ import lprs.logica.learningPath.LearningPath;
 public class RecursoRealizable extends ActividadRealizable {
 
 	RecursoEducativo actividadBase;
-	Scanner lecturaRecurso;
 
 	public RecursoRealizable(RecursoEducativo actividadBase, Estudiante estudiante) {
 		super(estudiante);
 		this.estado = "No completado";
 		this.actividadBase = actividadBase;
-		lecturaRecurso = new Scanner(System.in);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -44,21 +42,15 @@ public class RecursoRealizable extends ActividadRealizable {
 
 	@Override
 	public void enviarActividad(ArrayList respuestas) {
-		System.out.println("¿Desea marcar la actividad como completada? (S/N)");
-		String respuesta = lecturaRecurso.nextLine();
-		if (respuesta.equalsIgnoreCase("S")) {
-			try {
-				setEstado("Completado");
-			} catch (EstadoException e) {
-				System.out.println(e.getMessage());
-			}
+		try {
+			setEstado("Completado");
+		} catch (EstadoException e) {
+			System.out.println(e.getMessage());
 		}
 		guardarActividad(respuestas);
 		Profesor profesor = actividadBase.getLearningPathAsignado().getProfesorCreador();
 		profesor.addActividadPendiente(this);
 		System.out.println("Actividad completada!");
-		
-
 	}
 
 	@Override
@@ -84,11 +76,7 @@ public class RecursoRealizable extends ActividadRealizable {
 
 	@Override
 	public void calificarActividad() {
-		System.out.println("La informacion del recurso es la siguiente: ");
-		System.out.println("Titulo del recurso: " + actividadBase.getTitulo());
-		System.out.println("Descripcion del recurso: " + actividadBase.getDescripcion());
-		System.out.println("Estudiante: " + estudiante.getUsuario());
-		System.out.println("Esta actividad no se puede calificar.");
+
 
 	}
 

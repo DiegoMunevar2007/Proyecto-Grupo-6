@@ -19,15 +19,12 @@ public class QuizRealizable extends ActividadRealizable {
 	private double calificacion;
 	private int correctas;
 	private ArrayList<PreguntaCerradaRealizable> preguntas;
-	private Scanner lecturaQuiz;
 
 	public QuizRealizable(Estudiante estudiante, Quiz quizBase) {
 			super(estudiante);
 			this.actividadBase = quizBase;
 			preguntas = new ArrayList<PreguntaCerradaRealizable>();
-			lecturaQuiz = new Scanner(System.in);
 		}
-	
 		@Override
 		public ArrayList realizarActividad() throws ActividadPreviaException {
 			try {
@@ -111,4 +108,7 @@ public class QuizRealizable extends ActividadRealizable {
 			return calificacion;
 		}
 
+	public double getCorrectas() {
+		return correctas;
+	}
 }

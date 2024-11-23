@@ -31,12 +31,16 @@ public class ConsolaPrincipal {
 		System.out.println("--------------------------------");
 	}
 	public void reseniarActividad(Actividad actividad, Usuario usuario){
-		Scanner lectura = new Scanner(System.in);
-		System.out.println("Ingrese su resenia: ");
-		String resenia = lectura.nextLine();
-		System.out.println("Ingrese su calificacion: ");
-		double calificacion = lectura.nextDouble();
+		for (Resenia r : actividad.getResenias()){
+			if (r.getAutor().equals(usuario)){
+				System.out.println("Ya ha resenado esta actividad.");
+				return;
+			}
+		}
+		String resenia = pedirString("Ingrese su resenia: ");
+		double calificacion = pedirDouble("Ingrese su calificacion: ");
 		Resenia nuevaResenia = new Resenia(usuario, resenia, calificacion);
+
 		actividad.addResenia(nuevaResenia);
 		System.out.println("Resenia agregada exitosamente.");
 		}

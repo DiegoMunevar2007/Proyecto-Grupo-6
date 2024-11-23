@@ -76,24 +76,6 @@ public class TareaRealizable extends ActividadRealizable {
 	@Override
 	public void calificarActividad() {
 
-		System.out.println("Calificacion de la tarea: ");
-		System.out.println("Estudiante: " + estudiante.getUsuario());
-		System.out.println("Tarea: " + actividadBase.getTitulo());
-		System.out.println("Estado de la tarea: " + estado);
-		System.out.println("1. No exitoso");
-		System.out.println("2. Exitoso");
-//		int opcion = lectura.nextInt();
-//		String estado = "";
-//		if (opcion == 1) {
-//			estado = "No Exitoso";
-//		} else if (opcion == 2) {
-//			estado = "Exitoso";
-//		}
-//		try {
-//			setEstado(estado);
-//		} catch (EstadoException e) {
-//			System.out.println(e.getMessage());
-//		}
 	}
 
 }
