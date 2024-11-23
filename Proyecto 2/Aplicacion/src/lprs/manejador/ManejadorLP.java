@@ -39,6 +39,8 @@ public class ManejadorLP implements Serializable {
 		learningPathsDisponibles.add(learningPath);
 		System.out.println(learningPathsDisponibles.size());
 		learningPathsHash.put(learningPath.getID(), learningPath);
+		if (learningPath.getKeyWords() != null) {
+		
 		for (String keyword : learningPath.getKeyWords()){
 			if (learningPathKeyWord.containsKey(keyword)){
 				learningPathKeyWord.get(keyword).add(learningPath);
@@ -48,6 +50,7 @@ public class ManejadorLP implements Serializable {
 				learningPaths.add(learningPath);
 				learningPathKeyWord.put(keyword, learningPaths);
 			}
+		}
 		}
 	}
 

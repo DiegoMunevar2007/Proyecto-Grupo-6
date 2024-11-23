@@ -15,9 +15,7 @@ public class Estudiante extends Usuario {
 	private HashMap<String, Avance> avancesEstudiante;
 	private List<LearningPath> learningPathsInscritos;
 
-	public Avance obtenerAvance(String ID) {
-		return avancesEstudiante.get(ID);
-	}
+	
 
 	/**
 	 * Constructor para crear un objeto Estudiante.
@@ -71,6 +69,9 @@ public class Estudiante extends Usuario {
 		
 	}
 
+	public Avance obtenerAvance(String ID) {
+		return avancesEstudiante.get(ID);
+	}
 	public Avance getAvance(String ID) {
 		return avancesEstudiante.get(ID);
 	}
