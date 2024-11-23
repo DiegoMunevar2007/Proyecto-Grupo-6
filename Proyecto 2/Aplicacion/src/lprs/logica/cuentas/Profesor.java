@@ -98,10 +98,10 @@ public class Profesor extends Usuario {
      * 
      * @param ID el ID de la ruta de aprendizaje a clonar
      */
-    public void clonarLearningPath(String ID) throws ClonarLPException {
+    public String clonarLearningPath(String ID) throws ClonarLPException {
         if (lprsActual.getManejadorLP().getLearningPath(ID) == null) {
             System.out.println("No existe un learning path con ese ID.");
-            return;
+            return "";
         } else if (learningPathsCreados.containsKey(ID)) {
             throw new ClonarLPException(lprsActual.getManejadorLP().getLearningPath(ID));
         }
@@ -111,6 +111,7 @@ public class Profesor extends Usuario {
         lprsActual.getManejadorLP().addLearningPath(lPClon);
         learningPathsCreadosLista.add(lPClon);
         learningPathsCreados.put(lPClon.getID(), lPClon);
+        return lPClon.getID();
     }
 
     public Collection<LearningPath> getLearningPathsCreados() {

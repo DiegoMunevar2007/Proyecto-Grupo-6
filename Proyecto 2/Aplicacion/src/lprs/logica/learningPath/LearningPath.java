@@ -60,7 +60,7 @@ public class LearningPath implements Serializable {
 		this.metadatos = new Metadato(obtenerFecha(), "1");
 		this.lprsActual = lprsActual;
 		this.cantidadObligatorias = 0;
-		this.keyWords = keyWords;
+		this.keyWords = keyWords != null ? keyWords : new ArrayList<>();
 	}
 
 	public void addKeyWord(String palabraClave) {
