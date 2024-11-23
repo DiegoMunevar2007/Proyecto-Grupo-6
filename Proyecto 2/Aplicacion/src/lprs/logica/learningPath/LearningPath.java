@@ -187,10 +187,6 @@ public class LearningPath implements Serializable {
 		return calificaciones;
 	}
 
-	public void setCalificaciones(int calificaciones) {
-		this.calificaciones = calificaciones;
-	}
-
 	public LPRS getLprsActual() {
 		return lprsActual;
 	}
@@ -199,13 +195,6 @@ public class LearningPath implements Serializable {
 		this.lprsActual = lprsActual;
 	}
 
-	public void setDuracion(int duracion) {
-		this.duracion = duracion;
-	}
-
-	public void setRating(double rating) {
-		this.rating = rating;
-	}
 
 	public void setActividades(ArrayList<Actividad> actividades) {
 		this.actividades = actividades;
@@ -215,9 +204,6 @@ public class LearningPath implements Serializable {
 		this.estudiantesInscritos = estudiantesInscritos;
 	}
 
-	public void setProfesorCreador(Profesor profesorCreador) {
-		this.profesorCreador = profesorCreador;
-	}
 
 	public void eliminarActividad(Actividad actividad) {
 		actividades.remove(actividad);

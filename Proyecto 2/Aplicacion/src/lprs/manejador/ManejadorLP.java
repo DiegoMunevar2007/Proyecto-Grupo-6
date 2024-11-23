@@ -78,20 +78,8 @@ public class ManejadorLP implements Serializable {
 		return learningPathsDisponibles;
 	}
 
-	public List<LearningPath> learningPathsDisponibles() {
-		return getLearningPaths();
-	}
-
 	public HashMap<String, LearningPath> learningPathsHashMap() {
 		return learningPathsHash;
-	}
-
-	public HashMap<String, LearningPath> getLearningPathsHash() {
-		return learningPathsHash;
-	}
-
-	public void setLearningPathsHash(HashMap<String, LearningPath> learningPathsHash) {
-		this.learningPathsHash = learningPathsHash;
 	}
 
 	public ArrayList<LearningPath> getLearningPathsDisponibles() {

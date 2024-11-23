@@ -70,6 +70,7 @@ public class QuizRealizable extends ActividadRealizable {
 	
 		@Override
 		public void setEstado(String estado) throws EstadoException {
+			
 		}
 	
 		@Override
@@ -83,22 +84,6 @@ public class QuizRealizable extends ActividadRealizable {
 	
 		@Override
 		public void calificarActividad() {
-			// TODO Auto-generated method stub
-			System.out.println("La informacion del quiz es la siguiente: ");
-			System.out.println("Titulo del quiz: " + actividadBase.getTitulo());
-			System.out.println("Descripcion del quiz: " + actividadBase.getDescripcion());
-			System.out.println("Estudiante: " + estudiante.getUsuario());
-			System.out.println("Calificacion: " + calificacion + "%");
-			System.out.println("Preguntas correctas: " + correctas);
-			System.out.println("Desea ver las respuestas del estudiante? (S/N)");
-			String respuesta = System.console().readLine();
-			if (respuesta.equalsIgnoreCase("S")) {
-				for (PreguntaCerradaRealizable pregunta : this.preguntas) {
-					System.out.println(pregunta.getPreguntaBase().getEnunciado());
-					System.out.println("Respuesta correcta: " + pregunta.getPreguntaBase().getCorrecta().getOpcion());
-					System.out.println("Respuesta del estudiante: " + pregunta.getOpcionEscogida().getOpcion());
-				}
-			}
 	
 		}
 		public ArrayList<PreguntaCerradaRealizable> getPreguntas() {
@@ -106,6 +91,10 @@ public class QuizRealizable extends ActividadRealizable {
 		}
 		public double getCalificacion() {
 			return calificacion;
+		}
+		
+		public void setCalificacion(double calificacion) {
+			this.calificacion=calificacion;
 		}
 
 	public double getCorrectas() {

@@ -55,16 +55,12 @@ public class RecursoRealizable extends ActividadRealizable {
 
 	@Override
 	public void setEstado(String estado) throws EstadoException {
-		try {
-			if (estado.equals("No completado") || estado.equals("Completado")) {
-				this.estado = estado;
-			} else {
-				throw new EstadoException(this.getActividadBase(), estado);
-			}
-		} catch (EstadoException e) {
-			e.printStackTrace();
-			return;
+		if (estado.equals("No completado") || estado.equals("Completado")) {
+			this.estado = estado;
+		} else {
+			throw new EstadoException(this.getActividadBase(), estado);
 		}
+		
 
 	}
 

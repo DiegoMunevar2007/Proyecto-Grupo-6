@@ -67,4 +67,5 @@ public class PreguntaCerradaRealizableTest {
     public void testGetPreguntaBase() {
         assertEquals(preguntaBase, preguntaCerradaRealizable.getPreguntaBase());
     }
+    
 }

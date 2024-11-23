@@ -32,16 +32,11 @@ class EncuestaRealizableTest {
     private LPRS lprsActual;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         lprsActual = new LPRS();
         
-        try {
-			lprsActual.getManejadorSesion().crearUsuario("Profesor Test", "5678", 2);
-			lprsActual.getManejadorSesion().crearUsuario("Estudiante Test", "1234", 1);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        lprsActual.getManejadorSesion().crearUsuario("Profesor Test", "5678", 2);
+		lprsActual.getManejadorSesion().crearUsuario("Estudiante Test", "1234", 1);
         this.profesor = (Profesor) lprsActual.getManejadorSesion().getUsuarios().get("Profesor Test");
         this.estudiante = (Estudiante) lprsActual.getManejadorSesion().getUsuarios().get("Estudiante Test");
         ArrayList<String> keywords = new ArrayList<String>();

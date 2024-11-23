@@ -40,13 +40,13 @@ public class ManejadorSesion implements Serializable {
 		agregarUsuario(nuevoUsuario);
 	}
 
-	public Usuario obtenerUsuario(String ID) throws Exception {
+	public Usuario obtenerUsuario(String ID) throws UsuarioNotFoundException {
 		Usuario usuarioEncontrado = usuarios.get(ID);
 		if (usuarioEncontrado == null) {
 			throw new UsuarioNotFoundException("Usuario no encontrado", ID);
 		} else {
 			return usuarioEncontrado;
-		}
+		} 
 	}
 
 	public void agregarUsuario(Usuario usuario) {

@@ -110,7 +110,20 @@ class QuizVerdaderoFalsoTest {
             () -> quiz.crearPreguntaCerrada("¿Es el agua líquida a temperatura ambiente?", null, opciones),
             "Debe lanzar una excepción si no hay opciones."
         );
-
+    }
+    @Test
+    void testSetCalificacionMinima() {
+    	quiz.setCalificacionMinima(100);
+    	assertEquals(100,quiz.getCalificacionMinima());
+    }
+    @Test
+    void testRemovePreguntaQuiz() throws Exception{
+        quiz.crearPreguntaCerrada("¿La Tierra es redonda?", new Opcion("Verdadero","La Tierra es redonda."), new Opcion[]{new Opcion("Verdadero","La Tierra es redonda."), new Opcion("Falso","La Tierra es plana")});
+        PreguntaCerrada qc = quiz.getPreguntasQuiz().get(0);
+        quiz.crearPreguntaCerrada("¿La Tierra es plana?", new Opcion("Falso","La Tierra es plana."), new Opcion[]{new Opcion("Verdadero","La Tierra es redonda."), new Opcion("Falso","La Tierra es plana")});
+        assertEquals(2,quiz.getPreguntasQuiz().size());
+        quiz.removePreguntaQuiz(qc);
+        assertEquals(1,quiz.getPreguntasQuiz().size());
         
     }
 }

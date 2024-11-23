@@ -46,8 +46,4 @@ public abstract class Quiz extends Actividad {
 	public double getCalificacionMinima() {
 		return calificacionMinima;
 	}
-
-	public void setCalificacionMinima(int calificacionMinima) {
-		this.calificacionMinima = calificacionMinima;
-	}
 }
