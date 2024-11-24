@@ -21,7 +21,7 @@ public class ConsolaActividadSeguimientoProfesor {
             System.out.println(i + 1 + ". " + actividad.getActividadBase().getTitulo());
         }
         int opcion = consolaProfesor.pedirInt("Seleccione la actividad que desea calificar: ");
-        if (opcion < 1 || opcion >= actividadesPendientes.size()) {
+        if (opcion < 1 || opcion > actividadesPendientes.size()) {
             System.out.println("Opción no válida.");
             return;
         }
@@ -71,6 +71,7 @@ public class ConsolaActividadSeguimientoProfesor {
         try {
             if (opcion == 1) {
                 examen.setEstado("Exitoso");
+                examen.calificarActividad();
             } else if (opcion == 2) {
                 examen.setEstado("No exitoso");
             }

@@ -31,6 +31,12 @@ public class ConsolaPrincipal {
 		System.out.println("--------------------------------");
 	}
 	public void reseniarActividad(Actividad actividad, Usuario usuario){
+
+		if (actividad==null){
+			System.out.println("La actividad no existe.");
+			return;
+		}
+
 		for (Resenia r : actividad.getResenias()){
 			if (r.getAutor().equals(usuario)){
 				System.out.println("Ya ha resenado esta actividad.");

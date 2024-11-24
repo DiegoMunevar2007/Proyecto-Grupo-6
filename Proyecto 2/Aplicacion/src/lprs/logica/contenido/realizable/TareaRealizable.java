@@ -75,7 +75,12 @@ public class TareaRealizable extends ActividadRealizable {
 
 	@Override
 	public void calificarActividad() {
-
+		if (estado.equals("Exitoso")) {
+			estudiante.getAvance(actividadBase.getLearningPathAsignado().getID()).incTasaExito();
+		}
+		else{
+			estudiante.getAvance(actividadBase.getLearningPathAsignado().getID()).incTasaFracaso();
+		}
 	}
 
 }

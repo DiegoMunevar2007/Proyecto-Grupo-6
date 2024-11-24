@@ -20,14 +20,17 @@ public class ConsolaLPSeguimientoProfesor {
     public void mostrarConsolaLP(){
         boolean continuar = true;
         while (continuar) {
-            String[] opciones = { "Ver las actividades de un estudiante", "Ver los estudiantes inscritos en un learning path", "Salir" };
+            String[] opciones = { "Ver las actividades de un estudiante", "Ver los estudiantes inscritos en un learning path","Ver el avance de un estudiante en un Learning Path", "Salir" };
             consolaProfesor.mostrarOpciones(opciones.length, opciones);
             int opcion = consolaProfesor.pedirInt("Seleccione una opción: ");
             if (opcion == 1) {
                 verActividadesEstudiante();
             } else if (opcion == 2) {
                 verEstudiantesInscritos();
-            } else if (opcion == opciones.length) {
+            } else if (opcion == 3) {
+                mostrarAvanceEstudiante();
+            }
+            else if (opcion == opciones.length) {
                 System.out.println("Hasta luego!");
                 continuar = false;
             } else {
@@ -36,6 +39,38 @@ public class ConsolaLPSeguimientoProfesor {
         }
     }
 
+
+    public void mostrarAvanceEstudiante() {
+        LearningPath lp = pedirLearningPath(consolaProfesor.getProfesor());
+        if (lp == null) {
+            return;
+        }
+        ArrayList<Estudiante> listaEstudiantes = lp.getEstudiantesInscritos();
+        for (int i = 0; i < listaEstudiantes.size(); i++) {
+            System.out.println(i + 1 + ". " + listaEstudiantes.get(i).getUsuario());
+        }
+        int opcion = consolaProfesor.pedirInt("Seleccione el estudiante que desea ver: ");
+        Estudiante estudiante = listaEstudiantes.get(opcion - 1);
+        Avance avance = estudiante.getAvance(lp.getID());
+        System.out.println("Porcentaje de avance: " + avance.getActividadesCompletadasPorcentaje() + "%");
+        System.out.println("Fecha de inicio: " + avance.getFechaInicio());
+        if (avance.getFechaFin() != null) {
+            System.out.println("Fecha de fin: " + avance.getFechaFin());
+        }
+        System.out.println("Actividades completadas: ");
+        ArrayList<Actividad> actividadesCompletadas = avance.getActividadesCompletadasLista();
+        for (int i = 0; i < actividadesCompletadas.size(); i++) {
+            System.out.println(i + 1 + ". " + actividadesCompletadas.get(i).getTitulo());
+        }
+        System.out.println("Actividades pendientes: ");
+        ArrayList<Actividad> actividadesPendientes = avance.getActividadesPendientes();
+        for (int i = 0; i < actividadesPendientes.size(); i++) {
+            System.out.println(i + 1 + ". " + actividadesPendientes.get(i).getTitulo());
+        }
+        System.out.println("Tasa de éxito: " + avance.getTasaExito()*100 + "%");
+        System.out.println("Tasa de fracaso: " + avance.getTasaFracaso()*100 + "%");
+
+    }
     public void mostrarAvanceActividad(Actividad actividad, ActividadRealizable actividadRealizable) {
         {
             System.out.println("Actividad: " + actividad.getTitulo());
@@ -60,7 +95,7 @@ public class ConsolaLPSeguimientoProfesor {
         System.out.println("Preguntas: ");
         ArrayList<PreguntaCerradaRealizable> preguntas = quizRealizable.getPreguntas();
         for (int i = 0; i < preguntas.size(); i++) {
-            System.out.println("Pregunta " + i + 1);
+            System.out.println("Pregunta " + (i + 1));
             System.out.println(i + 1 + ". " + preguntas.get(i).getPreguntaBase().getEnunciado());
             System.out.println("Respuesta escogida: " + preguntas.get(i).getOpcionEscogida().getOpcion());
         }
@@ -72,7 +107,7 @@ public class ConsolaLPSeguimientoProfesor {
         System.out.println("Preguntas realizadas: ");
         ArrayList<PreguntaAbiertaRealizable> preguntas = examenRealizable.getPreguntas();
         for (int i = 0; i < preguntas.size(); i++) {
-            System.out.println("Pregunta " + i + 1);
+            System.out.println("Pregunta " + (i + 1));
             System.out.println(i + 1 + ". " + preguntas.get(i).getPreguntaBase().getEnunciado());
             System.out.println("Respuesta: " + preguntas.get(i).getRespuesta());
         }

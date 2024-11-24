@@ -5,13 +5,12 @@ import lprs.logica.contenido.realizable.*;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.Avance;
 import lprs.logica.learningPath.LearningPath;
-import lprs.principal.LPRS;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ConsolaAvanceEstudiante {
-    private ConsolaEstudiante consolaEstudiante;
+    private final ConsolaEstudiante consolaEstudiante;
     public ConsolaAvanceEstudiante(ConsolaEstudiante consolaEstudiante){
         this.consolaEstudiante=consolaEstudiante;
     }
@@ -65,9 +64,9 @@ public class ConsolaAvanceEstudiante {
             System.out.println(actividadesFaltante.getTitulo());
         }
         double tasaExito = avance.getTasaExito();
-        System.out.println("Tasa de éxito: " + tasaExito);
+        System.out.println("Tasa de éxito: " + tasaExito*100);
         double tasaFracaso = avance.getTasaFracaso();
-        System.out.println("Tasa de fracaso: " + tasaFracaso);
+        System.out.println("Tasa de fracaso: " + tasaFracaso*100);
     }
     public void mostrarAvanceActividad() {
         List<LearningPath> learningPaths = consolaEstudiante.getEstudiante().getLearningPathsInscritos();
