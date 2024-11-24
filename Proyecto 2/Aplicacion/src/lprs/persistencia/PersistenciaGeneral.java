@@ -12,18 +12,18 @@ import lprs.principal.LPRS;
 
 public class PersistenciaGeneral implements Persistencia {
 
-    public static void guardarDatos(LPRS lprs) throws Exception {
+    public static void guardarDatos(LPRS lprs, String archivo) throws Exception {
         ObjectOutputStream oos = new ObjectOutputStream(
-                new FileOutputStream(new File(direccionArchivo + "/Persistencia.bin")));
+                new FileOutputStream(new File(direccionArchivo + archivo)));
         oos.writeObject(lprs);
         oos.close();
     }
 
-    public static LPRS cargarDatos() throws Exception {
+    public static LPRS cargarDatos(String archivo) throws Exception {
         LPRS lprs = null;
-        if (Files.exists(Paths.get(direccionArchivo + "/Persistencia.bin"))) {
+        if (Files.exists(Paths.get(direccionArchivo + archivo))) {
             ObjectInputStream ois = new ObjectInputStream(
-                    new FileInputStream(new File(direccionArchivo + "/Persistencia.bin")));
+                    new FileInputStream(new File(direccionArchivo + archivo)));
             lprs = (LPRS) ois.readObject();
             ois.close();
         } else {

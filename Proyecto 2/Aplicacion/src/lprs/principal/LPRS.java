@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import lprs.manejador.ManejadorLP;
 import lprs.manejador.ManejadorSesion;
-import lprs.persistencia.PersistenciaLP;
-import lprs.persistencia.PersistenciaUsuario;
 
 public class LPRS implements Serializable {
 	ManejadorLP manejadorLP;
@@ -14,14 +12,6 @@ public class LPRS implements Serializable {
 	public LPRS() {
 		manejadorLP = new ManejadorLP();
 		manejadorSesion = new ManejadorSesion(this);
-	}
-
-	public void iniciar() {
-		try {
-			cargarDatos();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	// public static void main(String[] args) throws Exception {
@@ -108,31 +98,9 @@ public class LPRS implements Serializable {
 		return manejadorLP;
 	}
 
-	public void setManejadorLP(ManejadorLP manejadorLP) {
-		this.manejadorLP = manejadorLP;
-	}
-
 	public ManejadorSesion getManejadorSesion() {
 		return manejadorSesion;
 	}
+	
 
-	public void setManejadorSesion(ManejadorSesion manejadorSesion) {
-		this.manejadorSesion = manejadorSesion;
-	}
-
-	public void cargarDatos() throws Exception {
-
-		PersistenciaUsuario persU = new PersistenciaUsuario();
-		PersistenciaLP persLP = new PersistenciaLP();
-		persU.cargarUsuarios2(manejadorSesion);
-		persLP.cargarLP2(manejadorSesion, manejadorLP);
-	}
-
-	public void guardarDatos() throws Exception {
-
-		PersistenciaUsuario persU = new PersistenciaUsuario();
-		PersistenciaLP persLP = new PersistenciaLP();
-		persU.guardarUsuario2(manejadorSesion);
-		persLP.guardarLP2(manejadorSesion, manejadorLP);
-	}
 }
