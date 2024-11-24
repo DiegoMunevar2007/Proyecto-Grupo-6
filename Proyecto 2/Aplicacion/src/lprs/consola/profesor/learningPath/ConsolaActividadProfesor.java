@@ -236,6 +236,9 @@ public class ConsolaActividadProfesor {
                         actividadesDisponibles.add(act);
                     }
                 }
+                for (int i = 0; i < actividadesDisponibles.size(); i++) {
+                    System.out.println(i + 1 + ". " + actividadesDisponibles.get(i).getTitulo());
+                }
 
                 if (actividadesDisponibles.isEmpty()) {
                     System.out.println("No hay actividades disponibles para añadir como prerrequisitos.");
@@ -243,15 +246,22 @@ public class ConsolaActividadProfesor {
                     continue;
                 }
 
-                for (int i = 0; i < actividadesDisponibles.size(); i++) {
-                    System.out.println(i + 1 + ". " + actividadesDisponibles.get(i).getTitulo());
-                }
-
                 int opcion = consolaProfesorLP.pedirInt("Seleccione una actividad de la lista: ");
                 if (opcion < 1 || opcion > actividadesDisponibles.size()) {
                     System.out.println("Opción no válida. Por favor, seleccione una actividad de la lista.");
                     continue;
                 }
+                Actividad act = actividadesDisponibles.get(opcion - 1);
+                if (actividadesDisponibles.contains(actividad)) {
+                    System.out.println("No se puede añadir la actividad actual como prerrequisito.");
+                    continue;
+                }
+                if (actividad.getActividadesPrevias().contains(act)) {
+                    System.out.println("La actividad ya tiene esta actividad como prerrequisito.");
+                    continue;
+                }
+
+
 
                 prerequisitos.add(actividadesDisponibles.get(opcion - 1));
 
@@ -261,8 +271,10 @@ public class ConsolaActividadProfesor {
                 }
             }
         }
+        actividad.setActividadesPrevias(prerequisitos);
+    }
 
-        actividad.setActividadesPrevias(prerequisitos);}
+
 
     public void aniadirActividadesSeguimiento(LearningPath lp, Actividad actividad) {
         ArrayList<Actividad> actividadesSeleccionadas = new ArrayList<>();
@@ -275,7 +287,7 @@ public class ConsolaActividadProfesor {
                 ArrayList<Actividad> actividadesSeguimiento = new ArrayList<>();
                 for (int i = 0; i < lp.getActividades().size(); i++) {
                     Actividad act = lp.getActividades().get(i);
-                    if (!act.equals(actividad) && !actividad.getActividadesPrevias().contains(act)) {
+                    if (!act.equals(actividad) && !actividad.getActividadesPrevias().contains(act) && !actividadesSeleccionadas.contains(act)) {
                         actividadesSeguimiento.add(act);
                     }
                 }
@@ -296,7 +308,13 @@ public class ConsolaActividadProfesor {
                     continue;
                 }
 
-                actividadesSeleccionadas.add(actividadesSeguimiento.get(opcion - 1));
+                Actividad act = actividadesSeguimiento.get(opcion - 1);
+                if (actividadesSeleccionadas.contains(act)) {
+                    System.out.println("La actividad ya ha sido seleccionada como seguimiento.");
+                    continue;
+                }
+
+                actividadesSeleccionadas.add(act);
 
                 respuesta = consolaProfesorLP.pedirString("¿Desea añadir otra actividad de seguimiento? (s/n)");
                 if (respuesta.equalsIgnoreCase("n")) {
@@ -304,8 +322,7 @@ public class ConsolaActividadProfesor {
                 }
             }
         }
-
         actividad.setActividadesSeguimiento(actividadesSeleccionadas);
-    }
+}
 
 }

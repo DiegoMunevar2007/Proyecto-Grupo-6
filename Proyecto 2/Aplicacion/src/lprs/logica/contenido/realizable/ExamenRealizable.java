@@ -28,7 +28,11 @@ public class ExamenRealizable extends ActividadRealizable {
     @Override
     //TODO: Mover esta consola al seguimiento de profesor
     public void calificarActividad() {
-     
+
+        if (estado.equals("Exitoso")){
+            estudiante.getAvance(actividadBase.getLearningPathAsignado().getID()).incTasaExito();
+
+        }
       }
 
     @Override

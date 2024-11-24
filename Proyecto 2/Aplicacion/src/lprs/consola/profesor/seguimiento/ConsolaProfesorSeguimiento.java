@@ -28,17 +28,20 @@ public class ConsolaProfesorSeguimiento extends ConsolaPrincipal {
         System.out.println("Bienvenido " + profesor.getUsuario());
         String[] opciones = { "Ver mis learning paths",
                 "Ver mis actividades pendientes", "Salir" };
-        mostrarOpciones(opciones.length, opciones);
-        int opcion = pedirInt("Seleccione una opcion: ");
-        if (opcion == 1) {
-            consolaLP.mostrarConsolaLP();
-        } else if (opcion == 2) {
-            consolaActividad.calificarActividadesPendientes();
-        } else if (opcion == 3) {
-            System.out.println("Hasta luego!");
-        } else {
-            System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
-            mostrarConsolaProfesor();
+       boolean salir = false;
+        while (!salir) {
+            mostrarOpciones(opciones.length, opciones);
+            int opcion = pedirInt("Seleccione una opcion: ");
+            if (opcion == 1) {
+                consolaLP.mostrarConsolaLP();
+            } else if (opcion == 2) {
+                consolaActividad.calificarActividadesPendientes();
+            } else if (opcion == 3) {
+                System.out.println("Hasta luego!");
+                salir = true;
+            } else {
+                System.out.println("Opción no válida. Por favor, seleccione una opción de la lista.");
+            }
         }
     }
 

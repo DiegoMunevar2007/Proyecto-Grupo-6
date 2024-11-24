@@ -133,12 +133,21 @@ public class Avance implements Serializable {
 		this.actividadesPendientes.remove(actividadRealizada.getActividadBase());
 		Actividad actividadBase = actividadRealizada.getActividadBase();
 		if (actividadBase.isObligatoria()) {
+			actividadesCompletadasPorcentaje += 100.0 / learningPathCorrespondiente.getCantidadObligatorias();
 			cantidadActividadesObligatorias--;
+
 		}
 		actividadesCompletadas.put(actividadBase, actividadRealizada);
 		actividadesCompletadasLista.add(actividadBase);
 		tiempoDedicado += actividadRealizada.getTiempoTomado();
 
+	}
+
+	public void incTasaExito() {
+    	this.tasaExito += 1.0 / this.actividadesCompletadasLista.size();
+	}
+	public void incTasaFracaso() {
+		this.tasaFracaso += 1.0 / this.actividadesCompletadasLista.size();
 	}
 
 }

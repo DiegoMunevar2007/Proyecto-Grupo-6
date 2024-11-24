@@ -67,13 +67,13 @@ public class ConsolaSesionProfesor {
     public void mostrarConsolaSesion() {
         System.out.println("Bienvenido a Learning Path Recommendation System - Profesor Learning Path");
         String[] opciones = { "Iniciar sesión", "Crear una cuenta", "Salir" };
-        consolaProfesorLP.mostrarOpciones(opciones.length, opciones);
-        int opcion = consolaProfesorLP.pedirInt("Seleccione una opción: ");
+
         boolean salir = false;
         while (!salir) {
+            consolaProfesorLP.mostrarOpciones(opciones.length, opciones);
+            int opcion = consolaProfesorLP.pedirInt("Seleccione una opción: ");
             if (opcion == 1) {
                 iniciarSesion();
-                salir=true;
             } else if (opcion == 2) {
                 crearCuenta();
             } else if (opcion == 3) {

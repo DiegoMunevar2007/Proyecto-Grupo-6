@@ -43,7 +43,6 @@ public class QuizRealizable extends ActividadRealizable {
 		public void guardarActividad(ArrayList respuestas) {
 			preguntas = respuestas;
 			LearningPath lP = actividadBase.getLearningPathAsignado();
-			estudiante.getAvance(lP.getID()).addActividadRealizada(this);
 		}
 	
 		@Override
@@ -59,6 +58,7 @@ public class QuizRealizable extends ActividadRealizable {
 			if (calificacion >= actividadBase.getCalificacionMinima()) {
 				System.out.println("Felicidades, ha aprobado el quiz");
 				estudiante.getAvance(actividadBase.getLearningPathAsignado().getID()).addActividadRealizada(this);
+				estudiante.getAvance(actividadBase.getLearningPathAsignado().getID()).incTasaExito();
 			} else {
 				System.out.println("Lo siento, no ha aprobado el quiz");
 			}
