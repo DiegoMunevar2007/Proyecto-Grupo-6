@@ -68,7 +68,7 @@ public class ConsolaProfesorLP extends ConsolaPrincipal {
     public static void main(String[] args) {
         LPRS lprs = new LPRS();
         try {
-            lprs = PersistenciaGeneral.cargarDatos();
+            lprs = PersistenciaGeneral.cargarDatos("Persistencia.dat");
         } catch (Exception e) {
             System.out.println("Error al cargar los datos");
             e.printStackTrace();
@@ -76,7 +76,7 @@ public class ConsolaProfesorLP extends ConsolaPrincipal {
         ConsolaProfesorLP consola = new ConsolaProfesorLP(lprs);
         consola.getConsolaSesion().mostrarConsolaSesion();
         try {
-            PersistenciaGeneral.guardarDatos(lprs);
+            PersistenciaGeneral.guardarDatos(lprs, "Persistencia.dat");
         } catch (Exception e) {
             System.out.println("Error al guardar los datos");
             e.printStackTrace();
