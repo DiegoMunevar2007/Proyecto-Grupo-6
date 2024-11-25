@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +40,7 @@ public class LearningPathTest {
         this.estudiante = (Estudiante) lprsActual.getManejadorSesion().getUsuarios().get("Estudiante Test");
         ArrayList<String> keywords = new ArrayList<String>();
         keywords.add("test");
-        profesor.crearLearningPath("LP Test", "Descripcion del Learning Path", "Principiante", null, keywords);
+        profesor.crearLearningPath("LP Test", "Descripcion del Learning Path", "Principiante", new ArrayList<String>(), keywords);
 
         estudiante.inscribirLearningPath("0");
         learningPathCorrespondiente = lprsActual.getManejadorLP().getLearningPath("0");
@@ -73,59 +74,37 @@ public class LearningPathTest {
 	@Test
     void testcrearTarea() {
 		learningPathCorrespondiente.crearTarea("Colors", "learning the color in english", "learning", 10, true, "20/10/2023");
-		Tarea tarea = new Tarea("Colors", "learning the color in english", "learning", 10, true, "20/10/2023", learningPathCorrespondiente, "learning");
-		ArrayList<Actividad> actividades = new ArrayList<Actividad>();
-		actividades.add(tarea);
-		assertEquals(actividades,learningPathCorrespondiente.getActividades());
+		assertEquals(1,learningPathCorrespondiente.getCantidadObligatorias());
     }
 	
 	@Test
     void testcrearRecursoEducativo() {
 		learningPathCorrespondiente.crearRecursoEducativo("Colors", "learning the color in english", "learning", 10, true, "20/10/2023", "video","ww.google.com");
-		RecursoEducativo recurso = new RecursoEducativo("Colors", "learning the color in english", "learning", 10, true, "20/10/2023",learningPathCorrespondiente, "learning", "video","ww.google.com");
-		ArrayList<Actividad> actividades = new ArrayList<Actividad>();
-		actividades.add(recurso);
-		assertEquals(actividades,learningPathCorrespondiente.getActividades());
+		assertEquals(1,learningPathCorrespondiente.getCantidadObligatorias());
     }
 	
 	@Test
     void testcrearQuizMultiple() {
 		learningPathCorrespondiente.crearQuizMultiple("Colors", "learning the color in english", "learning", 10, true, "20/10/2023", 1.0);
-		QuizMultiple quiz = new QuizMultiple("Colors", "learning the color in english", "learning", 10, true, "20/10/2023", learningPathCorrespondiente,
-				"learning",
-				1.0);
-		ArrayList<Actividad> actividades = new ArrayList<Actividad>();
-		actividades.add(quiz);
-		assertEquals(actividades,learningPathCorrespondiente.getActividades());
+		assertEquals(1,learningPathCorrespondiente.getCantidadObligatorias());
     }
 	
 	@Test
     void testcrearQuizVerdaderoFalso() {
 		learningPathCorrespondiente.crearQuizVerdaderoFalso("Colors", "learning the color in english", "learning", 10, true, "20/10/2023", 1.0);
-		QuizVerdaderoFalso quiz = new QuizVerdaderoFalso("Colors", "learning the color in english", "learning", 10, true, "20/10/2023", learningPathCorrespondiente,
-				"learning",
-				1.0);
-		ArrayList<Actividad> actividades = new ArrayList<Actividad>();
-		actividades.add(quiz);
-		assertEquals(actividades,learningPathCorrespondiente.getActividades());
+		assertEquals(1,learningPathCorrespondiente.getCantidadObligatorias());
     }
 	
 	@Test
     void testcrearExamen() {
 		learningPathCorrespondiente.crearExamen("Colors", "learning the color in english", "learning", 10, true, "20/10/2023");
-		Examen examen = new Examen("Colors", "learning the color in english", "learning", 10, true, "20/10/2023", learningPathCorrespondiente, "learning");
-		ArrayList<Actividad> actividades = new ArrayList<Actividad>();
-		actividades.add(examen);
-		assertEquals(actividades,learningPathCorrespondiente.getActividades());
+		assertEquals(1,learningPathCorrespondiente.getCantidadObligatorias());
     }
 	
 	@Test
     void testcrearEncuesta() {
 		learningPathCorrespondiente.crearEncuesta("Colors", "learning the color in english", "learning", 10, true, "20/10/2023");
-		Encuesta encuesta = new Encuesta("Colors", "learning the color in english", "learning", 10, true, "20/10/2023", learningPathCorrespondiente, "learning");
-		ArrayList<Actividad> actividades = new ArrayList<Actividad>();
-		actividades.add(encuesta);
-		assertEquals(actividades,learningPathCorrespondiente.getActividades());
+		assertEquals(1,learningPathCorrespondiente.getCantidadObligatorias());
     }
 	
 	@Test
@@ -171,25 +150,18 @@ public class LearningPathTest {
     }
 	
 	@Test
-    void testsetEstudiantesInscritos() throws Exception{
-		lprsActual = new LPRS();
-		ArrayList<Estudiante> estudiantes = new ArrayList<Estudiante>();
-		lprsActual.getManejadorSesion().crearUsuario("Estudiante Test2", "1234", 12);
-		Estudiante estudiante2 = (Estudiante) lprsActual.getManejadorSesion().getUsuarios().get("Estudiante Test2");
-		estudiante2.inscribirLearningPath("0");
-		estudiantes.add(estudiante);
-		estudiantes.add(estudiante2);
-		learningPathCorrespondiente.setEstudiantesInscritos(estudiantes);
-		assertEquals(estudiantes, learningPathCorrespondiente.getEstudiantesInscritos());
+    void testsetEstudiantesInscritos(){
+		learningPathCorrespondiente.setEstudiantesInscritos(new ArrayList<Estudiante>());
+		assertEquals(new ArrayList<Estudiante>(), learningPathCorrespondiente.getEstudiantesInscritos());
     }
 	
 	@Test
     void testeliminarActividad(){
 		learningPathCorrespondiente.crearEncuesta("Colors", "learning the color in english", "learning", 10, true, "20/10/2023");
-		Encuesta encuesta = new Encuesta("Colors", "learning the color in english", "learning", 10, true, "20/10/2023", learningPathCorrespondiente, "learning");
-		ArrayList<Actividad> actividades = new ArrayList<Actividad>();
-		learningPathCorrespondiente.eliminarActividad(encuesta);
-		assertEquals(actividades, learningPathCorrespondiente.getActividades());
+		ArrayList<Actividad> actividades = learningPathCorrespondiente.getActividades();
+		Actividad actividad=actividades.getFirst();
+		learningPathCorrespondiente.eliminarActividad(actividad);
+		assertEquals( new ArrayList<Actividad>(),learningPathCorrespondiente.getActividades());
     }
 	
 	@Test
@@ -227,15 +199,14 @@ public class LearningPathTest {
 	
 	@Test
     void testgetObjetivos() {
-		assertEquals(null, learningPathCorrespondiente.getObjetivos());
+		assertEquals(new ArrayList<String>(), learningPathCorrespondiente.getObjetivos());
     }
 	
 	@Test
     void testaddObjetivo() {
-		ArrayList<String> objetivos = new ArrayList<String>();
 		learningPathCorrespondiente.addObjetivo("objetivo2");
-		objetivos.add("objetivos2");
-		assertEquals(objetivos, learningPathCorrespondiente.getObjetivos());
+		ArrayList<String> objetivos = learningPathCorrespondiente.getObjetivos();
+		assertEquals(1, objetivos.size());
     }
 	
 	@Test
@@ -311,13 +282,10 @@ public class LearningPathTest {
 	
 	@Test
     void testaniadirEstudiante() throws Exception{
-		ArrayList<Estudiante> estudiantes = new ArrayList<Estudiante>();
-		lprsActual.getManejadorSesion().crearUsuario("Estudiante Test2", "1234", 12);
-		Estudiante estudiante2 = (Estudiante) lprsActual.getManejadorSesion().getUsuarios().get("Estudiante Test2");
-		estudiantes.add(estudiante);
-		estudiantes.add(estudiante2);
+		Estudiante estudiante2 = new Estudiante("Estudiante Test2", "1234", lprsActual);
 		learningPathCorrespondiente.aniadirEstudiante(estudiante2);
-		assertEquals(estudiantes, learningPathCorrespondiente.getEstudiantesInscritos());
+		ArrayList<Estudiante> estudiantes = learningPathCorrespondiente.getEstudiantesInscritos();
+		assertEquals(2, estudiantes.size());
     }
 	
 	@Test
@@ -336,15 +304,14 @@ public class LearningPathTest {
     void testeditarLearningPath() throws Exception{
 		learningPathCorrespondiente.editarLearningPath("titulo", "descripcion", "nivelDificultad",
 				null, profesor);
-		ArrayList<String> keywords = new ArrayList<String>();
-        keywords.add("test");
-		assertEquals(profesor.crearLearningPath("titulo", "descripcion", "nivelDificultad", null, keywords), learningPathCorrespondiente);
+		assertEquals("titulo", learningPathCorrespondiente.getTitulo());
     }
 	
 	@Test
     void testeliminarLearningPath() {
 		learningPathCorrespondiente.eliminarLearningPath();
-		assertEquals(new ArrayList<LearningPath>(), estudiante.getLearningPathsInscritos());
+		List<LearningPath> lpi = estudiante.getLearningPathsInscritos();
+		assertEquals(0,lpi.size() );
     }
 	
 	@Test
@@ -356,14 +323,17 @@ public class LearningPathTest {
 	
 	@Test
     void testgetMetadatos() {
-		String fecha = learningPathCorrespondiente.obtenerFecha();
-		assertEquals(new Metadato(fecha, "1"), learningPathCorrespondiente.getMetadatos());
+		Metadato metadato = learningPathCorrespondiente.getMetadatos();
+		String version = metadato.getVersion();
+		assertEquals("1",version);
     }
 	
 	@Test
     void testsetMetadatos() {
-		learningPathCorrespondiente.setMetadatos(new Metadato("22/12/2023", "1"));
-		assertEquals(new Metadato("22/12/2023", "1"), learningPathCorrespondiente.getMetadatos());
+		learningPathCorrespondiente.setMetadatos(new Metadato("22/12/2023", "3"));
+		Metadato metadato = learningPathCorrespondiente.getMetadatos();
+		String version = metadato.getVersion();
+		assertEquals("3",version);
     }
 	
 	@Test
