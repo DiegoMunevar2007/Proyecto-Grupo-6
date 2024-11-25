@@ -42,8 +42,6 @@ class EncuestaRealizableTest {
         ArrayList<String> keywords = new ArrayList<String>();
         keywords.add("test");
         profesor.crearLearningPath("LP Test", "Descripcion del Learning Path", "Principiante", null, keywords);
-        // Crear el estudiante y asociar un avance
-        
         estudiante.inscribirLearningPath("0");
         profesor.getLearningPathCreado("0").crearEncuesta("Encuesta Test", "Descripción Encuesta", "Objetivo", 30, true, "2024-12-31");
         encuestaBase = (Encuesta) profesor.getLearningPathCreado("0").getActividades().get(0);
