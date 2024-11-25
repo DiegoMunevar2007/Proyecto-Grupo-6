@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import lprs.exceptions.ClonarLPException;
 import lprs.exceptions.NoLearningPathsException;
+import lprs.logica.contenido.Actividad;
 import lprs.logica.cuentas.Profesor;
 import lprs.logica.learningPath.LearningPath;
 import lprs.principal.LPRS;
@@ -288,6 +289,12 @@ public class ConsolaLPProfesor {
         }
         System.out.println("Duracion: " + lp.getDuracion());
         System.out.println("Rating: " + lp.getRating());
+        for (String keyWord : lp.getKeyWords()) {
+            System.out.println("Palabra clave: " + keyWord);
+        }
+        for (Actividad actividad : lp.getActividades()) {
+            System.out.println("Actividad: " + actividad.getTitulo());
+        }
     }
 
 }
