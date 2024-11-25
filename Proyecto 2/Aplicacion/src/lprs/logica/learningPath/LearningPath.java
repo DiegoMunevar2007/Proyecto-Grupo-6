@@ -432,13 +432,13 @@ public class LearningPath implements Serializable {
 	 * 
 	 */
 	public void eliminarLearningPath() {
-		ArrayList<Estudiante> estudiantes = getEstudiantesInscritos();
-		for (Estudiante estudiante : estudiantes) {
-			estudiante.eliminarLearningPath(getID());
-		}
+	    ArrayList<Estudiante> estudiantes = new ArrayList<>(getEstudiantesInscritos());
+	    for (Estudiante estudiante : estudiantes) {
+	        estudiante.eliminarLearningPath(getID());
+	    }
 
-		lprsActual.getManejadorLP().getLearningPaths().remove(this);
-		lprsActual.getManejadorLP().learningPathsHashMap().remove(this.getID());
+	    lprsActual.getManejadorLP().getLearningPaths().remove(this);
+	    lprsActual.getManejadorLP().learningPathsHashMap().remove(this.getID());
 	}
 
 	public void setLPRS(LPRS lprs) {
