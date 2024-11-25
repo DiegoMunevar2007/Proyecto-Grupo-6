@@ -1,5 +1,6 @@
 package lprs.consola.profesor.learningPath;
     
+    import java.lang.reflect.Array;
     import java.util.ArrayList;
     import java.util.Scanner;
     
@@ -140,6 +141,20 @@ package lprs.consola.profesor.learningPath;
                             } else if (actividad instanceof RecursoEducativo) {
                                 consolaRecursoEducativo.verRecurso((RecursoEducativo) actividad);
                             }
+                            ArrayList<Actividad> prerequisitos = actividad.getActividadesPrevias();
+                            if (!prerequisitos.isEmpty()) {
+                                System.out.println("Prerrequisitos:");
+                                for (int i = 0; i < prerequisitos.size(); i++) {
+                                    System.out.println(i + 1 + ". " + prerequisitos.get(i).getTitulo());
+                                }
+                            }
+                            ArrayList<Actividad> actividadesSeguimiento = actividad.getActividadesSeguimiento();
+                            if (!actividadesSeguimiento.isEmpty()) {
+                                System.out.println("Actividades de seguimiento:");
+                                for (int i = 0; i < actividadesSeguimiento.size(); i++) {
+                                    System.out.println(i + 1 + ". " + actividadesSeguimiento.get(i).getTitulo());
+                                }
+                            }
                         }
     
                     } else if (opcion == 5) { // Volver
@@ -160,6 +175,10 @@ package lprs.consola.profesor.learningPath;
     
     
         public void modificarActividad(LearningPath lp) {
+            if (lp.getActividades().isEmpty()) {
+                System.out.println("No hay actividades para modificar.");
+                return;
+            }
             System.out.println("¿Qué actividad desea modificar?");
             for (int i = 0; i < lp.getActividades().size(); i++) {
                 System.out.println(i + 1 + ". " + lp.getActividades().get(i).getTitulo());
