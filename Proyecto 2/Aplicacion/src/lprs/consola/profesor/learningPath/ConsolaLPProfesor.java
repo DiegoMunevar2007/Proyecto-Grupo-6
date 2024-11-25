@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import lprs.exceptions.ClonarLPException;
 import lprs.exceptions.NoLearningPathsException;
+import lprs.logica.contenido.Actividad;
 import lprs.logica.cuentas.Profesor;
 import lprs.logica.learningPath.LearningPath;
 import lprs.principal.LPRS;
@@ -171,7 +172,6 @@ public class ConsolaLPProfesor {
     }
 
     public void mostrarLearningPathsHechos() {
-        Scanner lectura = consolaProfesorLP.getLectura();
         Profesor profesor = consolaProfesorLP.getProfesor();
         Collection<LearningPath> learningPathsHechos = profesor.getLearningPathsCreados();
         if (learningPathsHechos.isEmpty()) {
@@ -183,11 +183,11 @@ public class ConsolaLPProfesor {
             System.out.println(indice + ". " + lp.getTitulo());
             indice++;
         }
-        System.out.println("Ingrese el número del Learning Path que desea o ingrese 0 para salir ");
+
         boolean opcionValida = false;
         int numero =0;
         while (!opcionValida) {
-            numero = lectura.nextInt();
+            numero = consolaProfesorLP.pedirInt("Seleccione un Learning Path o ingrese 0 para volver: ");
             if (numero < 0 || numero > learningPathsHechos.size()) {
                 System.out.println("Opción no válida. Por favor, seleccione un Learning Path de la lista.");
             } else if (numero == 0) {
@@ -204,7 +204,7 @@ public class ConsolaLPProfesor {
         opcionValida = false;
         while (!opcionValida) {
             consolaProfesorLP.mostrarOpciones(opciones.length, opciones);
-            int opcion = lectura.nextInt();
+            int opcion = consolaProfesorLP.pedirInt("Seleccione una opción: ");
             if (opcion == 1) {
                 mostrarLearningPathCompleto(lp);
                 opcionValida = true;
@@ -288,6 +288,12 @@ public class ConsolaLPProfesor {
         }
         System.out.println("Duracion: " + lp.getDuracion());
         System.out.println("Rating: " + lp.getRating());
+        for (String keyWord : lp.getKeyWords()) {
+            System.out.println("Palabra clave: " + keyWord);
+        }
+        for (Actividad actividad : lp.getActividades()) {
+            System.out.println("Actividad: " + actividad.getTitulo());
+        }
     }
 
 }
