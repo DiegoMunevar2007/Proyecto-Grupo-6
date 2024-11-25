@@ -5,6 +5,9 @@ import java.io.Serializable;
 import lprs.manejador.ManejadorLP;
 import lprs.manejador.ManejadorSesion;
 
+//Entrega final proyecto 2
+// Grupo 6 - 2024-20
+
 public class LPRS implements Serializable {
 	ManejadorLP manejadorLP;
 	ManejadorSesion manejadorSesion;
