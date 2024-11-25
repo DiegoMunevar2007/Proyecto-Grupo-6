@@ -1,5 +1,6 @@
 package lprs.logica.contenido.realizable.test;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -9,6 +10,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import lprs.exceptions.ActividadPreviaException;
+import lprs.exceptions.EstadoException;
 import lprs.logica.contenido.Encuesta;
 import lprs.logica.contenido.Examen;
 import lprs.logica.contenido.pregunta.PreguntaAbierta;
@@ -85,5 +88,29 @@ public class ExamenRealizableTest {
 		Examen examenBase = new Examen("Examen Test", "Descripción Examen", "Objetivo", 30, true, "2024-12-31", learningPath, "principiante");
 		examenRealizable.setActividadBase(examenBase);
         assertEquals(examenBase, examenRealizable.getActividadBase());
+    }
+	 
+	 @Test
+    void testcalificarActividad() throws EstadoException {
+		examenRealizable.setEstado("Exitoso");
+		examenRealizable.calificarActividad();
+		assertTrue((estudiante.getAvance(actividadBase.getLearningPathAsignado().getID()).getTasaExito())>= 0);
+    }
+	 
+	 @Test
+    void testrealizarActividad() throws ActividadPreviaException {
+		assertTrue((examenRealizable.realizarActividad().size())>= 0);
+    }
+	 
+	 @Test
+    void testguardarActividad() {
+		examenRealizable.guardarActividad(new ArrayList<>());
+		assertTrue((estudiante.getAvance(actividadBase.getLearningPathAsignado().getID()).getActividadesCompletadasLista().size())>= 0);
+    }
+	 
+	 @Test
+    void testenviarActividad() {
+		examenRealizable.enviarActividad(new ArrayList<>());
+		assertTrue((profesor.getActividadesPendientes().size())>= 0);
     }
 }
