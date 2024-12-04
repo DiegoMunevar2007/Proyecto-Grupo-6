@@ -15,7 +15,6 @@ public class PanelFieldBoton extends JPanel  {
         text = new JTextField();
         add(text, BorderLayout.CENTER);
         boton = new JButton(textoBoton);
-        boton.addActionListener(this);
         add(boton, BorderLayout.SOUTH);
     }
     public String getText() {
