@@ -1,6 +1,5 @@
 package lprs.interfaz.estudiante;
 
-import lprs.interfaz.InterfazPrincipal;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
 
@@ -49,9 +48,9 @@ public class DialogoMostrarLPs extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == comboBox) {
-            String selectedKey = (String) comboBox.getSelectedItem();
-            if (!"Seleccione un Learning Path".equals(selectedKey)) {
-                LearningPath lp = learningPathMap.get(selectedKey);
+            String Key = (String) comboBox.getSelectedItem();
+            if (!"Seleccione un Learning Path".equals(Key)) {
+                LearningPath lp = learningPathMap.get(Key);
                 panelInfoLP.cambiarInformacion(lp);
             }
 

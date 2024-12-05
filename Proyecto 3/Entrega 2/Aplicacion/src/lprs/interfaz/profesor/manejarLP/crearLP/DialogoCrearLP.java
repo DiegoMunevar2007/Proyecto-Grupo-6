@@ -1,20 +1,28 @@
-package lprs.interfaz.profesor.crearLP;
+package lprs.interfaz.profesor.manejarLP.crearLP;
+
+import lprs.interfaz.profesor.manejarLP.DialogoManejarLP;
+import lprs.logica.cuentas.Profesor;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class DialogoCrearLP extends JDialog implements ActionListener {
     private PanelCrearLearningPath panelCrearLearningPath;
     private JButton botonCrear;
     private JButton botonSalir;
-    public DialogoCrearLP() {
+    private Profesor profesor;
+    private DialogoManejarLP dialogoManejarLP;
+    public DialogoCrearLP(DialogoManejarLP dialogoManejarLP, Profesor profesor) {
         setLayout(new BorderLayout());
+        this.profesor = profesor;
+        this.dialogoManejarLP = dialogoManejarLP;
         JLabel lblTitulo = new JLabel("Crear Learning Path", SwingConstants.CENTER);
         add(lblTitulo, BorderLayout.NORTH);
 
-        panelCrearLearningPath = new PanelCrearLearningPath();
+        panelCrearLearningPath = new PanelCrearLearningPath(dialogoManejarLP.getLprs());
         add(panelCrearLearningPath, BorderLayout.CENTER);
         JPanel panelBotones = new JPanel();
         panelBotones.setLayout(new FlowLayout());
@@ -33,15 +41,23 @@ public class DialogoCrearLP extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==botonCrear) {
-            // Crear Learning Path
+            String titulo = panelCrearLearningPath.getTitulo();
+            String descripcion = panelCrearLearningPath.getDescripcion();
+            String nivel = panelCrearLearningPath.getNivel();
+            String objetivo = panelCrearLearningPath.getObjetivos();
+            String[] objetivos = objetivo.split("\n");
+
+            ArrayList<String> objetivosArray = new ArrayList<>();
+            for (String obj : objetivos) {
+                objetivosArray.add(obj);
+            }
+            ArrayList<String> keywords = panelCrearLearningPath.getKeywords();
+            profesor.crearLearningPath(titulo, descripcion, nivel, objetivosArray, keywords);
             JOptionPane.showMessageDialog(this, "Learning Path creado exitosamente");
             dispose();
         } else if (e.getSource()==botonSalir) {
             dispose();
         }
     }
-    public static void main(String[] args) {
-        DialogoCrearLP dialogo = new DialogoCrearLP();
-        dialogo.setVisible(true);
-    }
+
 }

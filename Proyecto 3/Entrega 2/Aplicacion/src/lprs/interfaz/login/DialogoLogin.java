@@ -2,7 +2,9 @@ package lprs.interfaz.login;
 
 import lprs.interfaz.InterfazPrincipal;
 import lprs.interfaz.estudiante.InicioEstudiante;
+import lprs.interfaz.profesor.InicioProfesor;
 import lprs.logica.cuentas.Estudiante;
+import lprs.logica.cuentas.Profesor;
 import lprs.logica.cuentas.Usuario;
 
 import javax.swing.*;
@@ -46,7 +48,8 @@ public class DialogoLogin extends JDialog implements ActionListener {
                     dispose();
                     interfazPrincipal.changeDialog(new InicioEstudiante((Estudiante) usuarioIniciado, interfazPrincipal));
                 } else {
-                    JOptionPane.showMessageDialog(this, "Usuario no es un estudiante");
+                    dispose();
+                    interfazPrincipal.changeDialog(new InicioProfesor((Profesor) usuarioIniciado, interfazPrincipal));
                 }
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage());

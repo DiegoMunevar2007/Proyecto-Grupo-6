@@ -1,4 +1,4 @@
-package lprs.interfaz.profesor.crearLP;
+package lprs.interfaz.profesor.manejarLP.crearLP;
 
 import javax.swing.*;
 import java.awt.*;

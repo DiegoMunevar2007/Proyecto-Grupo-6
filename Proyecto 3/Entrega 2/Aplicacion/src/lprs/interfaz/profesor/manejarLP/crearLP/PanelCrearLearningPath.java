@@ -1,11 +1,12 @@
-package lprs.interfaz.profesor.crearLP;
+package lprs.interfaz.profesor.manejarLP.crearLP;
 
-import lprs.logica.learningPath.LearningPath;
+import lprs.principal.LPRS;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class PanelCrearLearningPath extends JPanel implements ActionListener {
 
@@ -17,7 +18,10 @@ public class PanelCrearLearningPath extends JPanel implements ActionListener {
     private PanelFieldBoton panelFieldBotonKeywords;
     private JButton botonCrear;
     private JButton botonSalir;
-    public PanelCrearLearningPath() {
+    private ArrayList<String> keywords;
+    private JPanel panelKeywords;
+    public PanelCrearLearningPath(LPRS lprs) {
+    keywords = new ArrayList<String>();
     JPanel panelIzquierdo = new JPanel();
     panelIzquierdo.setLayout(new GridLayout(4,2,20,20));
     panelFieldBotonObjetivos = new PanelFieldBoton("Agregar Objetivo", "Objetivo");
@@ -62,8 +66,8 @@ public class PanelCrearLearningPath extends JPanel implements ActionListener {
 
     JLabel lblKeywords = new JLabel("Keywords");
     panelDerecho.add(lblKeywords);
-    String[] keywords= {"queso","queso 1", "queso 2"};
-    JPanel panelKeywords = new JPanel();
+    ArrayList<String> keywords= lprs.getManejadorLP().getKeyWords();
+    panelKeywords = new JPanel();
     panelKeywords.setLayout(new FlowLayout());
     for (String palabra : keywords){
         JCheckBox checkBox = new JCheckBox(palabra);
@@ -78,10 +82,41 @@ public class PanelCrearLearningPath extends JPanel implements ActionListener {
     panelDerecho.add(panelFieldBotonKeywords);
     add(panelDerecho, BorderLayout.EAST);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof JCheckBox){
-            System.out.println("Queso");
+            JCheckBox checkBox = (JCheckBox) e.getSource();
+            if (checkBox.isSelected()){
+                keywords.add(checkBox.getText());
+            } else {
+                keywords.remove(checkBox.getText());
+            }
+        } else if (e.getSource() == panelFieldBotonKeywords.getBoton()) {
+            keywords.add(panelFieldBotonKeywords.getText());
+            JOptionPane.showMessageDialog(this, "La palabra clave ha sido agregada");
+
+        } else if  (e.getSource() == panelFieldBotonObjetivos.getBoton()){
+            textAreaObjetivos.append(panelFieldBotonObjetivos.getText() + "\n");
         }
     }
+    public String getTitulo(){
+        return textTitulo.getText();
+    }
+    public String getDescripcion(){
+        return textDescripcion.getText();
+    }
+    public String getNivel(){
+        return (String) cmbNivel.getSelectedItem();
+    }
+    public String getObjetivos(){
+        return textAreaObjetivos.getText();
+    }
+    public ArrayList<String> getKeywords(){
+        return keywords;
+    }
+    public void setTitulo(String titulo){
+        textTitulo.setText(titulo);
+    }
+
 }

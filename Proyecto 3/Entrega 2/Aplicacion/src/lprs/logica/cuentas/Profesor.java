@@ -91,6 +91,7 @@ public class Profesor extends Usuario {
         }
         lP.eliminarLearningPath();
         learningPathsCreados.remove(ID);
+        learningPathsCreadosLista.remove(lP);
     }
 
     /**
