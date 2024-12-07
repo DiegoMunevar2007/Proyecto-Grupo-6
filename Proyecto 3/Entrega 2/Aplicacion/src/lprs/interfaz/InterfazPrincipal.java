@@ -60,10 +60,23 @@ public class InterfazPrincipal extends JFrame implements ActionListener {
     public static void main(String[] args) {
         LPRS lprs = new LPRS();
 
+
         try {
             lprs = PersistenciaGeneral.cargarDatos("Persistencia.dat");
         } catch (Exception e) {
             System.out.println("Error al cargar los datos");
+            e.printStackTrace();
+        }
+
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException |
+                 IllegalAccessException e) {
             e.printStackTrace();
         }
 

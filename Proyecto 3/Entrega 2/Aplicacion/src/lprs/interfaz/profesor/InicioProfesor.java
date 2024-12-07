@@ -2,6 +2,7 @@ package lprs.interfaz.profesor;
 
 import lprs.interfaz.InterfazPrincipal;
 import lprs.interfaz.profesor.manejarLP.DialogoManejarLP;
+import lprs.interfaz.profesor.manejaractividad.DialogoManejarActividad;
 import lprs.logica.cuentas.Profesor;
 
 import javax.swing.*;
@@ -61,7 +62,9 @@ public class InicioProfesor extends JFrame implements ActionListener {
             dialogoManejarLP.setVisible(true);
 
         } else if (e.getSource() == botonManejarActividades) {
-
+            this.dispose();
+            DialogoManejarActividad dialogoManejarActividad = new DialogoManejarActividad(this);
+            dialogoManejarActividad.setVisible(true);
         } else if (e.getSource() == botonHacerSeguimiento) {
 
         } else if (e.getSource() == botonSalir) {
