@@ -63,14 +63,17 @@ public class LearningPath implements Serializable {
 		this.lprsActual = lprsActual;
 		this.cantidadObligatorias = 0;
 		this.keyWords = keyWords != null ? keyWords : new ArrayList<>();
-		this.cantidadActividadesPorDia = new HashMap<Integer, HashMap<Integer, HashMap<Integer, Integer>>>();
-		for (int i = 0; i < 12; i++) {
-			HashMap<Integer, HashMap<Integer, Integer>> mes = new HashMap<>();
-			for (int j = 0; j < 31; j++) {
-				HashMap<Integer, Integer> dia = new HashMap<>();
-				mes.put(j, dia);
+		this.cantidadActividadesPorDia = new HashMap<>();
+		for (int year = 2020; year <= 2030; year++) { // Adjust the range of years as needed
+			HashMap<Integer, HashMap<Integer, Integer>> yearMap = new HashMap<>();
+			for (int month = 1; month <= 12; month++) {
+				HashMap<Integer, Integer> monthMap = new HashMap<>();
+				for (int day = 1; day <= 31; day++) {
+					monthMap.put(day, 0); // Initialize with 0 activities
+				}
+				yearMap.put(month, monthMap);
 			}
-			cantidadActividadesPorDia.put(i, mes);
+			cantidadActividadesPorDia.put(year, yearMap);
 		}
 	}
 
@@ -467,6 +470,9 @@ public class LearningPath implements Serializable {
 
 	public ArrayList<String> getKeyWords() {
 		return keyWords;
+	}
+	public HashMap<Integer, HashMap<Integer, HashMap<Integer, Integer>>> getCantidadActividadesPorDia() {
+		return cantidadActividadesPorDia;
 	}
 
 	public void incCantidadActividadesPorDia() {

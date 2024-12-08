@@ -2,6 +2,7 @@ package lprs.interfaz.profesor.seguimiento;
 
 import lprs.interfaz.profesor.InicioProfesor;
 import lprs.interfaz.profesor.seguimiento.LearningPath.DialogoSeguimientoLP;
+import lprs.interfaz.profesor.seguimiento.diagrama.DialogoSeleccionarLPAnio;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,6 +50,11 @@ public class DialogoManejarSeguimiento extends JDialog implements ActionListener
         } else if (e.getSource() == btnVerLps) {
             DialogoSeguimientoLP dialogoSeguimientoLP = new DialogoSeguimientoLP(this);
             dialogoSeguimientoLP.setVisible(true);
+        } else if (e.getSource() == btnVerPendientes) {
+
+        } else if (e.getSource() == btnVerDiagrama) {
+            DialogoSeleccionarLPAnio dialogoSeleccionarLPAnio = new DialogoSeleccionarLPAnio(this);
+            dialogoSeleccionarLPAnio.setVisible(true);
         }
 
     }
