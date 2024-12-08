@@ -1,7 +1,7 @@
-package lprs.interfaz.profesor.manejarLP.lpsCreados;
+package lprs.interfaz.profesor.learningpath.manejarLP.lpsCreados;
 
-import lprs.interfaz.profesor.manejarLP.DialogoManejarLP;
-import lprs.interfaz.profesor.manejarLP.PanelInfoLP;
+import lprs.interfaz.profesor.learningpath.manejarLP.DialogoManejarLP;
+import lprs.interfaz.profesor.learningpath.manejarLP.PanelInfoLP;
 import lprs.logica.learningPath.LearningPath;
 
 import javax.swing.*;

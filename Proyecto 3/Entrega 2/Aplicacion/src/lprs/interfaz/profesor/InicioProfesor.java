@@ -1,8 +1,9 @@
 package lprs.interfaz.profesor;
 
 import lprs.interfaz.InterfazPrincipal;
-import lprs.interfaz.profesor.manejarLP.DialogoManejarLP;
+import lprs.interfaz.profesor.learningpath.manejarLP.DialogoManejarLP;
 import lprs.interfaz.profesor.manejaractividad.DialogoManejarActividad;
+import lprs.interfaz.profesor.seguimiento.DialogoManejarSeguimiento;
 import lprs.logica.cuentas.Profesor;
 
 import javax.swing.*;
@@ -58,6 +59,7 @@ public class InicioProfesor extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == botonManejarLearningPaths) {
+            this.dispose();
             DialogoManejarLP dialogoManejarLP = new DialogoManejarLP(this);
             dialogoManejarLP.setVisible(true);
 
@@ -66,8 +68,11 @@ public class InicioProfesor extends JFrame implements ActionListener {
             DialogoManejarActividad dialogoManejarActividad = new DialogoManejarActividad(this);
             dialogoManejarActividad.setVisible(true);
         } else if (e.getSource() == botonHacerSeguimiento) {
-
+            this.dispose();
+            DialogoManejarSeguimiento dialogoManejarSeguimiento = new DialogoManejarSeguimiento(this);
+            dialogoManejarSeguimiento.setVisible(true);
         } else if (e.getSource() == botonSalir) {
+            this.dispose();
             interfazPrincipal.changeDialog(interfazPrincipal);
         }
     }

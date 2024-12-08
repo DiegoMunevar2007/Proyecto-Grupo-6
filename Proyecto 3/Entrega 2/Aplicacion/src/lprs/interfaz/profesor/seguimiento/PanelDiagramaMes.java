@@ -18,7 +18,7 @@ public class PanelDiagramaMes extends JPanel {
 
     public PanelDiagramaMes(int mes, int año, LearningPath learningPath) {
         setLayout( new BorderLayout());
-        if (mes == 2 && año % 4 == 0){
+        if (mes == 2 && año % 4 == 0 && (año % 100 != 0 || año % 400 == 0)){
             DIAS[1] = 29;
         }
         this.mes = mes;

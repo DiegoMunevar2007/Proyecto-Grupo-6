@@ -2,6 +2,7 @@ package lprs.interfaz.profesor.manejaractividad.crear;
 
 import lprs.logica.contenido.QuizMultiple;
 import lprs.logica.contenido.pregunta.Opcion;
+import lprs.logica.contenido.pregunta.PreguntaCerrada;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,7 +52,6 @@ public class DialogoQuizMultiple extends JDialog implements ActionListener {
         panelOpcionCorrecta.add(lblOpcionCorrecta, BorderLayout.WEST);
         cmbOpcionCorrecta = new JComboBox<>(new String[]{"Opción 1", "Opción 2", "Opción 3", "Opción 4"});
         panelOpcionCorrecta.add(cmbOpcionCorrecta, BorderLayout.CENTER);
-        add(panelOpcionCorrecta, BorderLayout.SOUTH);
 
         JPanel panelBotones = new JPanel(new FlowLayout());
         btnAgregarPregunta = new JButton("Agregar Pregunta");
@@ -63,7 +63,12 @@ public class DialogoQuizMultiple extends JDialog implements ActionListener {
         panelBotones.add(btnAgregarPregunta);
         panelBotones.add(btnCancelar);
         panelBotones.add(btnContinuar);
-        add(panelBotones, BorderLayout.SOUTH);
+
+        JPanel panelExtra = new JPanel(new BorderLayout(10, 10));
+        panelExtra.add(panelOpcionCorrecta, BorderLayout.NORTH);
+        panelExtra.add(panelBotones, BorderLayout.SOUTH);
+
+        add(panelExtra, BorderLayout.SOUTH);
     }
 
     @Override
@@ -76,6 +81,9 @@ public class DialogoQuizMultiple extends JDialog implements ActionListener {
                 opciones[i] = new Opcion(txtOpciones[i].getText(),txtJustificaciones[i].getText());
             }
             Opcion opcionCorrecta = opciones[cmbOpcionCorrecta.getSelectedIndex()];
+            quizMultiple.addPreguntaQuiz(new PreguntaCerrada(txtPregunta.getText(), opcionCorrecta, opciones));
+            JOptionPane.showMessageDialog(this, "Pregunta agregada exitosamente");
+            limpiarCampos();
         } else if (e.getSource() == btnContinuar) {
             int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea agregar una actividad previa?");
             if (respuesta == JOptionPane.YES_OPTION) {
@@ -91,6 +99,13 @@ public class DialogoQuizMultiple extends JDialog implements ActionListener {
             }
             JOptionPane.showMessageDialog(this, "Actividad creada exitosamente");
             dialogoCrearActividad.getDialogoManejarActividad().setVisible(true);
+        }
+    }
+    public void limpiarCampos() {
+        txtPregunta.setText("");
+        for (int i = 0; i < 4; i++) {
+            txtOpciones[i].setText("");
+            txtJustificaciones[i].setText("");
         }
     }
 }

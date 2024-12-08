@@ -1,6 +1,8 @@
-package lprs.interfaz.profesor.seguimiento;
+package lprs.interfaz.profesor.seguimiento.LearningPath;
 
-import lprs.interfaz.profesor.InicioProfesor;
+import lprs.interfaz.estudiante.avance.learningpath.DialogoAvanceLP;
+import lprs.interfaz.profesor.seguimiento.DialogoManejarSeguimiento;
+import lprs.logica.cuentas.Profesor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,9 +47,15 @@ public class DialogoSeguimientoLP extends JDialog implements ActionListener {
             this.dispose();
             dialogoManejarSeguimiento.setVisible(true);
         } else if (e.getSource() == btnVerActividadesEstudiante) {
-            // Implement the action for viewing student activities
+            this.dispose();
+           DialogoActividadesEstudiante dialogoActividadesEstudiante = new DialogoActividadesEstudiante(this);
+           dialogoActividadesEstudiante.setVisible(true);
         } else if (e.getSource() == btnVerAvanceEstudiante) {
-            // Implement the action for viewing student progress in a Learning Path
+            DialogoAvanceLPProfesor dialogoAvanceLP = new DialogoAvanceLPProfesor(this);
+
         }
+    }
+    public Profesor getProfesor(){
+        return dialogoManejarSeguimiento.getInicioProfesor().getProfesor();
     }
 }

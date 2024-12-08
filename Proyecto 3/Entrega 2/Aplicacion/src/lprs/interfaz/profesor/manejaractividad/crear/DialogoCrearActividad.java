@@ -2,6 +2,7 @@ package lprs.interfaz.profesor.manejaractividad.crear;
 
 import lprs.interfaz.profesor.manejaractividad.DialogoManejarActividad;
 import lprs.logica.contenido.QuizMultiple;
+import lprs.logica.contenido.QuizVerdaderoFalso;
 import lprs.logica.learningPath.LearningPath;
 
 import javax.swing.*;
@@ -65,8 +66,25 @@ public class DialogoCrearActividad extends JDialog implements ActionListener {
         } else if (tipo.equals("Recurso")) {
 
         } else if (tipo.equals("Quiz Verdadero/Falso")) {
-
-
+            float calificacion = Float.parseFloat(JOptionPane.showInputDialog("Ingrese la calificación mínima para aprobar el quiz"));
+            QuizVerdaderoFalso quizVerdaderoFalso = null;
+            try {
+                quizVerdaderoFalso = new QuizVerdaderoFalso(panelActividadBasica.getTxtTitulo().getText(),
+                        panelActividadBasica.getTxtDescripcion().getText(),
+                        panelActividadBasica.getTxtObjetivo().getText(),
+                        Integer.parseInt(panelActividadBasica.getTxtDuracion().getText()),
+                        panelActividadBasica.getCheckObligatoria().isSelected(), panelActividadBasica.getFecha(),
+                        lp,
+                        panelActividadBasica.getCmbDificultad().getSelectedItem().toString(),calificacion);
+            }
+            catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+                return;
+            }
+            lp.aniadirActividad(quizVerdaderoFalso);
+            this.dispose();
+            DialogoQuizVF verdaderoFalso = new DialogoQuizVF(quizVerdaderoFalso,this);
+            verdaderoFalso.setVisible(true);
         } else if (tipo.equals("Quiz Multiple")) {
             float calificacion = Float.parseFloat(JOptionPane.showInputDialog("Ingrese la calificación mínima para aprobar el quiz"));
             QuizMultiple quizMultiple = null;
@@ -84,6 +102,7 @@ public class DialogoCrearActividad extends JDialog implements ActionListener {
                 JOptionPane.showMessageDialog(this, e.getMessage());
                 return;
             }
+            lp.aniadirActividad(quizMultiple);
             this.dispose();
             DialogoQuizMultiple multiple = new DialogoQuizMultiple(quizMultiple,this);
             multiple.setVisible(true);

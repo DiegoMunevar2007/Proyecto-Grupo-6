@@ -30,6 +30,7 @@ public class InicioEstudiante extends JFrame implements ActionListener {
 
     public InicioEstudiante(Estudiante estudiante, InterfazPrincipal interfazPrincipal) {
         this.estudiante = estudiante;
+        this.lprs = estudiante.getLprsActual();
         this.interfazPrincipal = interfazPrincipal;
         setTitle("Inicio - " + estudiante.getUsuario());
         setLayout(new BorderLayout());

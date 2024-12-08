@@ -1,17 +1,15 @@
-package lprs.interfaz.profesor.manejarLP;
+package lprs.interfaz.profesor.learningpath.manejarLP;
 
 import lprs.interfaz.profesor.InicioProfesor;
-import lprs.interfaz.profesor.manejarLP.clonarLP.DialogoClonarLP;
-import lprs.interfaz.profesor.manejarLP.crearLP.DialogoCrearLP;
-import lprs.interfaz.profesor.manejarLP.lpsCreados.DialogoLpCreado;
-import lprs.logica.learningPath.LearningPath;
+import lprs.interfaz.profesor.learningpath.manejarLP.clonarLP.DialogoClonarLP;
+import lprs.interfaz.profesor.learningpath.manejarLP.crearLP.DialogoCrearLP;
+import lprs.interfaz.profesor.learningpath.manejarLP.lpsCreados.DialogoLpCreado;
 import lprs.principal.LPRS;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 
 public class DialogoManejarLP extends JDialog implements ActionListener {
     private JButton botonVerCreados;
@@ -64,6 +62,7 @@ public class DialogoManejarLP extends JDialog implements ActionListener {
 
         } else if (e.getSource() == botonSalir) {
             dispose();
+            inicioProfesor.setVisible(true);
         }
     }
     public LPRS getLprs() {

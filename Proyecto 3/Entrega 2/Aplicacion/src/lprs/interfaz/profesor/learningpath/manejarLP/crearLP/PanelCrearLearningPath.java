@@ -1,4 +1,4 @@
-package lprs.interfaz.profesor.manejarLP.crearLP;
+package lprs.interfaz.profesor.learningpath.manejarLP.crearLP;
 
 import lprs.principal.LPRS;
 

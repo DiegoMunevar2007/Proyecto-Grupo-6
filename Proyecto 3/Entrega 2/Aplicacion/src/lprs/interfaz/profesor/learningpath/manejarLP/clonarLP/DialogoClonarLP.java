@@ -1,8 +1,8 @@
-package lprs.interfaz.profesor.manejarLP.clonarLP;
+package lprs.interfaz.profesor.learningpath.manejarLP.clonarLP;
 
 import lprs.exceptions.ClonarLPException;
-import lprs.interfaz.profesor.manejarLP.DialogoManejarLP;
-import lprs.interfaz.profesor.manejarLP.PanelInfoLP;
+import lprs.interfaz.profesor.learningpath.manejarLP.DialogoManejarLP;
+import lprs.interfaz.profesor.learningpath.manejarLP.PanelInfoLP;
 import lprs.logica.learningPath.LearningPath;
 
 import javax.swing.*;

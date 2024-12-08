@@ -1,4 +1,4 @@
-package lprs.interfaz.profesor.manejarLP;
+package lprs.interfaz.profesor.learningpath.manejarLP;
 
 import lprs.logica.learningPath.LearningPath;
 

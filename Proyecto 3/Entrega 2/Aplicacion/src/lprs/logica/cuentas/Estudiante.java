@@ -80,4 +80,8 @@ public class Estudiante extends Usuario {
 		return avancesEstudiante.get(ID);
 	}
 
+	@Override
+	public String toString(){
+		return usuario;
+	}
 }
