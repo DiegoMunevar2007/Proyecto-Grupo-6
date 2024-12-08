@@ -41,6 +41,7 @@ public class DialogoAgregarActividadSeguimiento extends JDialog implements Actio
         btnVolver = new JButton("Volver");
         btnVolver.addActionListener(this);
         panelBotones.add(btnVolver);
+        add(panelBotones, BorderLayout.SOUTH);
     }
     @Override
     public void actionPerformed(ActionEvent e) {

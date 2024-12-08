@@ -106,4 +106,8 @@ public abstract class ActividadRealizable implements Serializable {
 		return estudiante.getAvance(actividadBase.getLearningPathAsignado().getID());
 	}
 
+	@Override
+	public String toString(){
+		return actividadBase.getTitulo();
+	}
 }

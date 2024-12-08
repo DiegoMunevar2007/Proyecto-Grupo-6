@@ -5,11 +5,14 @@ import lprs.logica.learningPath.LearningPath;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class DialogoDiagrama extends JDialog {
+public class DialogoDiagrama extends JDialog implements ActionListener {
     private LearningPath lp;
     private int anio;
     private DialogoManejarSeguimiento dialogoManejarSeguimiento;
+    private JButton btnVolver;
     public DialogoDiagrama(DialogoManejarSeguimiento dialogoManejarSeguimiento,  LearningPath lp, int anio) {
        setLayout(new BorderLayout());
        setSize(500, 500);
@@ -25,6 +28,17 @@ public class DialogoDiagrama extends JDialog {
            panelDiagrama.add(panelDiagramaMes);
        }
         add(panelDiagrama, BorderLayout.CENTER);
+        btnVolver = new JButton("Volver");
+        btnVolver.addActionListener(this);
+        btnVolver.setLayout(new FlowLayout());
+        add(btnVolver, BorderLayout.SOUTH);
+    }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnVolver) {
+            this.dispose();
+            dialogoManejarSeguimiento.setVisible(true);
+        }
     }
 }

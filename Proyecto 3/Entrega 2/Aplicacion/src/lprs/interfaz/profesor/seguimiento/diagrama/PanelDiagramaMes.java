@@ -3,6 +3,7 @@ package lprs.interfaz.profesor.seguimiento.diagrama;
 import lprs.logica.learningPath.LearningPath;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ public class PanelDiagramaMes extends JPanel {
     private int mes;
     private int año;
     private LearningPath learningPath;
+    private int cantidadDiasAgregados;
 
     public PanelDiagramaMes(int mes, int año, LearningPath learningPath) {
         setLayout( new BorderLayout());
@@ -24,6 +26,7 @@ public class PanelDiagramaMes extends JPanel {
         this.mes = mes;
         this.año = año;
         this.learningPath = learningPath;
+        cantidadDiasAgregados = 0;
         JLabel titulo = new JLabel(MESES[mes-1], SwingConstants.CENTER);
         add(titulo, BorderLayout.NORTH);
         JPanel panelDiasSemana = crearPanelDiasSemanaTexto();
@@ -34,49 +37,71 @@ public class PanelDiagramaMes extends JPanel {
 
     public JPanel crearPanelMes(LearningPath learningPath){
         JPanel panelDias = new JPanel();
-        panelDias.setLayout(new GridLayout(1,4,10,10));
+        panelDias.setLayout(new GridLayout(1,5,10,10));
         LocalDate fecha = LocalDate.of(año, mes, 1);
         int diaInicio = 1;
         int diaFin = DIAS[mes-1];
+        int cantidadEspacios = calcularCantidadEspacios(1, mes, año);
+        panelDias.add(crearSemanaVacia(cantidadEspacios, learningPath));
 
-        for (int i = 1; i<= 5; i++){
-            JPanel panelSemana = crearPanelSemana(diaInicio, diaFin, learningPath);
-            panelDias.add(panelSemana);
-            diaInicio += 7;
-            if (diaFin > DIAS[mes-1]){
-                diaFin = DIAS[mes-1];
+        diaInicio = cantidadDiasAgregados;
+        while(diaInicio<diaFin){
+            int diaFinSemana = Math.min(diaInicio + 6, diaFin-1);
+            if (diaFinSemana ==diaFin){
+                panelDias.add(crearPanelSemana(diaInicio, diaFinSemana, learningPath));
             }
+            else{
+                panelDias.add(crearPanelSemana(diaInicio, diaFinSemana, learningPath));
+            }
+            diaInicio = diaFinSemana + 1;
         }
+
+
         return panelDias;
     }
+
+    public JPanel crearSemanaVacia(int cantidadEspacios, LearningPath learningPath){
+        JPanel panelSemana = new JPanel();
+        panelSemana.setLayout(new GridLayout(7, 1, 10, 10));
+        for (int i = 0; i < cantidadEspacios; i++) {
+            JLabel labelVacio = new JLabel(" ");
+            labelVacio.setOpaque(true);
+            labelVacio.setPreferredSize(new Dimension(20, 20));
+            panelSemana.add(labelVacio);
+        }
+        for (int i = 1; i <= 7-cantidadEspacios; i++) {
+            int cantidad = learningPath.getCantidadActividadesEnMes(año, mes).getOrDefault(i, 0);
+            JLabel labelColor = new JLabel(" ");
+            labelColor.setOpaque(true);
+            labelColor.setBorder(new LineBorder(Color.BLACK));
+            labelColor.setPreferredSize(new Dimension(20, 20));
+            if (cantidad == 0) {
+                labelColor.setBackground(Color.WHITE);
+            } else if (cantidad > 0 && cantidad < 3) {
+                labelColor.setBackground(Color.LIGHT_GRAY);
+            } else if (cantidad >= 3 && cantidad < 10) {
+                labelColor.setBackground(Color.GRAY);
+            } else {
+                labelColor.setBackground(Color.BLACK);
+            }
+            panelSemana.add(labelColor);
+            cantidadDiasAgregados += 1;
+        }
+        return panelSemana;
+    }
+
+
 
     public JPanel crearPanelSemana(int diaInicio, int diaFin, LearningPath learningPath) {
     JPanel panelSemana = new JPanel();
     panelSemana.setLayout(new GridLayout(7, 1, 10, 10));
     HashMap<Integer, Integer> actividadesPorDia = learningPath.getCantidadActividadesEnMes(año, mes);
 
-    if (actividadesPorDia == null) {
-        panelSemana.setBackground(Color.WHITE);
-        return panelSemana;
-    }
-
-    int cantidadAgregrada = 0;
-    int diaSemana = LocalDate.of(año, mes, diaInicio).getDayOfWeek().getValue() % 7;
-    if (diaInicio == 1) {
-        for (int i = 0; i < diaSemana; i++) {
-            JLabel labelVacio = new JLabel(" ");
-            labelVacio.setOpaque(true);
-            labelVacio.setPreferredSize(new Dimension(20, 20));
-            panelSemana.add(labelVacio);
-            cantidadAgregrada += 1;
-        }
-    }
-
     for (int i = diaInicio; i <= diaFin; i++) {
         int cantidad = actividadesPorDia.getOrDefault(i, 0);
         JLabel labelColor = new JLabel(" ");
         labelColor.setOpaque(true);
-        labelColor.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        labelColor.setBorder(new LineBorder(Color.BLACK));
         labelColor.setPreferredSize(new Dimension(20, 20));
         if (cantidad == 0) {
             labelColor.setBackground(Color.WHITE);
@@ -87,11 +112,8 @@ public class PanelDiagramaMes extends JPanel {
         } else {
             labelColor.setBackground(Color.BLACK);
         }
-        if (cantidadAgregrada == 7) {
-            break;
-        }
+
         panelSemana.add(labelColor);
-        cantidadAgregrada += 1;
     }
     return panelSemana;
 }
@@ -106,4 +128,8 @@ public class PanelDiagramaMes extends JPanel {
         return panelDiasSemana;
     }
 
+    public int calcularCantidadEspacios(int diaInicio, int mes, int anio){
+        int diaSemana = LocalDate.of(anio, mes, diaInicio).getDayOfWeek().getValue() % 7;
+        return diaSemana;
+    }
 }

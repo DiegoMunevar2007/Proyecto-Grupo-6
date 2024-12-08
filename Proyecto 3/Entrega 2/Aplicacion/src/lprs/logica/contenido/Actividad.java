@@ -328,4 +328,8 @@ public abstract class Actividad implements Serializable{
         this.numeroActividad = numeroActividad;
     }
 
+    @Override
+    public String toString(){
+        return titulo;
+    }
 }

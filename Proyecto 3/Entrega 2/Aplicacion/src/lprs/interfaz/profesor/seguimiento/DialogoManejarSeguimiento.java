@@ -51,7 +51,8 @@ public class DialogoManejarSeguimiento extends JDialog implements ActionListener
             DialogoSeguimientoLP dialogoSeguimientoLP = new DialogoSeguimientoLP(this);
             dialogoSeguimientoLP.setVisible(true);
         } else if (e.getSource() == btnVerPendientes) {
-
+            DialogoPendientes dialogoPendientes = new DialogoPendientes(this);
+            dialogoPendientes.setVisible(true);
         } else if (e.getSource() == btnVerDiagrama) {
             DialogoSeleccionarLPAnio dialogoSeleccionarLPAnio = new DialogoSeleccionarLPAnio(this);
             dialogoSeleccionarLPAnio.setVisible(true);

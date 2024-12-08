@@ -31,7 +31,7 @@ public class ExamenRealizable extends ActividadRealizable {
 
         if (estado.equals("Exitoso")){
             estudiante.getAvance(actividadBase.getLearningPathAsignado().getID()).incTasaExito();
-
+            actividadBase.getLearningPathAsignado().getProfesorCreador().getActividadesPendientes().remove(this);
         }
       }
 

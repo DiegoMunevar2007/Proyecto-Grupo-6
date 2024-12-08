@@ -1,5 +1,6 @@
 package lprs.interfaz.profesor.manejaractividad;
 
+import lprs.interfaz.estudiante.resenia.DialogoResenia;
 import lprs.interfaz.profesor.InicioProfesor;
 import lprs.interfaz.profesor.manejaractividad.crear.DialogoCrearActividad;
 import lprs.interfaz.profesor.manejaractividad.crear.DialogoSeleccionarLP;
@@ -55,6 +56,12 @@ public class DialogoManejarActividad extends JDialog implements ActionListener {
             DialogoSeleccionarLP dialogoSeleccionarLP = new DialogoSeleccionarLP(this);
             dialogoSeleccionarLP.setVisible(true);
             this.dispose();
+        } else if (e.getSource() == botonVerActividades) {
+
+        } else if (e.getSource() == botonReseniarActividad) {
+            this.dispose();
+            DialogoResenia dialogoResenia = new DialogoResenia(this);
+            dialogoResenia.setVisible(true);
         }
     }
     public InicioProfesor getInicioProfesor() {

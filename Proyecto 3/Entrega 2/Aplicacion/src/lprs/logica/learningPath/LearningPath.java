@@ -64,12 +64,12 @@ public class LearningPath implements Serializable {
 		this.cantidadObligatorias = 0;
 		this.keyWords = keyWords != null ? keyWords : new ArrayList<>();
 		this.cantidadActividadesPorDia = new HashMap<>();
-		for (int year = 2020; year <= 2030; year++) { // Adjust the range of years as needed
+		for (int year = 2020; year <= 2030; year++) {
 			HashMap<Integer, HashMap<Integer, Integer>> yearMap = new HashMap<>();
 			for (int month = 1; month <= 12; month++) {
 				HashMap<Integer, Integer> monthMap = new HashMap<>();
 				for (int day = 1; day <= 31; day++) {
-					monthMap.put(day, 0); // Initialize with 0 activities
+					monthMap.put(day, 0);
 				}
 				yearMap.put(month, monthMap);
 			}

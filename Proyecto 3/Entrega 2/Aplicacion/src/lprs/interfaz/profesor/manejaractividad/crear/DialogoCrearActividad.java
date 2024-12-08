@@ -1,8 +1,7 @@
 package lprs.interfaz.profesor.manejaractividad.crear;
 
 import lprs.interfaz.profesor.manejaractividad.DialogoManejarActividad;
-import lprs.logica.contenido.QuizMultiple;
-import lprs.logica.contenido.QuizVerdaderoFalso;
+import lprs.logica.contenido.*;
 import lprs.logica.learningPath.LearningPath;
 
 import javax.swing.*;
@@ -39,6 +38,7 @@ public class DialogoCrearActividad extends JDialog implements ActionListener {
         tipoActividad.addItem("Quiz Verdadero/Falso");
         tipoActividad.addItem("Quiz Multiple");
         tipoActividad.addItem("Encuesta");
+        tipoActividad.addItem("Tarea");
         tipoActividad.addActionListener(this);
         panelActividadBasica.add(new JLabel("Tipo de actividad:"));
         panelActividadBasica.add(tipoActividad);
@@ -58,12 +58,51 @@ public class DialogoCrearActividad extends JDialog implements ActionListener {
 
 
 
-    private void crearActividad(JPanel panelDerecho) {
+    private void crearActividad() {
         String tipo = tipoActividad.getSelectedItem().toString();
         if (tipo.equals("Encuesta")) {
-
+            Encuesta encuesta = null;
+            try {
+                encuesta = new Encuesta(panelActividadBasica.getTxtTitulo().getText(),
+                        panelActividadBasica.getTxtDescripcion().getText(),
+                        panelActividadBasica.getTxtObjetivo().getText(),
+                        Integer.parseInt(panelActividadBasica.getTxtDuracion().getText()),
+                        panelActividadBasica.getCheckObligatoria().isSelected(), panelActividadBasica.getFecha(),
+                        lp,
+                        panelActividadBasica.getCmbDificultad().getSelectedItem().toString());
+            }
+            catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+                return;
+            }
+            lp.aniadirActividad(encuesta);
+            this.dispose();
+            DialogoEncuesta encuestaDialogo = new DialogoEncuesta(encuesta,this);
+            encuestaDialogo.setVisible(true);
         } else if (tipo.equals("Examen")) {
+
+            Examen examen = null;
+            try {
+                examen = new Examen(panelActividadBasica.getTxtTitulo().getText(),
+                        panelActividadBasica.getTxtDescripcion().getText(),
+                        panelActividadBasica.getTxtObjetivo().getText(),
+                        Integer.parseInt(panelActividadBasica.getTxtDuracion().getText()),
+                        panelActividadBasica.getCheckObligatoria().isSelected(), panelActividadBasica.getFecha(),
+                        lp,
+                        panelActividadBasica.getCmbDificultad().getSelectedItem().toString());
+            }
+            catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+                return;
+            }
+            lp.aniadirActividad(examen);
+            this.dispose();
+            DialogoExamen examenDialogo = new DialogoExamen(examen,this);
+            examenDialogo.setVisible(true);
+
         } else if (tipo.equals("Recurso")) {
+
+
 
         } else if (tipo.equals("Quiz Verdadero/Falso")) {
             float calificacion = Float.parseFloat(JOptionPane.showInputDialog("Ingrese la calificación mínima para aprobar el quiz"));
@@ -107,15 +146,37 @@ public class DialogoCrearActividad extends JDialog implements ActionListener {
             DialogoQuizMultiple multiple = new DialogoQuizMultiple(quizMultiple,this);
             multiple.setVisible(true);
         }
+        else if (tipo.equals("Tarea")){
+            Tarea tarea = null;
+            try {
+                tarea = new Tarea(panelActividadBasica.getTxtTitulo().getText(),
+                        panelActividadBasica.getTxtDescripcion().getText(),
+                        panelActividadBasica.getTxtObjetivo().getText(),
+                        Integer.parseInt(panelActividadBasica.getTxtDuracion().getText()),
+                        panelActividadBasica.getCheckObligatoria().isSelected(), panelActividadBasica.getFecha(),
+                        lp,
+                        panelActividadBasica.getCmbDificultad().getSelectedItem().toString());
+            }
+            catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+                return;
+            }
+            lp.aniadirActividad(tarea);
+            this.dispose();
+            DialogoTarea tareaDialogo = new DialogoTarea(this, tarea);
+            tareaDialogo.setVisible(true);
+
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() ==btnCrearActividad) {
-            crearActividad(panelDerecho);
+            crearActividad();
         }
         else if (e.getSource() == btnCancelar) {
             this.dispose();
+            dialogoManejarActividad.setVisible(true);
         }
         else if (e.getSource() == tipoActividad) {
             actividadSeleccionada = tipoActividad.getSelectedItem().toString();
@@ -123,6 +184,7 @@ public class DialogoCrearActividad extends JDialog implements ActionListener {
 
 
     }
+
 
     public LearningPath getLp() {
         return lp;

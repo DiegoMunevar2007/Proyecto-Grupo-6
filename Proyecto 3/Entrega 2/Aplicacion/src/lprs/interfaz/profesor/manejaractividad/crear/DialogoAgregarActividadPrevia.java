@@ -43,6 +43,7 @@ public class DialogoAgregarActividadPrevia extends JDialog implements ActionList
         btnVolver.setBounds(120, 70, 100, 20);
         btnVolver.addActionListener(this);
         panelBotones.add(btnVolver);
+        add(panelBotones, BorderLayout.SOUTH);
     }
     @Override
     public void actionPerformed(ActionEvent e) {

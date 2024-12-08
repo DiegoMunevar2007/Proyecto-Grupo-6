@@ -52,7 +52,9 @@ public class DialogoSeleccionarLPAnio extends JDialog implements ActionListener 
             if (!"Seleccione un Learning Path".equals(learningPaths.getSelectedItem())) {
                 LearningPath lp = (LearningPath) learningPaths.getSelectedItem();
                 for (int anio : lp.getCantidadActividadesPorDia().keySet()) {
-                    anios.addItem(String.valueOf(anio));
+                    if (String.valueOf(anio).length()==4) {
+                        anios.addItem(String.valueOf(anio));
+                    }
                 }
             }
         } else if (e.getSource() == btnAceptar) {
