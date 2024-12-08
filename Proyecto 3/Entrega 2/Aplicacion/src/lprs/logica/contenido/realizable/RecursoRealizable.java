@@ -16,7 +16,7 @@ public class RecursoRealizable extends ActividadRealizable {
 	RecursoEducativo actividadBase;
 
 	public RecursoRealizable(RecursoEducativo actividadBase, Estudiante estudiante) {
-		super(estudiante);
+		super(actividadBase, estudiante);
 		this.estado = "No completado";
 		this.actividadBase = actividadBase;
 		// TODO Auto-generated constructor stub

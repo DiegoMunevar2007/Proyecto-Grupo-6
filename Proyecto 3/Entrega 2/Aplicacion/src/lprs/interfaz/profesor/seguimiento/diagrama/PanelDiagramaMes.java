@@ -98,7 +98,7 @@ public class PanelDiagramaMes extends JPanel {
     HashMap<Integer, Integer> actividadesPorDia = learningPath.getCantidadActividadesEnMes(año, mes);
 
     for (int i = diaInicio; i <= diaFin; i++) {
-        int cantidad = actividadesPorDia.getOrDefault(i, 0);
+        int cantidad = actividadesPorDia.getOrDefault(i+1 ,0);
         JLabel labelColor = new JLabel(" ");
         labelColor.setOpaque(true);
         labelColor.setBorder(new LineBorder(Color.BLACK));

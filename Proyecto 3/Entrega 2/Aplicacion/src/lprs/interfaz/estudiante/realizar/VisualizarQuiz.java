@@ -17,7 +17,7 @@ public class VisualizarQuiz extends JPanel implements ActionListener {
     private JButton btnSiguiente;
     private JTextField txtPregunta;
 
-    public VisualizarQuiz(ArrayList<PreguntaCerrada> preguntaCerradas){
+    public VisualizarQuiz(ArrayList<PreguntaCerrada> preguntaCerradas) {
 
         this.preguntaCerradas = preguntaCerradas;
         this.preguntaCerradaRealizables = new ArrayList<>();
@@ -27,6 +27,7 @@ public class VisualizarQuiz extends JPanel implements ActionListener {
         setLayout(new BorderLayout());
         btnSiguiente = new JButton("Siguiente");
         btnSiguiente.addActionListener(this);
+        mostrarPregunta();
     }
 
     public void mostrarPregunta(){
@@ -44,12 +45,18 @@ public class VisualizarQuiz extends JPanel implements ActionListener {
         }
         add(panelOpciones, BorderLayout.CENTER);
         btnSiguiente = new JButton("Siguiente");
+        btnSiguiente.addActionListener(this);
         add(btnSiguiente, BorderLayout.SOUTH);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnSiguiente) {
+            for (int i = 0; i < opciones.length; i++) {
+                if (opciones[i].isSelected()) {
+                    preguntaCerradaRealizables.add(new PreguntaCerradaRealizable(preguntaCerradas.get(cantidadPreguntasVistas), preguntaCerradas.get(cantidadPreguntasVistas).getOpciones()[i]));
+                }
+            }
             cantidadPreguntasVistas++;
             if (cantidadPreguntasVistas < cantidadPreguntas) {
                 mostrarPregunta();

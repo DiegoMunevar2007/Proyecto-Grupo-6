@@ -21,7 +21,7 @@ public class QuizRealizable extends ActividadRealizable {
 	private ArrayList<PreguntaCerradaRealizable> preguntas;
 
 	public QuizRealizable(Estudiante estudiante, Quiz quizBase) {
-			super(estudiante);
+			super(quizBase, estudiante);
 			this.actividadBase = quizBase;
 			preguntas = new ArrayList<PreguntaCerradaRealizable>();
 		}
@@ -59,11 +59,11 @@ public class QuizRealizable extends ActividadRealizable {
 				System.out.println("Felicidades, ha aprobado el quiz");
 				estudiante.getAvance(actividadBase.getLearningPathAsignado().getID()).addActividadRealizada(this);
 				estudiante.getAvance(actividadBase.getLearningPathAsignado().getID()).incTasaExito();
-				actividadBase.getLearningPathAsignado().incCantidadActividadesPorDia();
+
 			} else {
 				System.out.println("Lo siento, no ha aprobado el quiz");
 			}
-	
+			actividadBase.getLearningPathAsignado().incCantidadActividadesPorDia();
 			Profesor profesor = actividadBase.getLearningPathAsignado().getProfesorCreador();
 			profesor.addActividadPendiente(this);
 			

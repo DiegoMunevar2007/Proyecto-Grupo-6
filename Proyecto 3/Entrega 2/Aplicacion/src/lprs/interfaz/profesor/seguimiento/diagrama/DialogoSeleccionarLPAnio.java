@@ -15,7 +15,7 @@ public class DialogoSeleccionarLPAnio extends JDialog implements ActionListener 
     private JButton btnCancelar;
     public DialogoSeleccionarLPAnio(DialogoManejarSeguimiento dialogoManejarSeguimiento) {
         setTitle("Seleccionar Learning Path");
-        setSize(500, 500);
+        setSize(200, 200);
         setLocationRelativeTo(null);
         setLayout(null);
         setVisible(true);

@@ -18,12 +18,13 @@ public abstract class ActividadRealizable implements Serializable {
 	protected int tiempoTomado;
 	protected boolean bypassActividadPrevia;
 
-	public ActividadRealizable(Estudiante estudiante) {
+	public ActividadRealizable(Actividad actividad,Estudiante estudiante) {
 		this.comentarios = "";
 		this.estado = "";
 		this.estudiante = estudiante;
 		tiempoTomado = 0;
 		bypassActividadPrevia = false;
+		actividadBase = actividad;
 	}
 
 	public abstract void calificarActividad();

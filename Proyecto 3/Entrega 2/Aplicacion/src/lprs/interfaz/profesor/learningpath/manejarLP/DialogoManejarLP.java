@@ -7,6 +7,7 @@ import lprs.interfaz.profesor.learningpath.manejarLP.lpsCreados.DialogoLpCreado;
 import lprs.principal.LPRS;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,14 +21,20 @@ public class DialogoManejarLP extends JDialog implements ActionListener {
 
     public DialogoManejarLP(InicioProfesor inicioProfesor) {
         setSize(800, 600);
+        setTitle("Manejar Learning Paths");
         setLayout(new BorderLayout());
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         this.inicioProfesor = inicioProfesor;
 
         JLabel lblTitulo = new JLabel("Manejar Learning Paths", SwingConstants.CENTER);
+        lblTitulo.setBorder(new EmptyBorder(20, 0, 20, 0));
+        add(lblTitulo, BorderLayout.NORTH);
+
         JPanel panelBotones = new JPanel();
-        panelBotones.setLayout(new GridLayout(2, 2, 80,80));
+        panelBotones.setBorder(new EmptyBorder(50, 50, 50, 50));
+        panelBotones.setLayout(new GridLayout(2, 2, 20, 20));
+
         botonVerCreados = new JButton("Ver Learning Paths Creados");
         botonVerCreados.addActionListener(this);
         panelBotones.add(botonVerCreados);
@@ -43,6 +50,7 @@ public class DialogoManejarLP extends JDialog implements ActionListener {
         botonSalir = new JButton("Salir");
         botonSalir.addActionListener(this);
         panelBotones.add(botonSalir);
+
         add(panelBotones, BorderLayout.CENTER);
     }
 
@@ -65,9 +73,11 @@ public class DialogoManejarLP extends JDialog implements ActionListener {
             inicioProfesor.setVisible(true);
         }
     }
+
     public LPRS getLprs() {
         return inicioProfesor.getProfesor().getLprsActual();
     }
+
     public InicioProfesor getInicioProfesor() {
         return inicioProfesor;
     }

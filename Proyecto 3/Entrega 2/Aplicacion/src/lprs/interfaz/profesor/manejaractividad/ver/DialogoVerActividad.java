@@ -4,6 +4,7 @@ import lprs.interfaz.profesor.manejaractividad.DialogoManejarActividad;
 import lprs.logica.contenido.Actividad;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,28 +16,47 @@ public class DialogoVerActividad extends JDialog implements ActionListener {
     private JButton botonVolver;
     private JButton botonEditar;
     private JButton botonEliminar;
+
     public DialogoVerActividad(DialogoManejarActividad dialogoManejarActividad) {
         this.dialogoManejarActividad = dialogoManejarActividad;
         setSize(800, 600);
         setLayout(new BorderLayout());
+        setLocationRelativeTo(null);
         panelComboBoxLPActividad = new PanelComboBoxLPActividad(dialogoManejarActividad);
         panelComboBoxLPActividad.getComboBoxActividades().addActionListener(this);
         add(panelComboBoxLPActividad, BorderLayout.WEST);
+
         panelVerActividad = new PanelVerActividad();
         add(panelVerActividad, BorderLayout.CENTER);
+
         JPanel panelBotones = new JPanel(new FlowLayout());
+        panelBotones.setBorder(new EmptyBorder(10, 10, 10, 10));
+
         botonVolver = new JButton("Volver");
-        botonEditar = new JButton("Editar");
-        botonEliminar = new JButton("Eliminar");
         botonVolver.addActionListener(this);
-        botonEditar.addActionListener(this);
-        botonEliminar.addActionListener(this);
+        botonVolver.setFont(new Font("Arial", Font.PLAIN, 16));
+        botonVolver.setBackground(new Color(105, 105, 105));
+        botonVolver.setForeground(Color.WHITE);
+        botonVolver.setBorderPainted(false);
         panelBotones.add(botonVolver);
+
+        botonEditar = new JButton("Editar");
+        botonEditar.addActionListener(this);
+        botonEditar.setFont(new Font("Arial", Font.PLAIN, 16));
+        botonEditar.setBackground(new Color(70, 130, 180));
+        botonEditar.setForeground(Color.WHITE);
+        botonEditar.setBorderPainted(false);
         panelBotones.add(botonEditar);
+
+        botonEliminar = new JButton("Eliminar");
+        botonEliminar.addActionListener(this);
+        botonEliminar.setFont(new Font("Arial", Font.PLAIN, 16));
+        botonEliminar.setBackground(new Color(220, 20, 60));
+        botonEliminar.setForeground(Color.WHITE);
+        botonEliminar.setBorderPainted(false);
         panelBotones.add(botonEliminar);
+
         add(panelBotones, BorderLayout.SOUTH);
-
-
     }
 
     public PanelVerActividad getPanelVerActividad() {
@@ -52,7 +72,7 @@ public class DialogoVerActividad extends JDialog implements ActionListener {
         if (e.getSource() == panelComboBoxLPActividad.getComboBoxActividades()) {
             Actividad actividad = (Actividad) panelComboBoxLPActividad.getComboBoxActividades().getSelectedItem();
             if (actividad != null) {
-               panelVerActividad.actualizarActividad(actividad);
+                panelVerActividad.actualizarActividad(actividad);
             }
         } else if (e.getSource() == botonVolver) {
             this.dispose();

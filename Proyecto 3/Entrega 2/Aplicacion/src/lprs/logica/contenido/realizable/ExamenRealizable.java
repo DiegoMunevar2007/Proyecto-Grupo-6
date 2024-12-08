@@ -18,7 +18,7 @@ public class ExamenRealizable extends ActividadRealizable {
     private ArrayList<PreguntaAbiertaRealizable> preguntasRealizadas;
 
     public ExamenRealizable(Estudiante estudiante, Examen examen) {
-        super(estudiante);
+        super(examen,estudiante);
         this.actividadBase = examen;
         this.preguntasRealizadas = new ArrayList<PreguntaAbiertaRealizable>();
         this.tiempoTomado = 0;

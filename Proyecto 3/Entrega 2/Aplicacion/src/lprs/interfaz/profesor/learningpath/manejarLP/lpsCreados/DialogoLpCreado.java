@@ -23,7 +23,7 @@ public class DialogoLpCreado extends JDialog implements ActionListener {
     private HashMap<String, LearningPath> lpsHashMap;
 
     public DialogoLpCreado(DialogoManejarLP dialogoManejarLP) {
-        setSize(600,600);
+        setSize(600, 600);
         this.dialogoManejarLP = dialogoManejarLP;
         panelInfoLP = new PanelInfoLP();
         lps = dialogoManejarLP.getInicioProfesor().getProfesor().getLearningPathsCreadosLista();
@@ -32,6 +32,8 @@ public class DialogoLpCreado extends JDialog implements ActionListener {
 
         JLabel titulo = new JLabel("Learning Paths Creados");
         titulo.setBorder(new EmptyBorder(30, 30, 30, 30));
+        titulo.setFont(new Font("Arial", Font.BOLD, 24));
+        titulo.setHorizontalAlignment(SwingConstants.CENTER);
         add(titulo, BorderLayout.NORTH);
         add(panelInfoLP, BorderLayout.CENTER);
 
@@ -43,6 +45,7 @@ public class DialogoLpCreado extends JDialog implements ActionListener {
             lpsHashMap.put(lp.getTitulo() + "(" + lp.getID() + ")", lp);
         }
         comboLPs.addActionListener(this);
+        comboLPs.setFont(new Font("Arial", Font.PLAIN, 16));
         panelCombo.add(comboLPs);
         add(panelCombo, BorderLayout.WEST);
 
@@ -51,15 +54,23 @@ public class DialogoLpCreado extends JDialog implements ActionListener {
         panelBotones.setLayout(new FlowLayout());
         botonModificar = new JButton("Modificar");
         botonModificar.addActionListener(this);
+        botonModificar.setFont(new Font("Arial", Font.PLAIN, 16));
+        botonModificar.setBackground(new Color(70, 130, 180));
+        botonModificar.setForeground(Color.WHITE);
         panelBotones.add(botonModificar);
         botonEliminar = new JButton("Eliminar");
         botonEliminar.addActionListener(this);
+        botonEliminar.setFont(new Font("Arial", Font.PLAIN, 16));
+        botonEliminar.setBackground(new Color(220, 20, 60));
+        botonEliminar.setForeground(Color.WHITE);
         panelBotones.add(botonEliminar);
         botonCerrar = new JButton("Cerrar");
         botonCerrar.addActionListener(this);
+        botonCerrar.setFont(new Font("Arial", Font.PLAIN, 16));
+        botonCerrar.setBackground(new Color(105, 105, 105));
+        botonCerrar.setForeground(Color.WHITE);
         panelBotones.add(botonCerrar);
         add(panelBotones, BorderLayout.SOUTH);
-
     }
 
     @Override

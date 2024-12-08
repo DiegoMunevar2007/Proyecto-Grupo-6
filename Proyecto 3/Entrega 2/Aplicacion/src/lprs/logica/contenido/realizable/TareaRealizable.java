@@ -17,7 +17,7 @@ public class TareaRealizable extends ActividadRealizable {
 	private int seccionActual;
 
 	public TareaRealizable(Tarea actividadBase, Estudiante estudiante) {
-		super(estudiante);
+		super(actividadBase, estudiante);
 		this.actividadBase = actividadBase;
 		this.estado = "No Exitoso";
 		seccionActual = 0;

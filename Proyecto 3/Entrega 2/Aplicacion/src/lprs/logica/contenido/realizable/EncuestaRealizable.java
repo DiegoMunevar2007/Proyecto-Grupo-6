@@ -19,7 +19,7 @@ public class EncuestaRealizable extends ActividadRealizable {
     private long tiempoFinal;
 
     public EncuestaRealizable(Encuesta actividadBase, Estudiante estudiante) {
-        super(estudiante);
+        super(actividadBase, estudiante);
         this.actividadBase = actividadBase;;
         preguntasRealizadas = new ArrayList<PreguntaAbiertaRealizable>();
     }

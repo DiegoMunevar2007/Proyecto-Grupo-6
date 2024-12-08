@@ -23,21 +23,22 @@ public class DialogoClonarLP extends JDialog implements ActionListener {
     private HashMap<String, LearningPath> lpsHashMap;
 
     public DialogoClonarLP(DialogoManejarLP dialogoManejarLP) {
-        setSize(600,600);
+        setSize(600, 600);
         this.dialogoManejarLP = dialogoManejarLP;
         panelInfoLP = new PanelInfoLP();
         lps = dialogoManejarLP.getInicioProfesor().getProfesor().getLprsActual().getManejadorLP().getLearningPaths();
-        lpsHashMap = new HashMap<String, LearningPath>();
+        lpsHashMap = new HashMap<>();
         setLayout(new BorderLayout());
 
         JLabel titulo = new JLabel("Clonar Learning Path", SwingConstants.CENTER);
-        titulo.setBorder(new EmptyBorder(30, 30, 30, 30));
+        titulo.setFont(new Font("Arial", Font.BOLD, 24));
+        titulo.setBorder(new EmptyBorder(20, 0, 20, 0));
         add(titulo, BorderLayout.NORTH);
         add(panelInfoLP, BorderLayout.CENTER);
 
         JPanel panelCombo = new JPanel();
-        panelCombo.setBorder(new EmptyBorder(30, 30, 30, 30));
-        comboLPs = new JComboBox<String>();
+        panelCombo.setBorder(new EmptyBorder(20, 20, 20, 20));
+        comboLPs = new JComboBox<>();
         for (LearningPath lp : lps) {
             comboLPs.addItem(lp.getTitulo() + "(" + lp.getID() + ")");
             lpsHashMap.put(lp.getTitulo() + "(" + lp.getID() + ")", lp);
@@ -47,12 +48,20 @@ public class DialogoClonarLP extends JDialog implements ActionListener {
         add(panelCombo, BorderLayout.WEST);
 
         JPanel panelBotones = new JPanel();
-        panelBotones.setBorder(new EmptyBorder(30, 30, 30, 30));
+        panelBotones.setBorder(new EmptyBorder(20, 20, 20, 20));
         panelBotones.setLayout(new FlowLayout());
         botonClonar = new JButton("Clonar");
+        botonClonar.setFont(new Font("Arial", Font.PLAIN, 16));
+        botonClonar.setBackground(new Color(70, 130, 180));
+        botonClonar.setForeground(Color.WHITE);
+        botonClonar.setBorderPainted(false);
         botonClonar.addActionListener(this);
         panelBotones.add(botonClonar);
         botonCerrar = new JButton("Cerrar");
+        botonCerrar.setFont(new Font("Arial", Font.PLAIN, 16));
+        botonCerrar.setBackground(new Color(105, 105, 105));
+        botonCerrar.setForeground(Color.WHITE);
+        botonCerrar.setBorderPainted(false);
         botonCerrar.addActionListener(this);
         panelBotones.add(botonCerrar);
         add(panelBotones, BorderLayout.SOUTH);

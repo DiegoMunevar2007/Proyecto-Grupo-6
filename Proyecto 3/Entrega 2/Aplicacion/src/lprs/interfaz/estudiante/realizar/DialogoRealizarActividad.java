@@ -3,6 +3,7 @@ package lprs.interfaz.estudiante.realizar;
 import lprs.exceptions.ActividadPreviaException;
 import lprs.interfaz.estudiante.InicioEstudiante;
 import lprs.logica.contenido.*;
+import lprs.logica.contenido.pregunta.PreguntaCerrada;
 import lprs.logica.contenido.realizable.*;
 
 import javax.swing.*;
@@ -80,20 +81,33 @@ public class DialogoRealizarActividad extends JDialog implements ActionListener 
                 if (actividadRealizable instanceof TareaRealizable){
                     actividadRealizable.enviarActividad(new ArrayList());}
                 else if (actividadRealizable instanceof QuizRealizable){
-                VisualizarQuiz visualizarQuiz = (VisualizarQuiz) panelActividad;
-                ArrayList preguntasRealizadas = visualizarQuiz.getPreguntasRealizadas();
-                actividadRealizable.enviarActividad(preguntasRealizadas);
+                VisualizarQuiz visualizarQuiz = (VisualizarQuiz) panelActividad.getComponent(0);
+
+                if (visualizarQuiz.getPreguntasRealizadas().size()<((Quiz) actividad).getPreguntasQuiz().size()){
+                    JOptionPane.showMessageDialog(this, "No se han respondido todas las preguntas");
+                    return;
                 }
+                ArrayList preguntasRealizadas = visualizarQuiz.getPreguntasRealizadas();
+                for (int i = 0; i < preguntasRealizadas.size(); i++) {
+                    PreguntaCerradaRealizable preguntaRealizada = (PreguntaCerradaRealizable) preguntasRealizadas.get(i);
+                    PreguntaCerrada pregunta = ((Quiz) actividad).getPreguntasQuiz().get(i);
+                    if (preguntaRealizada.getOpcionEscogida().equals(pregunta.getCorrecta())) {
+                        ((QuizRealizable) actividadRealizable).incCorrectas();
+                    }
+                }
+                    actividadRealizable.enviarActividad(preguntasRealizadas);
+                }
+
                 else if (actividadRealizable instanceof RecursoRealizable){
                     actividadRealizable.enviarActividad(new ArrayList());
                 }
                 else if (actividadRealizable instanceof ExamenRealizable){
-                    VisualizarPreguntaAbierta visualizarPreguntaAbierta = (VisualizarPreguntaAbierta) panelActividad;
+                    VisualizarPreguntaAbierta visualizarPreguntaAbierta = (VisualizarPreguntaAbierta) panelActividad.getComponent(0);
                     ArrayList preguntasRealizadas = visualizarPreguntaAbierta.getPreguntasRealizadas();
                     actividadRealizable.enviarActividad(preguntasRealizadas);
                 }
                 else if (actividadRealizable instanceof EncuestaRealizable){
-                    VisualizarPreguntaAbierta visualizarPreguntaAbierta = (VisualizarPreguntaAbierta) panelActividad;
+                    VisualizarPreguntaAbierta visualizarPreguntaAbierta = (VisualizarPreguntaAbierta) panelActividad.getComponent(0);
                     ArrayList preguntasRealizadas = visualizarPreguntaAbierta.getPreguntasRealizadas();
                     actividadRealizable.enviarActividad(preguntasRealizadas);
 

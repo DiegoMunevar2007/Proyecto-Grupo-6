@@ -15,7 +15,7 @@ public class DialogoDiagrama extends JDialog implements ActionListener {
     private JButton btnVolver;
     public DialogoDiagrama(DialogoManejarSeguimiento dialogoManejarSeguimiento,  LearningPath lp, int anio) {
        setLayout(new BorderLayout());
-       setSize(500, 500);
+       setSize(900, 900);
        JLabel label = new JLabel("Diagrama del Learning Path: " + lp.getTitulo()+" del año: "+anio);
        add(label, BorderLayout.NORTH);
        this.lp = lp;
