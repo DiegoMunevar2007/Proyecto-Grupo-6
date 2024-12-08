@@ -5,6 +5,7 @@ import lprs.interfaz.profesor.InicioProfesor;
 import lprs.interfaz.profesor.manejaractividad.crear.DialogoCrearActividad;
 import lprs.interfaz.profesor.manejaractividad.crear.DialogoSeleccionarLP;
 import lprs.interfaz.profesor.manejaractividad.crear.PanelActividadBasica;
+import lprs.interfaz.profesor.manejaractividad.ver.DialogoVerActividad;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -57,7 +58,9 @@ public class DialogoManejarActividad extends JDialog implements ActionListener {
             dialogoSeleccionarLP.setVisible(true);
             this.dispose();
         } else if (e.getSource() == botonVerActividades) {
-
+            this.dispose();
+            DialogoVerActividad dialogoVerActividad = new DialogoVerActividad(this);
+            dialogoVerActividad.setVisible(true);
         } else if (e.getSource() == botonReseniarActividad) {
             this.dispose();
             DialogoResenia dialogoResenia = new DialogoResenia(this);

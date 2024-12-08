@@ -61,20 +61,7 @@ public class DialogoRecurso extends JDialog implements ActionListener {
                 JOptionPane.showMessageDialog(this, "El link no puede estar vacío");
             }
         } else if (e.getSource() == btnContinuar) {
-            int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea agregar una actividad previa?");
-            if (respuesta == JOptionPane.YES_OPTION) {
-                DialogoAgregarActividadPrevia dialogoAgregarActividadPrevia = new DialogoAgregarActividadPrevia(this, dialogoCrearActividad.getLp(), recurso);
-                dialogoAgregarActividadPrevia.setVisible(true);
-                this.dispose();
-            }
-            int respuesta2 = JOptionPane.showConfirmDialog(this, "¿Desea agregar una actividad de seguimiento?");
-            if (respuesta2 == JOptionPane.YES_OPTION) {
-                DialogoAgregarActividadSeguimiento dialogoAgregarActividadSeguimiento = new DialogoAgregarActividadSeguimiento(this, dialogoCrearActividad.getLp(), recurso);
-                dialogoAgregarActividadSeguimiento.setVisible(true);
-                this.dispose();
-            }
-            JOptionPane.showMessageDialog(this, "Actividad creada exitosamente");
-            dialogoCrearActividad.getDialogoManejarActividad().setVisible(true);
+
         }
     }
 }

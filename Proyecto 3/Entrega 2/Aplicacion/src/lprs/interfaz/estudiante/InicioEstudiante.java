@@ -3,6 +3,7 @@ package lprs.interfaz.estudiante;
 import lprs.interfaz.InterfazPrincipal;
 import lprs.interfaz.estudiante.avance.actividad.DialogoAvanceActividad;
 import lprs.interfaz.estudiante.avance.learningpath.DialogoAvanceLP;
+import lprs.interfaz.estudiante.realizar.DialogoSeleccionarActividad;
 import lprs.interfaz.estudiante.resenia.DialogoResenia;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
@@ -88,7 +89,11 @@ public class InicioEstudiante extends JFrame implements ActionListener {
         }
         else if (e.getSource() == btnVerAvance) {
             verAvance();
-        } else if (e.getSource() == btnReseniarActividad) {
+        } else if (e.getSource() == btnRealizarActividad){
+            DialogoSeleccionarActividad dialogoSeleccionarActividad = new DialogoSeleccionarActividad(this);
+            interfazPrincipal.changeDialog(dialogoSeleccionarActividad);
+        }
+        else if (e.getSource() == btnReseniarActividad) {
             DialogoResenia dialogoResenia = new DialogoResenia(this);
             interfazPrincipal.changeDialog(dialogoResenia);
         }

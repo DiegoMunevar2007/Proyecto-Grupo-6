@@ -101,9 +101,38 @@ public class DialogoCrearActividad extends JDialog implements ActionListener {
             examenDialogo.setVisible(true);
 
         } else if (tipo.equals("Recurso")) {
-
-
-
+            String tipoRecurso = JOptionPane.showInputDialog("Ingrese el tipo de recurso");
+            String link = JOptionPane.showInputDialog("Ingrese el link del recurso");
+            RecursoEducativo recurso = null;
+            try {
+                recurso = new RecursoEducativo(panelActividadBasica.getTxtTitulo().getText(),
+                        panelActividadBasica.getTxtDescripcion().getText(),
+                        panelActividadBasica.getTxtObjetivo().getText(),
+                        Integer.parseInt(panelActividadBasica.getTxtDuracion().getText()),
+                        panelActividadBasica.getCheckObligatoria().isSelected(), panelActividadBasica.getFecha(),
+                        lp,
+                        panelActividadBasica.getCmbDificultad().getSelectedItem().toString(), tipoRecurso, link);
+            }
+            catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+                return;
+            }
+            lp.aniadirActividad(recurso);
+            this.dispose();
+            int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea agregar una actividad previa?");
+            if (respuesta == JOptionPane.YES_OPTION) {
+                DialogoAgregarActividadPrevia dialogoAgregarActividadPrevia = new DialogoAgregarActividadPrevia(this, lp, recurso);
+                dialogoAgregarActividadPrevia.setVisible(true);
+                this.dispose();
+            }
+            int respuesta2 = JOptionPane.showConfirmDialog(this, "¿Desea agregar una actividad de seguimiento?");
+            if (respuesta2 == JOptionPane.YES_OPTION) {
+                DialogoAgregarActividadSeguimiento dialogoAgregarActividadSeguimiento = new DialogoAgregarActividadSeguimiento(this, lp, recurso);
+                dialogoAgregarActividadSeguimiento.setVisible(true);
+                this.dispose();
+            }
+            JOptionPane.showMessageDialog(this, "Actividad creada exitosamente");
+            dialogoManejarActividad.setVisible(true);
         } else if (tipo.equals("Quiz Verdadero/Falso")) {
             float calificacion = Float.parseFloat(JOptionPane.showInputDialog("Ingrese la calificación mínima para aprobar el quiz"));
             QuizVerdaderoFalso quizVerdaderoFalso = null;
