@@ -31,8 +31,8 @@ public class DialogoManejarActividad extends JDialog implements ActionListener {
         add(titulo, BorderLayout.NORTH);
 
         JPanel panelBotones = new JPanel();
-        panelBotones.setLayout(new GridLayout(4, 1, 20, 20)); // Reduce the gaps between buttons
-        panelBotones.setBorder(new EmptyBorder(20, 20, 20, 20)); // Reduce the border size
+        panelBotones.setLayout(new GridLayout(4, 1, 20, 20));
+        panelBotones.setBorder(new EmptyBorder(20, 20, 20, 20));
 
         botonVerActividades = new JButton("Ver/Editar/Eliminar Actividades");
         botonVerActividades.addActionListener(this);

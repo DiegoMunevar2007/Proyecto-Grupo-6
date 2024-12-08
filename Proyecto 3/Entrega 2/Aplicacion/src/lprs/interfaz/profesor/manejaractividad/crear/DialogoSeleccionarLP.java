@@ -4,6 +4,7 @@ import lprs.interfaz.profesor.manejaractividad.DialogoManejarActividad;
 import lprs.logica.learningPath.LearningPath;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,28 +17,47 @@ public class DialogoSeleccionarLP extends JDialog implements ActionListener {
 
     public DialogoSeleccionarLP(DialogoManejarActividad dialogoManejarActividad) {
         this.dialogoManejarActividad = dialogoManejarActividad;
-        setSize(300, 300);
-        setLayout(new BorderLayout());
-        JLabel lblSeleccionarLP = new JLabel("Seleccionar Learning Path:");
+        setTitle("Seleccionar Learning Path");
+        setSize(400, 300);
+        setLayout(new BorderLayout(10, 10));
+        setLocationRelativeTo(null);
+
+        JLabel lblSeleccionarLP = new JLabel("Seleccionar Learning Path:", SwingConstants.CENTER);
+        lblSeleccionarLP.setFont(new Font("Arial", Font.BOLD, 16));
+        lblSeleccionarLP.setBorder(new EmptyBorder(20, 0, 10, 0));
         add(lblSeleccionarLP, BorderLayout.NORTH);
-        listaLP = new JComboBox();
-        listaLP.addItem("Seleccionar");
+
+        listaLP = new JComboBox<>();
+        listaLP.addItem("Seleccionar un Learning Path");
         for (LearningPath lp : dialogoManejarActividad.getInicioProfesor().getProfesor().getLearningPathsCreadosLista()) {
             listaLP.addItem(lp);
         }
+        listaLP.setFont(new Font("Arial", Font.PLAIN, 14));
+        listaLP.setBackground(new Color(70, 130, 180));
+        listaLP.setForeground(Color.WHITE);
         add(listaLP, BorderLayout.CENTER);
-        JPanel panelBotones = new JPanel();
-        panelBotones.setLayout(new FlowLayout());
+
+        JPanel panelBotones = new JPanel(new FlowLayout());
+        panelBotones.setBorder(new EmptyBorder(10, 10, 10, 10));
+
         btnContinuar = new JButton("Continuar");
+        btnContinuar.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnContinuar.setBackground(new Color(34, 139, 34));
+        btnContinuar.setForeground(Color.WHITE);
+        btnContinuar.setBorderPainted(false);
         btnContinuar.addActionListener(this);
         panelBotones.add(btnContinuar);
+
         btnVolver = new JButton("Volver");
+        btnVolver.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnVolver.setBackground(new Color(220, 20, 60));
+        btnVolver.setForeground(Color.WHITE);
+        btnVolver.setBorderPainted(false);
         btnVolver.addActionListener(this);
         panelBotones.add(btnVolver);
+
         add(panelBotones, BorderLayout.SOUTH);
     }
-
-
 
     @Override
     public void actionPerformed(ActionEvent e) {

@@ -4,6 +4,7 @@ import lprs.logica.contenido.Actividad;
 import lprs.logica.learningPath.LearningPath;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,43 +16,62 @@ public class DialogoAgregarActividadPrevia extends JDialog implements ActionList
     private JButton btnVolver;
     private JDialog dialogoOrigen;
     private Actividad actividad;
-    public DialogoAgregarActividadPrevia(JDialog dialogoOrigen, LearningPath lp, Actividad actividad){
+
+    public DialogoAgregarActividadPrevia(JDialog dialogoOrigen, LearningPath lp, Actividad actividad) {
         this.dialogoOrigen = dialogoOrigen;
-        this.actividad  = actividad;
+        this.actividad = actividad;
+
+        setTitle("Agregar Actividad Previa");
         setSize(300, 300);
         setLayout(new BorderLayout());
-        JLabel lblSeleccionarActividad = new JLabel("Seleccionar Actividad Previa:",SwingConstants.CENTER);
-        lblSeleccionarActividad.setBounds(10, 10, 200, 20);
+        setLocationRelativeTo(null);
+
+        JLabel lblSeleccionarActividad = new JLabel("Seleccionar Actividad Previa:", SwingConstants.CENTER);
+        lblSeleccionarActividad.setFont(new Font("Arial", Font.BOLD, 16));
+        lblSeleccionarActividad.setBorder(new EmptyBorder(20, 0, 20, 0));
         add(lblSeleccionarActividad, BorderLayout.NORTH);
-        listaActividades = new JComboBox();
-        listaActividades.setBounds(10, 40, 200, 20);
+
+        listaActividades = new JComboBox<>();
         listaActividades.addItem("Seleccionar");
         for (Actividad act : lp.getActividades()) {
-            if (act.equals(actividad)) {
-                continue;
+            if (!act.equals(actividad)) {
+                listaActividades.addItem(act);
             }
-            listaActividades.addItem(act);
         }
+        listaActividades.setFont(new Font("Arial", Font.PLAIN, 16));
+        listaActividades.setBackground(new Color(70, 130, 180));
+        listaActividades.setForeground(Color.WHITE);
         add(listaActividades, BorderLayout.CENTER);
+
         JPanel panelBotones = new JPanel();
         panelBotones.setLayout(new FlowLayout());
-         btnContinuar = new JButton("Continuar");
-        btnContinuar.setBounds(10, 70, 100, 20);
+        panelBotones.setBorder(new EmptyBorder(20, 20, 20, 20));
+
+        btnContinuar = new JButton("Continuar");
+        btnContinuar.setFont(new Font("Arial", Font.PLAIN, 16));
+        btnContinuar.setBackground(new Color(34, 139, 34));
+        btnContinuar.setForeground(Color.WHITE);
+        btnContinuar.setBorderPainted(false);
         btnContinuar.addActionListener(this);
         panelBotones.add(btnContinuar);
+
         btnVolver = new JButton("Volver");
-        btnVolver.setBounds(120, 70, 100, 20);
+        btnVolver.setFont(new Font("Arial", Font.PLAIN, 16));
+        btnVolver.setBackground(new Color(220, 20, 60));
+        btnVolver.setForeground(Color.WHITE);
+        btnVolver.setBorderPainted(false);
         btnVolver.addActionListener(this);
         panelBotones.add(btnVolver);
+
         add(panelBotones, BorderLayout.SOUTH);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-
         if (e.getSource() == btnVolver) {
             this.dispose();
         } else if (e.getSource() == btnContinuar) {
-            if (listaActividades.getSelectedItem().toString().equals("Seleccionar")) {
+            if ("Seleccionar".equals(listaActividades.getSelectedItem().toString())) {
                 JOptionPane.showMessageDialog(this, "Seleccione una Actividad");
             } else {
                 Actividad act = (Actividad) listaActividades.getSelectedItem();

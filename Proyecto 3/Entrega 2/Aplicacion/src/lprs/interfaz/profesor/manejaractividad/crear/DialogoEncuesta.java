@@ -4,6 +4,7 @@ import lprs.logica.contenido.Encuesta;
 import lprs.logica.contenido.pregunta.PreguntaAbierta;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,26 +23,48 @@ public class DialogoEncuesta extends JDialog implements ActionListener {
         this.encuesta = encuesta;
         this.dialogoCrearActividad = dialogoCrearActividad;
         this.preguntas = new ArrayList<>();
+        setTitle("Crear Encuesta");
         setSize(400, 400);
         setLayout(new BorderLayout(10, 10));
+        setLocationRelativeTo(null);
 
         JPanel panelPregunta = new JPanel(new BorderLayout(10, 10));
         JLabel lblPregunta = new JLabel("Pregunta:");
+        lblPregunta.setFont(new Font("Arial", Font.BOLD, 16));
+        lblPregunta.setBorder(new EmptyBorder(20, 0, 10, 0));
         panelPregunta.add(lblPregunta, BorderLayout.NORTH);
         txtPregunta = new JTextArea();
+        txtPregunta.setFont(new Font("Arial", Font.PLAIN, 14));
         panelPregunta.add(new JScrollPane(txtPregunta), BorderLayout.CENTER);
         add(panelPregunta, BorderLayout.CENTER);
 
         JPanel panelBotones = new JPanel(new FlowLayout());
+        panelBotones.setBorder(new EmptyBorder(10, 10, 10, 10));
+
         btnAgregarPregunta = new JButton("Agregar Pregunta");
-        btnCancelar = new JButton("Cancelar");
-        btnContinuar = new JButton("Continuar");
+        btnAgregarPregunta.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnAgregarPregunta.setBackground(new Color(70, 130, 180));
+        btnAgregarPregunta.setForeground(Color.WHITE);
+        btnAgregarPregunta.setBorderPainted(false);
         btnAgregarPregunta.addActionListener(this);
-        btnCancelar.addActionListener(this);
-        btnContinuar.addActionListener(this);
         panelBotones.add(btnAgregarPregunta);
+
+        btnCancelar = new JButton("Cancelar");
+        btnCancelar.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnCancelar.setBackground(new Color(220, 20, 60));
+        btnCancelar.setForeground(Color.WHITE);
+        btnCancelar.setBorderPainted(false);
+        btnCancelar.addActionListener(this);
         panelBotones.add(btnCancelar);
+
+        btnContinuar = new JButton("Continuar");
+        btnContinuar.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnContinuar.setBackground(new Color(34, 139, 34));
+        btnContinuar.setForeground(Color.WHITE);
+        btnContinuar.setBorderPainted(false);
+        btnContinuar.addActionListener(this);
         panelBotones.add(btnContinuar);
+
         add(panelBotones, BorderLayout.SOUTH);
     }
 

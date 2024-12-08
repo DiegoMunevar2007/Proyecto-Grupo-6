@@ -75,4 +75,26 @@ public class PanelInfoLP extends JPanel {
             txtPalabrasClave.append(palabraClave + "\n");
         }
     }
+    public String getTitulo(){
+        return txtTitulo.getText();
+    }
+    public String getDescripcion(){
+        return txtDescripcion.getText();
+    }
+    public String getNivel(){
+        return txtNivel.getText();
+    }
+    public String getObjetivos(){
+        return txtObjetivos.getText();
+    }
+    public String getDuracion(){
+        return txtDuracion.getText();
+    }
+    public String getRating(){
+        return txtRating.getText();
+    }
+    public String getPalabrasClave(){
+        return txtPalabrasClave.getText();
+    }
+
 }

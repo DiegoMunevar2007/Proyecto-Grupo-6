@@ -8,6 +8,7 @@ import lprs.logica.cuentas.Profesor;
 import lprs.logica.learningPath.LearningPath;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,15 +44,21 @@ public class DialogoPendientes extends JDialog implements ActionListener, Window
         comboBoxActividades.addActionListener(this);
 
         JPanel panelAuxiliarComboBox = new JPanel(new BorderLayout());
+        panelAuxiliarComboBox.setBorder(new EmptyBorder(20, 20, 20, 20));
         panelAuxiliarComboBox.add(comboBoxLearningPaths, BorderLayout.NORTH);
         panelAuxiliarComboBox.add(comboBoxActividades, BorderLayout.SOUTH);
         add(panelAuxiliarComboBox, BorderLayout.WEST);
 
         panelActividad = new PanelActividad();
         botonCalificar = new JButton("Calificar");
+        botonCalificar.setFont(new Font("Arial", Font.PLAIN, 16));
+        botonCalificar.setBackground(new Color(70, 130, 180));
+        botonCalificar.setForeground(Color.WHITE);
+        botonCalificar.setBorderPainted(false);
         botonCalificar.addActionListener(this);
 
         JPanel panelAuxiliarInfo = new JPanel(new BorderLayout());
+        panelAuxiliarInfo.setBorder(new EmptyBorder(20, 20, 20, 20));
         panelAuxiliarInfo.add(panelActividad, BorderLayout.CENTER);
         panelAuxiliarInfo.add(botonCalificar, BorderLayout.SOUTH);
         add(panelAuxiliarInfo, BorderLayout.CENTER);
@@ -87,7 +94,7 @@ public class DialogoPendientes extends JDialog implements ActionListener, Window
     }
 
     private void actualizarActividad() {
-    if (comboBoxActividades.getSelectedItem() == null) {
+        if (comboBoxActividades.getSelectedItem() == null) {
             return;
         }
         actividadRealizable = (ActividadRealizable) comboBoxActividades.getSelectedItem();
@@ -106,7 +113,6 @@ public class DialogoPendientes extends JDialog implements ActionListener, Window
         } else if (actividadRealizable instanceof ExamenRealizable) {
             JFrame panel = verExamen((ExamenRealizable) actividadRealizable);
             panel.addWindowListener(this);
-
         }
     }
 
@@ -133,6 +139,7 @@ public class DialogoPendientes extends JDialog implements ActionListener, Window
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
         panel.add(new JLabel("Titulo: " + encuesta.getActividadBase().getTitulo()));
         panel.add(new JLabel("Estudiante: " + encuesta.getEstudiante().getUsuario()));
@@ -159,6 +166,7 @@ public class DialogoPendientes extends JDialog implements ActionListener, Window
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
         panel.add(new JLabel("Titulo: " + examen.getActividadBase().getTitulo()));
         panel.add(new JLabel("Estudiante: " + examen.getEstudiante().getUsuario()));
@@ -179,14 +187,10 @@ public class DialogoPendientes extends JDialog implements ActionListener, Window
     }
 
     @Override
-    public void windowOpened(WindowEvent e) {
-
-    }
+    public void windowOpened(WindowEvent e) {}
 
     @Override
-    public void windowClosing(WindowEvent e) {
-
-    }
+    public void windowClosing(WindowEvent e) {}
 
     @Override
     public void windowClosed(WindowEvent e) {
@@ -194,22 +198,14 @@ public class DialogoPendientes extends JDialog implements ActionListener, Window
     }
 
     @Override
-    public void windowIconified(WindowEvent e) {
-
-    }
+    public void windowIconified(WindowEvent e) {}
 
     @Override
-    public void windowDeiconified(WindowEvent e) {
-
-    }
+    public void windowDeiconified(WindowEvent e) {}
 
     @Override
-    public void windowActivated(WindowEvent e) {
-
-    }
+    public void windowActivated(WindowEvent e) {}
 
     @Override
-    public void windowDeactivated(WindowEvent e) {
-
-    }
+    public void windowDeactivated(WindowEvent e) {}
 }

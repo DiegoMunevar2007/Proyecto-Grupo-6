@@ -5,6 +5,7 @@ import lprs.logica.contenido.*;
 import lprs.logica.learningPath.LearningPath;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,23 +13,24 @@ import java.awt.event.ActionListener;
 public class DialogoCrearActividad extends JDialog implements ActionListener {
     private PanelActividadBasica panelActividadBasica;
     private JComboBox<String> tipoActividad;
-
-
-    private JComboBox<String> learningPaths;
     private JButton btnCrearActividad;
     private JButton btnCancelar;
-    private JPanel panelDerecho;
-    private String actividadSeleccionada;
     private DialogoManejarActividad dialogoManejarActividad;
     private LearningPath lp;
+
     public DialogoCrearActividad(LearningPath lp, DialogoManejarActividad dialogoManejarActividad) {
-        this.actividadSeleccionada = "";
         this.dialogoManejarActividad = dialogoManejarActividad;
         this.lp = lp;
-        setSize(600, 600);
+        setTitle("Crear Actividad");
+        setSize(900, 900);
         setLayout(new BorderLayout());
-        JLabel titulo = new JLabel("Crear Actividad");
+        setLocationRelativeTo(null);
+
+        JLabel titulo = new JLabel("Crear Actividad", SwingConstants.CENTER);
+        titulo.setFont(new Font("Arial", Font.BOLD, 18));
+        titulo.setBorder(new EmptyBorder(20, 0, 20, 0));
         add(titulo, BorderLayout.NORTH);
+
         panelActividadBasica = new PanelActividadBasica();
         tipoActividad = new JComboBox<>();
         tipoActividad.addItem("Seleccionar");
@@ -37,26 +39,37 @@ public class DialogoCrearActividad extends JDialog implements ActionListener {
         tipoActividad.addItem("Recurso");
         tipoActividad.addItem("Quiz Verdadero/Falso");
         tipoActividad.addItem("Quiz Multiple");
-        tipoActividad.addItem("Encuesta");
         tipoActividad.addItem("Tarea");
+        tipoActividad.setFont(new Font("Arial", Font.PLAIN, 16));
+        tipoActividad.setBackground(new Color(70, 130, 180));
+        tipoActividad.setForeground(Color.WHITE);
         tipoActividad.addActionListener(this);
         panelActividadBasica.add(new JLabel("Tipo de actividad:"));
         panelActividadBasica.add(tipoActividad);
         add(panelActividadBasica, BorderLayout.CENTER);
+
         JPanel panelBotones = new JPanel();
         panelBotones.setLayout(new FlowLayout());
+        panelBotones.setBorder(new EmptyBorder(20, 20, 20, 20));
+
         btnCrearActividad = new JButton("Crear Actividad");
+        btnCrearActividad.setFont(new Font("Arial", Font.PLAIN, 16));
+        btnCrearActividad.setBackground(new Color(34, 139, 34));
+        btnCrearActividad.setForeground(Color.WHITE);
+        btnCrearActividad.setBorderPainted(false);
         btnCrearActividad.addActionListener(this);
         panelBotones.add(btnCrearActividad);
+
         btnCancelar = new JButton("Cancelar");
+        btnCancelar.setFont(new Font("Arial", Font.PLAIN, 16));
+        btnCancelar.setBackground(new Color(220, 20, 60));
+        btnCancelar.setForeground(Color.WHITE);
+        btnCancelar.setBorderPainted(false);
         btnCancelar.addActionListener(this);
         panelBotones.add(btnCancelar);
+
         add(panelBotones, BorderLayout.SOUTH);
-
     }
-
-
-
 
     private void crearActividad() {
         String tipo = tipoActividad.getSelectedItem().toString();
@@ -70,17 +83,15 @@ public class DialogoCrearActividad extends JDialog implements ActionListener {
                         panelActividadBasica.getCheckObligatoria().isSelected(), panelActividadBasica.getFecha(),
                         lp,
                         panelActividadBasica.getCmbDificultad().getSelectedItem().toString());
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
                 return;
             }
             lp.aniadirActividad(encuesta);
             this.dispose();
-            DialogoEncuesta encuestaDialogo = new DialogoEncuesta(encuesta,this);
+            DialogoEncuesta encuestaDialogo = new DialogoEncuesta(encuesta, this);
             encuestaDialogo.setVisible(true);
         } else if (tipo.equals("Examen")) {
-
             Examen examen = null;
             try {
                 examen = new Examen(panelActividadBasica.getTxtTitulo().getText(),
@@ -90,16 +101,14 @@ public class DialogoCrearActividad extends JDialog implements ActionListener {
                         panelActividadBasica.getCheckObligatoria().isSelected(), panelActividadBasica.getFecha(),
                         lp,
                         panelActividadBasica.getCmbDificultad().getSelectedItem().toString());
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
                 return;
             }
             lp.aniadirActividad(examen);
             this.dispose();
-            DialogoExamen examenDialogo = new DialogoExamen(examen,this);
+            DialogoExamen examenDialogo = new DialogoExamen(examen, this);
             examenDialogo.setVisible(true);
-
         } else if (tipo.equals("Recurso")) {
             String tipoRecurso = JOptionPane.showInputDialog("Ingrese el tipo de recurso");
             String link = JOptionPane.showInputDialog("Ingrese el link del recurso");
@@ -112,8 +121,7 @@ public class DialogoCrearActividad extends JDialog implements ActionListener {
                         panelActividadBasica.getCheckObligatoria().isSelected(), panelActividadBasica.getFecha(),
                         lp,
                         panelActividadBasica.getCmbDificultad().getSelectedItem().toString(), tipoRecurso, link);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
                 return;
             }
@@ -143,15 +151,14 @@ public class DialogoCrearActividad extends JDialog implements ActionListener {
                         Integer.parseInt(panelActividadBasica.getTxtDuracion().getText()),
                         panelActividadBasica.getCheckObligatoria().isSelected(), panelActividadBasica.getFecha(),
                         lp,
-                        panelActividadBasica.getCmbDificultad().getSelectedItem().toString(),calificacion);
-            }
-            catch (Exception e) {
+                        panelActividadBasica.getCmbDificultad().getSelectedItem().toString(), calificacion);
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
                 return;
             }
             lp.aniadirActividad(quizVerdaderoFalso);
             this.dispose();
-            DialogoQuizVF verdaderoFalso = new DialogoQuizVF(quizVerdaderoFalso,this);
+            DialogoQuizVF verdaderoFalso = new DialogoQuizVF(quizVerdaderoFalso, this);
             verdaderoFalso.setVisible(true);
         } else if (tipo.equals("Quiz Multiple")) {
             float calificacion = Float.parseFloat(JOptionPane.showInputDialog("Ingrese la calificación mínima para aprobar el quiz"));
@@ -163,19 +170,16 @@ public class DialogoCrearActividad extends JDialog implements ActionListener {
                         Integer.parseInt(panelActividadBasica.getTxtDuracion().getText()),
                         panelActividadBasica.getCheckObligatoria().isSelected(), panelActividadBasica.getFecha(),
                         lp,
-                        panelActividadBasica.getCmbDificultad().getSelectedItem().toString(),
-                        calificacion);
-            }
-            catch (Exception e) {
+                        panelActividadBasica.getCmbDificultad().getSelectedItem().toString(), calificacion);
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
                 return;
             }
             lp.aniadirActividad(quizMultiple);
             this.dispose();
-            DialogoQuizMultiple multiple = new DialogoQuizMultiple(quizMultiple,this);
+            DialogoQuizMultiple multiple = new DialogoQuizMultiple(quizMultiple, this);
             multiple.setVisible(true);
-        }
-        else if (tipo.equals("Tarea")){
+        } else if (tipo.equals("Tarea")) {
             Tarea tarea = null;
             try {
                 tarea = new Tarea(panelActividadBasica.getTxtTitulo().getText(),
@@ -185,8 +189,7 @@ public class DialogoCrearActividad extends JDialog implements ActionListener {
                         panelActividadBasica.getCheckObligatoria().isSelected(), panelActividadBasica.getFecha(),
                         lp,
                         panelActividadBasica.getCmbDificultad().getSelectedItem().toString());
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
                 return;
             }
@@ -194,30 +197,23 @@ public class DialogoCrearActividad extends JDialog implements ActionListener {
             this.dispose();
             DialogoTarea tareaDialogo = new DialogoTarea(this, tarea);
             tareaDialogo.setVisible(true);
-
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() ==btnCrearActividad) {
+        if (e.getSource() == btnCrearActividad) {
             crearActividad();
-        }
-        else if (e.getSource() == btnCancelar) {
+        } else if (e.getSource() == btnCancelar) {
             this.dispose();
             dialogoManejarActividad.setVisible(true);
         }
-        else if (e.getSource() == tipoActividad) {
-            actividadSeleccionada = tipoActividad.getSelectedItem().toString();
-        }
-
-
     }
-
 
     public LearningPath getLp() {
         return lp;
     }
+
     public DialogoManejarActividad getDialogoManejarActividad() {
         return dialogoManejarActividad;
     }

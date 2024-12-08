@@ -20,34 +20,50 @@ public class DialogoManejarLP extends JDialog implements ActionListener {
     private InicioProfesor inicioProfesor;
 
     public DialogoManejarLP(InicioProfesor inicioProfesor) {
-        setSize(800, 600);
+        this.inicioProfesor = inicioProfesor;
         setTitle("Manejar Learning Paths");
-        setLayout(new BorderLayout());
+        setSize(800, 600);
+        setLayout(new BorderLayout(10, 10));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        this.inicioProfesor = inicioProfesor;
 
         JLabel lblTitulo = new JLabel("Manejar Learning Paths", SwingConstants.CENTER);
+        lblTitulo.setFont(new Font("Arial", Font.BOLD, 20));
         lblTitulo.setBorder(new EmptyBorder(20, 0, 20, 0));
         add(lblTitulo, BorderLayout.NORTH);
 
-        JPanel panelBotones = new JPanel();
+        JPanel panelBotones = new JPanel(new GridLayout(2, 2, 20, 20));
         panelBotones.setBorder(new EmptyBorder(50, 50, 50, 50));
-        panelBotones.setLayout(new GridLayout(2, 2, 20, 20));
 
         botonVerCreados = new JButton("Ver Learning Paths Creados");
+        botonVerCreados.setFont(new Font("Arial", Font.PLAIN, 16));
+        botonVerCreados.setBackground(new Color(70, 130, 180));
+        botonVerCreados.setForeground(Color.WHITE);
+        botonVerCreados.setBorderPainted(false);
         botonVerCreados.addActionListener(this);
         panelBotones.add(botonVerCreados);
 
         botonVerDisponibles = new JButton("Ver Learning Paths Disponibles");
+        botonVerDisponibles.setFont(new Font("Arial", Font.PLAIN, 16));
+        botonVerDisponibles.setBackground(new Color(70, 130, 180));
+        botonVerDisponibles.setForeground(Color.WHITE);
+        botonVerDisponibles.setBorderPainted(false);
         botonVerDisponibles.addActionListener(this);
         panelBotones.add(botonVerDisponibles);
 
         botonCrear = new JButton("Crear Learning Path");
+        botonCrear.setFont(new Font("Arial", Font.PLAIN, 16));
+        botonCrear.setBackground(new Color(34, 139, 34));
+        botonCrear.setForeground(Color.WHITE);
+        botonCrear.setBorderPainted(false);
         botonCrear.addActionListener(this);
         panelBotones.add(botonCrear);
 
         botonSalir = new JButton("Salir");
+        botonSalir.setFont(new Font("Arial", Font.PLAIN, 16));
+        botonSalir.setBackground(new Color(220, 20, 60));
+        botonSalir.setForeground(Color.WHITE);
+        botonSalir.setBorderPainted(false);
         botonSalir.addActionListener(this);
         panelBotones.add(botonSalir);
 
@@ -59,15 +75,12 @@ public class DialogoManejarLP extends JDialog implements ActionListener {
         if (e.getSource() == botonVerCreados) {
             DialogoLpCreado dialogoLpCreado = new DialogoLpCreado(this);
             dialogoLpCreado.setVisible(true);
-
         } else if (e.getSource() == botonVerDisponibles) {
             DialogoClonarLP dialogoClonarLP = new DialogoClonarLP(this);
             dialogoClonarLP.setVisible(true);
-
         } else if (e.getSource() == botonCrear) {
             DialogoCrearLP dialogoCrearLP = new DialogoCrearLP(this, inicioProfesor.getProfesor());
             dialogoCrearLP.setVisible(true);
-
         } else if (e.getSource() == botonSalir) {
             dispose();
             inicioProfesor.setVisible(true);

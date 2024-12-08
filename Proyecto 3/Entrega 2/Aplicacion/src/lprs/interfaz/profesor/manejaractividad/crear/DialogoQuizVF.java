@@ -5,6 +5,7 @@ import lprs.logica.contenido.pregunta.Opcion;
 import lprs.logica.contenido.pregunta.PreguntaCerrada;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,39 +18,64 @@ public class DialogoQuizVF extends JDialog implements ActionListener {
     private JButton btnContinuar;
     private QuizVerdaderoFalso quizVF;
     private DialogoCrearActividad dialogoCrearActividad;
+
     public DialogoQuizVF(QuizVerdaderoFalso quizVF, DialogoCrearActividad dialogoCrearActividad) {
         this.quizVF = quizVF;
         this.dialogoCrearActividad = dialogoCrearActividad;
-        setLayout(new BorderLayout(10, 10));
+        setTitle("Crear Quiz Verdadero/Falso");
         setSize(400, 400);
+        setLayout(new BorderLayout(10, 10));
+        setLocationRelativeTo(null);
+
         JPanel panelGrid = new JPanel(new GridLayout(2, 2, 10, 10));
         JLabel lblPregunta = new JLabel("Pregunta:");
+        lblPregunta.setFont(new Font("Arial", Font.BOLD, 16));
+        lblPregunta.setBorder(new EmptyBorder(20, 0, 10, 0));
         panelGrid.add(lblPregunta);
         txtPregunta = new JTextField();
+        txtPregunta.setFont(new Font("Arial", Font.PLAIN, 14));
         panelGrid.add(txtPregunta);
         JLabel lblRespuesta = new JLabel("Respuesta:");
+        lblRespuesta.setFont(new Font("Arial", Font.BOLD, 16));
+        lblRespuesta.setBorder(new EmptyBorder(10, 0, 10, 0));
         panelGrid.add(lblRespuesta);
-        verdaderoFalso = new JComboBox<>();
-        verdaderoFalso.addItem("Verdadero");
-        verdaderoFalso.addItem("Falso");
+        verdaderoFalso = new JComboBox<>(new String[]{"Verdadero", "Falso"});
+        verdaderoFalso.setFont(new Font("Arial", Font.PLAIN, 14));
+        verdaderoFalso.setBackground(new Color(70, 130, 180));
+        verdaderoFalso.setForeground(Color.WHITE);
         panelGrid.add(verdaderoFalso);
 
-        // Panel for the buttons
         JPanel panelButtons = new JPanel(new FlowLayout());
+        panelButtons.setBorder(new EmptyBorder(10, 10, 10, 10));
+
         btnAgregarPregunta = new JButton("Agregar Pregunta");
+        btnAgregarPregunta.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnAgregarPregunta.setBackground(new Color(70, 130, 180));
+        btnAgregarPregunta.setForeground(Color.WHITE);
+        btnAgregarPregunta.setBorderPainted(false);
         btnAgregarPregunta.addActionListener(this);
-        btnCancelar = new JButton("Cancelar");
-        btnCancelar.addActionListener(this);
-        btnContinuar = new JButton("Continuar");
-        btnContinuar.addActionListener(this);
         panelButtons.add(btnAgregarPregunta);
+
+        btnCancelar = new JButton("Cancelar");
+        btnCancelar.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnCancelar.setBackground(new Color(220, 20, 60));
+        btnCancelar.setForeground(Color.WHITE);
+        btnCancelar.setBorderPainted(false);
+        btnCancelar.addActionListener(this);
         panelButtons.add(btnCancelar);
+
+        btnContinuar = new JButton("Continuar");
+        btnContinuar.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnContinuar.setBackground(new Color(34, 139, 34));
+        btnContinuar.setForeground(Color.WHITE);
+        btnContinuar.setBorderPainted(false);
+        btnContinuar.addActionListener(this);
         panelButtons.add(btnContinuar);
 
-        // Add the panels to the main panel
         add(panelGrid, BorderLayout.CENTER);
         add(panelButtons, BorderLayout.SOUTH);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnCancelar) {
@@ -82,6 +108,7 @@ public class DialogoQuizVF extends JDialog implements ActionListener {
             dialogoCrearActividad.getDialogoManejarActividad().setVisible(true);
         }
     }
+
     public void limpiarCampos() {
         txtPregunta.setText("");
     }
