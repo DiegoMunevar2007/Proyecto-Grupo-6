@@ -2,6 +2,7 @@ package lprs.interfaz.profesor.manejaractividad;
 
 import lprs.interfaz.profesor.InicioProfesor;
 import lprs.interfaz.profesor.manejaractividad.crear.DialogoCrearActividad;
+import lprs.interfaz.profesor.manejaractividad.crear.DialogoSeleccionarLP;
 import lprs.interfaz.profesor.manejaractividad.crear.PanelActividadBasica;
 
 import javax.swing.*;
@@ -51,9 +52,15 @@ public class DialogoManejarActividad extends JDialog implements ActionListener {
             this.dispose();
             inicioProfesor.setVisible(true);
         } else if (e.getSource() == botonCrearActividad) {
-            DialogoCrearActividad dialogoCrearActividad = new DialogoCrearActividad();
-            dialogoCrearActividad.setVisible(true);
+            DialogoSeleccionarLP dialogoSeleccionarLP = new DialogoSeleccionarLP(this);
+            dialogoSeleccionarLP.setVisible(true);
             this.dispose();
         }
     }
+    public InicioProfesor getInicioProfesor() {
+        return inicioProfesor;
+    }
+
+
+
 }

@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
+import lprs.exceptions.ActividadReseniadaException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -173,7 +174,12 @@ public class ReqFunsTest {
     void testReq10() {
         Actividad actividad = estudiante.getAvance(lp.getID()).getActividadesCompletadasLista().getFirst();
        
-        actividad.addResenia(new Resenia(estudiante, "Reseña", 5));
+        try {
+            actividad.addResenia(new Resenia(estudiante, "Reseña", 5));
+        }
+        catch (ActividadReseniadaException e) {
+            System.out.println(e.getMessage());
+        }
         assertFalse(actividad.getResenias().isEmpty());
         assertTrue(actividad.getResenias().get(0).getAutor().equals(estudiante));
     }

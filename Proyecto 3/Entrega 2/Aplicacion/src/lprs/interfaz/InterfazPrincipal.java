@@ -6,6 +6,7 @@ import lprs.persistencia.PersistenciaGeneral;
 import lprs.principal.LPRS;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,7 +28,8 @@ public class InterfazPrincipal extends JFrame implements ActionListener {
         lblTitulo = new JLabel("Bienvenido al Learning Path Recommendation System",SwingConstants.CENTER);
         add(lblTitulo, BorderLayout.NORTH);
         JPanel panelAuxiliar = new JPanel();
-        panelAuxiliar.setLayout(new FlowLayout());
+        panelAuxiliar.setBorder( new EmptyBorder(50, 50, 50, 50));
+        panelAuxiliar.setLayout(new GridLayout(3,1,30,30));
         btnIniciarSesion = new JButton("Iniciar sesión");
         btnIniciarSesion.addActionListener(this);
         panelAuxiliar.add(btnIniciarSesion);

@@ -71,6 +71,7 @@ public class EncuestaRealizable extends ActividadRealizable {
         try {
             setEstado("Completado");
             estudiante.getAvance(actividadBase.getLearningPathAsignado().getID()).incTasaExito();
+            actividadBase.getLearningPathAsignado().incCantidadActividadesPorDia();
         } catch (EstadoException e) {
             e.printStackTrace();
         }

@@ -3,6 +3,7 @@ package lprs.logica.cuentas;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import lprs.exceptions.ClonarLPException;
 import lprs.logica.contenido.realizable.ActividadRealizable;
@@ -80,13 +81,14 @@ public class Profesor extends Usuario {
      */
     public void eliminarLearningPath(String ID) {
 
-        LearningPath lP = lprsActual.getManejadorLP().getLearningPath(ID);
+       LearningPath lP = lprsActual.getManejadorLP().getLearningPath(ID);
         if (lP.getProfesorCreador() != this) {
             System.out.println("No tienes permiso para eliminar esta ruta de aprendizaje.");
             return;
         }
-        ArrayList<Estudiante> estudiantes = lP.getEstudiantesInscritos();
-        for (Estudiante estudiante : estudiantes) {
+        Iterator<Estudiante> iterator = lP.getEstudiantesInscritos().iterator();
+        while (iterator.hasNext()) {
+            Estudiante estudiante = iterator.next();
             estudiante.eliminarLearningPath(ID);
         }
         lP.eliminarLearningPath();

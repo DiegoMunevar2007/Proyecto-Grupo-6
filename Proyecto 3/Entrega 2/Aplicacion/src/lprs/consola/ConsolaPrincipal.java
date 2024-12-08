@@ -1,5 +1,6 @@
 package lprs.consola;
 
+import lprs.exceptions.ActividadReseniadaException;
 import lprs.logica.contenido.Actividad;
 import lprs.logica.contenido.Resenia;
 import lprs.logica.cuentas.Usuario;
@@ -47,8 +48,14 @@ public class ConsolaPrincipal {
 		double calificacion = pedirDouble("Ingrese su calificacion: ");
 		Resenia nuevaResenia = new Resenia(usuario, resenia, calificacion);
 
-		actividad.addResenia(nuevaResenia);
-		System.out.println("Resenia agregada exitosamente.");
+		try {
+			actividad.addResenia(nuevaResenia);
+			System.out.println("Resenia agregada exitosamente.");
+		}
+		catch (ActividadReseniadaException e){
+			System.out.println(e.getMessage());
+		}
+
 		}
 
 	public String pedirString(String mensaje) {

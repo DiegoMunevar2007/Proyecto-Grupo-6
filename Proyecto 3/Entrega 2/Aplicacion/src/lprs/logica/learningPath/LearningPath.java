@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import lprs.logica.contenido.Actividad;
 import lprs.logica.contenido.Encuesta;
@@ -33,6 +34,7 @@ public class LearningPath implements Serializable {
 	private LPRS lprsActual;
 	private int cantidadObligatorias;
 	private ArrayList<String> keyWords;
+	private HashMap<Integer, HashMap<Integer, HashMap<Integer, Integer>>> cantidadActividadesPorDia;
 
 	/**
 	 * Constructor para crear un objeto LearningPath.
@@ -44,8 +46,8 @@ public class LearningPath implements Serializable {
 	 * @param profesorCreador el profesor que crea la ruta de aprendizaje
 	 */
 	public LearningPath(String ID, String titulo, String descripcion, String nivelDificultad,
-			ArrayList<String> objetivos,
-			Profesor profesorCreador, LPRS lprsActual, ArrayList<String> keyWords) {
+						ArrayList<String> objetivos,
+						Profesor profesorCreador, LPRS lprsActual, ArrayList<String> keyWords) {
 		this.ID = ID;
 		this.titulo = titulo;
 		this.descripcion = descripcion;
@@ -61,12 +63,22 @@ public class LearningPath implements Serializable {
 		this.lprsActual = lprsActual;
 		this.cantidadObligatorias = 0;
 		this.keyWords = keyWords != null ? keyWords : new ArrayList<>();
+		this.cantidadActividadesPorDia = new HashMap<Integer, HashMap<Integer, HashMap<Integer, Integer>>>();
+		for (int i = 0; i < 12; i++) {
+			HashMap<Integer, HashMap<Integer, Integer>> mes = new HashMap<>();
+			for (int j = 0; j < 31; j++) {
+				HashMap<Integer, Integer> dia = new HashMap<>();
+				mes.put(j, dia);
+			}
+			cantidadActividadesPorDia.put(i, mes);
+		}
 	}
 
 	public void addKeyWord(String palabraClave) {
 		keyWords.add(palabraClave);
 		lprsActual.getManejadorLP().addLearningPathKeyWord(palabraClave, this);
 	}
+
 	public String obtenerFecha() {
 		LocalDateTime myDateObj = LocalDateTime.now();
 		DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -455,6 +467,45 @@ public class LearningPath implements Serializable {
 
 	public ArrayList<String> getKeyWords() {
 		return keyWords;
+	}
+
+	public void incCantidadActividadesPorDia() {
+		String fecha = obtenerFecha();
+		String[] fechaSplit = fecha.split("/");
+		int dia = Integer.parseInt(fechaSplit[0]);
+		int mes = Integer.parseInt(fechaSplit[1]);
+		int anio = Integer.parseInt(fechaSplit[2]);
+		if (cantidadActividadesPorDia.containsKey(anio)) {
+			if (cantidadActividadesPorDia.get(anio).containsKey(mes)) {
+				if (cantidadActividadesPorDia.get(anio).get(mes).containsKey(dia)) {
+					int cantidad = cantidadActividadesPorDia.get(anio).get(mes).get(dia);
+					cantidadActividadesPorDia.get(anio).get(mes).put(dia, cantidad + 1);
+				} else {
+					cantidadActividadesPorDia.get(anio).get(mes).put(dia, 1);
+				}
+			} else {
+				HashMap<Integer, Integer> dias = new HashMap<>();
+				dias.put(dia, 1);
+				cantidadActividadesPorDia.get(anio).put(mes, dias);
+			}
+		} else {
+			HashMap<Integer, Integer> dias = new HashMap<>();
+			dias.put(dia, 1);
+			HashMap<Integer, HashMap<Integer, Integer>> meses = new HashMap<>();
+			meses.put(mes, dias);
+			cantidadActividadesPorDia.put(anio, meses);
+		}
+	}
+
+	public HashMap<Integer, Integer> getCantidadActividadesEnMes(int anio, int mes) {
+		return cantidadActividadesPorDia.get(anio).get(mes);
+	}
+	public void setKeyWords(ArrayList<String> keyWords) {
+		this.keyWords = keyWords;
+	}
+	@Override
+	public String toString(){
+		return this.titulo;
 	}
 
 }

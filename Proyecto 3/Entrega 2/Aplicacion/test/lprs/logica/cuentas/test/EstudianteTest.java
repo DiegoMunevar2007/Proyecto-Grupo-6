@@ -60,7 +60,7 @@ public class EstudianteTest {
     }
 
     @Test
-    public void testInscribirLearningPath() {
+    public void testInscribirLearningPath() throws Exception {
         lprs.getManejadorLP().addLearningPath(learningPath);
         estudiante.inscribirLearningPath("LP1");
         List<LearningPath> learningPaths = estudiante.getLearningPathsInscritos();
@@ -68,7 +68,7 @@ public class EstudianteTest {
     }
 
     @Test
-    public void testEliminarLearningPath() {
+    public void testEliminarLearningPath() throws Exception {
         lprs.getManejadorLP().addLearningPath(learningPath);
         estudiante.inscribirLearningPath("LP1");
         estudiante.eliminarLearningPath("LP1");
@@ -97,7 +97,7 @@ public class EstudianteTest {
 
 
 	@Test
-	public void testGetAvance() {
+	public void testGetAvance() throws Exception {
 	    lprs.getManejadorLP().addLearningPath(learningPath);
 	    estudiante.inscribirLearningPath("LP1");
 	    Avance avance = estudiante.getAvance("LP1");
@@ -105,7 +105,7 @@ public class EstudianteTest {
 	}
 	
 	@Test
-	public void testObtenerAvance() {
+	public void testObtenerAvance() throws Exception {
 	    lprs.getManejadorLP().addLearningPath(learningPath);
 	    estudiante.inscribirLearningPath("LP1");
 	    Avance avance = estudiante.obtenerAvance("LP1");

@@ -59,6 +59,7 @@ public class QuizRealizable extends ActividadRealizable {
 				System.out.println("Felicidades, ha aprobado el quiz");
 				estudiante.getAvance(actividadBase.getLearningPathAsignado().getID()).addActividadRealizada(this);
 				estudiante.getAvance(actividadBase.getLearningPathAsignado().getID()).incTasaExito();
+				actividadBase.getLearningPathAsignado().incCantidadActividadesPorDia();
 			} else {
 				System.out.println("Lo siento, no ha aprobado el quiz");
 			}

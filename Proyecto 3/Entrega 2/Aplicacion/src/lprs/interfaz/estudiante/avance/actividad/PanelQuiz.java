@@ -24,6 +24,10 @@ public class PanelQuiz extends PanelActividad implements ActionListener {
         preguntaActual = 0;
         preguntas = quiz.getPreguntas();
 
+        setLayout(new GridLayout(5,2,30,30));
+        add(new JLabel("Preguntas"));
+
+        //Panel de pregunta y respuesta
         lblPregunta = new JLabel("Pregunta");
         lblRespuesta = new JLabel("Respuesta");
 
@@ -35,17 +39,21 @@ public class PanelQuiz extends PanelActividad implements ActionListener {
         JPanel panelBotonesPreguntas = new JPanel();
         panelBotonesPreguntas.setLayout(new FlowLayout());
         btnAnterior = new JButton("Anterior");
-
+        btnAnterior.addActionListener(this);
         btnSiguiente = new JButton("Siguiente");
+        btnSiguiente.addActionListener(this);
 
         panelBotonesPreguntas.add(btnAnterior);
         panelBotonesPreguntas.add(btnSiguiente);
         panelAux.add(panelBotonesPreguntas);
+
         add(panelAux);
 
         lblCalificacion = new JLabel("Calificacion");
         txtCalificacion = new JTextField(String.valueOf(quiz.getCalificacion()));
         txtCalificacion.setEditable(false);
+        add(lblCalificacion);
+        add(txtCalificacion);
     }
 
     @Override

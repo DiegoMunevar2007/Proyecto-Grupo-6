@@ -1,5 +1,6 @@
 package lprs.interfaz.estudiante;
 
+import lprs.interfaz.InterfazPrincipal;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
 

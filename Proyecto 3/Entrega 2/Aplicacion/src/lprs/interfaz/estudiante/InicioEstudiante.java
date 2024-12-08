@@ -3,6 +3,7 @@ package lprs.interfaz.estudiante;
 import lprs.interfaz.InterfazPrincipal;
 import lprs.interfaz.estudiante.avance.actividad.DialogoAvanceActividad;
 import lprs.interfaz.estudiante.avance.learningpath.DialogoAvanceLP;
+import lprs.interfaz.estudiante.resenia.DialogoResenia;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
 import lprs.persistencia.PersistenciaGeneral;
@@ -86,6 +87,9 @@ public class InicioEstudiante extends JFrame implements ActionListener {
         }
         else if (e.getSource() == btnVerAvance) {
             verAvance();
+        } else if (e.getSource() == btnReseniarActividad) {
+            DialogoResenia dialogoResenia = new DialogoResenia(this);
+            interfazPrincipal.changeDialog(dialogoResenia);
         }
         else if (e.getSource() == btnSalir) {
             dispose();
@@ -99,6 +103,10 @@ public class InicioEstudiante extends JFrame implements ActionListener {
     }
 
     public void inscribirLearningPath() {
+        if (lprs.getManejadorLP().getLearningPaths().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay Learning Paths disponibles");
+            return;
+        }
         DialogoInscribirLearningPath dialogoInscribirLearningPath = new DialogoInscribirLearningPath(this);
         interfazPrincipal.changeDialog(dialogoInscribirLearningPath);
     }

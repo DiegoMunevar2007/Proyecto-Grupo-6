@@ -45,6 +45,7 @@ public class RecursoRealizable extends ActividadRealizable {
 		try {
 			setEstado("Completado");
 			estudiante.getAvance(actividadBase.getLearningPathAsignado().getID()).incTasaExito();
+			actividadBase.getLearningPathAsignado().incCantidadActividadesPorDia();
 		} catch (EstadoException e) {
 			System.out.println(e.getMessage());
 		}

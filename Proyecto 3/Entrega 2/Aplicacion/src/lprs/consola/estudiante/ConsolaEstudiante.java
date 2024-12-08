@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import lprs.consola.ConsolaPrincipal;
+import lprs.exceptions.LearningPathYaInscritoException;
 import lprs.exceptions.NoLearningPathsException;
 import lprs.logica.contenido.*;
 import lprs.logica.contenido.realizable.ActividadRealizable;
@@ -66,6 +67,8 @@ public class ConsolaEstudiante extends ConsolaPrincipal {
                     }
                     estudiante.inscribirLearningPath(id);
                 } catch (NoLearningPathsException e) {
+                    System.out.println(e.getMessage());
+                } catch (LearningPathYaInscritoException e) {
                     System.out.println(e.getMessage());
                 }
             } else if (opcion == 3) {

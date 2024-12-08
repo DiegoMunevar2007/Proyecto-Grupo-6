@@ -59,6 +59,7 @@ public class ExamenRealizable extends ActividadRealizable {
         guardarActividad(respuestas);
         try {
             setEstado("Enviado");
+            actividadBase.getLearningPathAsignado().incCantidadActividadesPorDia();
         } catch (EstadoException e) {
             e.printStackTrace();
         }

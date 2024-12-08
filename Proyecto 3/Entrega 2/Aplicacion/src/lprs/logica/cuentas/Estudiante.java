@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import lprs.exceptions.LearningPathYaInscritoException;
 import lprs.logica.contenido.Actividad;
 import lprs.logica.contenido.realizable.ActividadRealizable;
 import lprs.logica.learningPath.Avance;
@@ -35,8 +36,11 @@ public class Estudiante extends Usuario {
 	 *
 	 * @param ID el ID de la ruta de aprendizaje en la que inscribir al estudiante
 	 */
-	public void inscribirLearningPath(String ID) {
+	public void inscribirLearningPath(String ID) throws LearningPathYaInscritoException {
 		LearningPath lP = lprsActual.getManejadorLP().getLearningPath(ID);
+		if (learningPathsInscritos.contains(lP)) {
+			throw new LearningPathYaInscritoException();
+		}
 		learningPathsInscritos.add(lP);
 		lP.aniadirEstudiante(this);
 		Avance nuevoAvance = new Avance(lP.obtenerFecha(), lP); //

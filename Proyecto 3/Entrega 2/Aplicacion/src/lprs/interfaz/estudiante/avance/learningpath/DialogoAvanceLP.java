@@ -28,7 +28,7 @@ public class DialogoAvanceLP extends JDialog implements ActionListener {
         add(new JLabel("Avance de Learning Path"), BorderLayout.NORTH);
         add(panelAvanceLP, BorderLayout.CENTER);
         setSize(800, 600);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(inicioEstudiante);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         comboBoxLearningPaths = new JComboBox<>();
         comboBoxLearningPaths.addItem("Seleccione un Learning Path");

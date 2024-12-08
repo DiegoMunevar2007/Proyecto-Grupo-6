@@ -1,12 +1,9 @@
 package lprs.interfaz.estudiante.avance.actividad;
 
 import lprs.interfaz.estudiante.InicioEstudiante;
-import lprs.logica.contenido.Actividad;
-import lprs.logica.contenido.RecursoEducativo;
-import lprs.logica.contenido.Tarea;
-import lprs.logica.contenido.realizable.ActividadRealizable;
-import lprs.logica.contenido.realizable.RecursoRealizable;
-import lprs.logica.contenido.realizable.TareaRealizable;
+import lprs.interfaz.estudiante.PanelComboBox;
+import lprs.logica.contenido.*;
+import lprs.logica.contenido.realizable.*;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
 
@@ -18,12 +15,15 @@ import java.awt.event.ActionListener;
 public class DialogoAvanceActividad extends JDialog implements ActionListener {
     private PanelComboBox panelComboBox;
     private InicioEstudiante inicioEstudiante;
+    private JButton btnSalir;
     public DialogoAvanceActividad(InicioEstudiante inicioEstudiante) {
         this.inicioEstudiante = inicioEstudiante;
         setLayout(new BorderLayout());
         panelComboBox = new PanelComboBox(inicioEstudiante);
         panelComboBox.getComboBoxActividades().addActionListener(this);
         add(panelComboBox, BorderLayout.WEST);
+        btnSalir = new JButton("Salir");
+        btnSalir.addActionListener(this);
         setSize(400, 300);
         setVisible(true);
     }
@@ -58,7 +58,33 @@ public class DialogoAvanceActividad extends JDialog implements ActionListener {
                 add(panelComboBox, BorderLayout.WEST);
                 revalidate();
                 repaint();
+            } else if (actividad instanceof Quiz){
+                ActividadRealizable actividadRealizable = estudiante.getAvance(learningPath.getID()).getActividadesCompletadas().get(actividad);
+                PanelQuiz panelQuiz = new PanelQuiz((QuizRealizable) actividadRealizable);
+                getContentPane().removeAll();
+                add(panelQuiz, BorderLayout.CENTER);
+                add(panelComboBox, BorderLayout.WEST);
+                revalidate();
+                repaint();
+            } else if (actividad instanceof Examen) {
+                ActividadRealizable actividadRealizable = estudiante.getAvance(learningPath.getID()).getActividadesCompletadas().get(actividad);
+                PanelExamen panelExamen = new PanelExamen((ExamenRealizable) actividadRealizable);
+                getContentPane().removeAll();
+                add(panelExamen, BorderLayout.CENTER);
+                add(panelComboBox, BorderLayout.WEST);
+                revalidate();
+                repaint();
+            } else if (actividad instanceof Encuesta){
+                ActividadRealizable actividadRealizable = estudiante.getAvance(learningPath.getID()).getActividadesCompletadas().get(actividad);
+                PanelEncuesta panelEncuesta = new PanelEncuesta((EncuestaRealizable) actividadRealizable);
+                getContentPane().removeAll();
+                add(panelEncuesta, BorderLayout.CENTER);
+                add(panelComboBox, BorderLayout.WEST);
+                revalidate();
+                repaint();
             }
+        } else if (e.getSource() == btnSalir) {
+            dispose();
         }
     }
 }

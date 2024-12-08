@@ -3,6 +3,7 @@ package lprs.logica.contenido;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import lprs.exceptions.ActividadReseniadaException;
 import lprs.logica.contenido.realizable.ActividadRealizable;
 import lprs.logica.cuentas.Estudiante;
 import lprs.logica.learningPath.LearningPath;
@@ -261,7 +262,12 @@ public abstract class Actividad implements Serializable{
      *
      * @param resenia la reseña a añadir
      */
-    public void addResenia(Resenia resenia) {
+    public void addResenia(Resenia resenia) throws ActividadReseniadaException {
+        for (Resenia r : resenias) {
+            if (r.getAutor().equals(resenia.getAutor())) {
+                throw new ActividadReseniadaException();
+            }
+        }
         resenias.add(resenia);
         learningPathAsignado.cambiarRating(resenia.getRating());
     }

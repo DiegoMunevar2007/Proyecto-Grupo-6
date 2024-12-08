@@ -47,7 +47,7 @@ public class DialogoLogin extends JDialog implements ActionListener {
                 if (usuarioIniciado instanceof Estudiante) {
                     dispose();
                     interfazPrincipal.changeDialog(new InicioEstudiante((Estudiante) usuarioIniciado, interfazPrincipal));
-                } else {
+                }else if (usuarioIniciado instanceof Profesor){
                     dispose();
                     interfazPrincipal.changeDialog(new InicioProfesor((Profesor) usuarioIniciado, interfazPrincipal));
                 }
