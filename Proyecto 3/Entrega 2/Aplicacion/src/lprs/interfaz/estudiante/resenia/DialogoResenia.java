@@ -29,20 +29,19 @@ public class DialogoResenia extends JDialog implements ActionListener, ChangeLis
 
     public DialogoResenia(InicioEstudiante inicioEstudiante) {
         this.inicioEstudiante = inicioEstudiante;
-        initialize();
+        inicializar(inicioEstudiante);
     }
 
     public DialogoResenia(DialogoManejarActividad dialogoManejarActividad) {
         this.dialogoManejarActividad = dialogoManejarActividad;
-        initialize();
+        inicializar(dialogoManejarActividad);
     }
 
-    private void initialize() {
+    private void inicializar(InicioEstudiante inicioEstudiante) {
         setLayout(new BorderLayout(10, 10));
         setTitle("Reseña de Learning Path");
         setLocationRelativeTo(null);
         setSize(600, 300);
-
         panelComboBox = new PanelComboBox(inicioEstudiante);
         add(panelComboBox, BorderLayout.WEST);
 
@@ -86,6 +85,57 @@ public class DialogoResenia extends JDialog implements ActionListener, ChangeLis
 
         add(panelBotones, BorderLayout.SOUTH);
     }
+
+    private void inicializar(DialogoManejarActividad dialogoManejarActividad) {
+        setLayout(new BorderLayout(10, 10));
+        setTitle("Reseña de Learning Path");
+        setLocationRelativeTo(null);
+        setSize(600, 300);
+        panelComboBox = new PanelComboBox(dialogoManejarActividad);
+        add(panelComboBox, BorderLayout.WEST);
+
+        panelResenia = new JPanel(new GridLayout(2, 2, 10, 10));
+        panelResenia.setBorder(new EmptyBorder(20, 20, 20, 20));
+        labelResenia = new JLabel("Reseña:");
+        labelResenia.setFont(new Font("Arial", Font.BOLD, 16));
+        panelResenia.add(labelResenia);
+        textAreaResenia = new JTextArea();
+        textAreaResenia.setFont(new Font("Arial", Font.PLAIN, 14));
+        panelResenia.add(textAreaResenia);
+        panelResenia.add(new JLabel(""));
+
+        slider = new JSlider(1, 5);
+        slider.addChangeListener(this);
+        slider.setMajorTickSpacing(1);
+        slider.setMinorTickSpacing(1);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+        panelResenia.add(slider);
+
+        add(panelResenia, BorderLayout.CENTER);
+
+        panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        panelBotones.setBorder(new EmptyBorder(10, 10, 10, 10));
+        botonEnviar = new JButton("Enviar");
+        botonEnviar.setFont(new Font("Arial", Font.PLAIN, 14));
+        botonEnviar.setBackground(new Color(34, 139, 34));
+        botonEnviar.setForeground(Color.WHITE);
+        botonEnviar.setBorderPainted(false);
+        botonEnviar.addActionListener(this);
+        panelBotones.add(botonEnviar);
+
+        botonCancelar = new JButton("Cancelar");
+        botonCancelar.setFont(new Font("Arial", Font.PLAIN, 14));
+        botonCancelar.setBackground(new Color(220, 20, 60));
+        botonCancelar.setForeground(Color.WHITE);
+        botonCancelar.setBorderPainted(false);
+        botonCancelar.addActionListener(this);
+        panelBotones.add(botonCancelar);
+
+        add(panelBotones, BorderLayout.SOUTH);
+    }
+
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
