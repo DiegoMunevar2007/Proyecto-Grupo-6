@@ -104,13 +104,13 @@ public class DialogoTarea extends JDialog implements ActionListener {
             tarea.setSecciones(secciones);
             int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea agregar una actividad previa?");
             if (respuesta == JOptionPane.YES_OPTION) {
-                DialogoAgregarActividadPrevia dialogoAgregarActividadPrevia = new DialogoAgregarActividadPrevia(this, dialogoCrearActividad.getLp(), tarea);
+                DialogoAgregarActividadPrevia dialogoAgregarActividadPrevia = new DialogoAgregarActividadPrevia(this.dialogoCrearActividad.getDialogoManejarActividad(), dialogoCrearActividad.getLp(), tarea);
                 dialogoAgregarActividadPrevia.setVisible(true);
                 this.dispose();
             }
             int respuesta2 = JOptionPane.showConfirmDialog(this, "¿Desea agregar una actividad de seguimiento?");
             if (respuesta2 == JOptionPane.YES_OPTION) {
-                DialogoAgregarActividadSeguimiento dialogoAgregarActividadSeguimiento = new DialogoAgregarActividadSeguimiento(this, dialogoCrearActividad.getLp(), tarea);
+                DialogoAgregarActividadSeguimiento dialogoAgregarActividadSeguimiento = new DialogoAgregarActividadSeguimiento(this.dialogoCrearActividad.getDialogoManejarActividad(), dialogoCrearActividad.getLp(), tarea);
                 dialogoAgregarActividadSeguimiento.setVisible(true);
                 this.dispose();
             }

@@ -119,13 +119,13 @@ public class DialogoQuizMultiple extends JDialog implements ActionListener {
         } else if (e.getSource() == btnContinuar) {
             int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea agregar una actividad previa?");
             if (respuesta == JOptionPane.YES_OPTION) {
-                DialogoAgregarActividadPrevia dialogoAgregarActividadPrevia = new DialogoAgregarActividadPrevia(this, dialogoCrearActividad.getLp(), quizMultiple);
+                DialogoAgregarActividadPrevia dialogoAgregarActividadPrevia = new DialogoAgregarActividadPrevia(this.dialogoCrearActividad.getDialogoManejarActividad(), dialogoCrearActividad.getLp(), quizMultiple);
                 dialogoAgregarActividadPrevia.setVisible(true);
                 this.dispose();
             }
             int respuesta2 = JOptionPane.showConfirmDialog(this, "¿Desea agregar una actividad de seguimiento?");
             if (respuesta2 == JOptionPane.YES_OPTION) {
-                DialogoAgregarActividadSeguimiento dialogoAgregarActividadSeguimiento = new DialogoAgregarActividadSeguimiento(this, dialogoCrearActividad.getLp(), quizMultiple);
+                DialogoAgregarActividadSeguimiento dialogoAgregarActividadSeguimiento = new DialogoAgregarActividadSeguimiento(this.dialogoCrearActividad.getDialogoManejarActividad(), dialogoCrearActividad.getLp(), quizMultiple);
                 dialogoAgregarActividadSeguimiento.setVisible(true);
                 this.dispose();
             }

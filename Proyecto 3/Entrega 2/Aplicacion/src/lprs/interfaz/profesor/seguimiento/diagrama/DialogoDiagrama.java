@@ -21,7 +21,7 @@ public class DialogoDiagrama extends JDialog implements ActionListener {
         setLocationRelativeTo(null);
         setTitle("Diagrama del Learning Path");
 
-        JLabel label = new JLabel("Diagrama del Learning Path: " + lp.getTitulo() + " del año: " + anio, SwingConstants.CENTER);
+        JLabel label = new JLabel("Diagrama del Learning Path: " + lp.getTitulo() + " del año " + anio, SwingConstants.CENTER);
         label.setFont(new Font("Arial", Font.BOLD, 18));
         label.setBorder(new EmptyBorder(20, 0, 20, 0));
         add(label, BorderLayout.NORTH);

@@ -31,15 +31,15 @@ public class InicioProfesor extends JFrame implements ActionListener {
         setLayout(new BorderLayout());
 
         JPanel panelTexto = new JPanel();
-        panelTexto.setLayout(new BoxLayout(panelTexto, BoxLayout.Y_AXIS));
+        panelTexto.setLayout(new BorderLayout());
         JLabel lblBienvenido = new JLabel("Bienvenido " + usuarioIniciado.getUsuario(), SwingConstants.CENTER);
         lblBienvenido.setFont(new Font("Arial", Font.BOLD, 18));
         lblBienvenido.setBorder(new EmptyBorder(20, 0, 10, 0));
-        panelTexto.add(lblBienvenido);
+        panelTexto.add(lblBienvenido, BorderLayout.NORTH);
         JLabel lblSeleccione = new JLabel("Seleccione una opción:", SwingConstants.CENTER);
         lblSeleccione.setFont(new Font("Arial", Font.PLAIN, 16));
         lblSeleccione.setBorder(new EmptyBorder(10, 0, 20, 0));
-        panelTexto.add(lblSeleccione);
+        panelTexto.add(lblSeleccione, BorderLayout.CENTER);
         add(panelTexto, BorderLayout.NORTH);
 
         JPanel panelBotones = new JPanel();

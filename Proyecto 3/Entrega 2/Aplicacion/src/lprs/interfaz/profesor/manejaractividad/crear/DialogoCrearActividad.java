@@ -9,8 +9,10 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
-public class DialogoCrearActividad extends JDialog implements ActionListener {
+public class DialogoCrearActividad extends JDialog implements ActionListener, WindowListener {
     private PanelActividadBasica panelActividadBasica;
     private JComboBox<String> tipoActividad;
     private JButton btnCrearActividad;
@@ -69,6 +71,7 @@ public class DialogoCrearActividad extends JDialog implements ActionListener {
         panelBotones.add(btnCancelar);
 
         add(panelBotones, BorderLayout.SOUTH);
+        this.addWindowListener(this);
     }
 
     private void crearActividad() {
@@ -129,13 +132,13 @@ public class DialogoCrearActividad extends JDialog implements ActionListener {
             this.dispose();
             int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea agregar una actividad previa?");
             if (respuesta == JOptionPane.YES_OPTION) {
-                DialogoAgregarActividadPrevia dialogoAgregarActividadPrevia = new DialogoAgregarActividadPrevia(this, lp, recurso);
+                DialogoAgregarActividadPrevia dialogoAgregarActividadPrevia = new DialogoAgregarActividadPrevia(this.dialogoManejarActividad, lp, recurso);
                 dialogoAgregarActividadPrevia.setVisible(true);
                 this.dispose();
             }
             int respuesta2 = JOptionPane.showConfirmDialog(this, "¿Desea agregar una actividad de seguimiento?");
             if (respuesta2 == JOptionPane.YES_OPTION) {
-                DialogoAgregarActividadSeguimiento dialogoAgregarActividadSeguimiento = new DialogoAgregarActividadSeguimiento(this, lp, recurso);
+                DialogoAgregarActividadSeguimiento dialogoAgregarActividadSeguimiento = new DialogoAgregarActividadSeguimiento(this.dialogoManejarActividad, lp, recurso);
                 dialogoAgregarActividadSeguimiento.setVisible(true);
                 this.dispose();
             }
@@ -216,5 +219,40 @@ public class DialogoCrearActividad extends JDialog implements ActionListener {
 
     public DialogoManejarActividad getDialogoManejarActividad() {
         return dialogoManejarActividad;
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 }
