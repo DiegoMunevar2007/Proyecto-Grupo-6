@@ -7,9 +7,8 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/org.json-1.6-20240205.jar"/>
-	<classpathentry kind="lib" path="C:/Users/dialm/Downloads/jcalendar_1.0.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/dialm/Downloads/junit5-r5.11.3.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.json-1.6-20240205.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="lib/jcalendar_1.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
